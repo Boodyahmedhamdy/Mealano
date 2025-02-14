@@ -6,9 +6,16 @@ import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import io.github.boodyahmedhamdy.mealano.data.network.MealsApi;
 import io.github.boodyahmedhamdy.mealano.data.network.MealsApiService;
@@ -24,7 +31,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    TextView tv;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +43,23 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        tv = findViewById(R.id.tv);
 
+        // bottom navigation view
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
+        NavController navController = navHostFragment.getNavController();
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+        // top app bar
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.homeFragment, R.id.searchFragment, R.id.favoriteFragment,
+                R.id.plansFragment, R.id.profileFragment, R.id.loginFragment,
+                R.id.signupFragment
+        ).build();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
+
+/*
         MealsApiService service = MealsApi.getMealsApiService();
         Call<DetailedMealsResponse> randomMealCall = service.getRandomMeal();
         Log.i(TAG, "onCreate: Sent request randomMealCall");
@@ -220,6 +242,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "onFailure: ", throwable);
             }
         });
+*/
 
 
     }
