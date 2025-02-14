@@ -3,12 +3,12 @@ package io.github.boodyahmedhamdy.mealano.data.network.dto;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class MealsResponse{
+public class DetailedMealsResponse {
 
 	@SerializedName("meals")
-	private List<MealDTO> meals;
+	private List<DetailedMealDTO> meals;
 
-	public List<MealDTO> getMeals(){
+	public List<DetailedMealDTO> getMeals(){
 		return meals;
 	}
 

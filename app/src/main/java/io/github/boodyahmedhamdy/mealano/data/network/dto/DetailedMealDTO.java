@@ -2,7 +2,7 @@ package io.github.boodyahmedhamdy.mealano.data.network.dto;
 
 import com.google.gson.annotations.SerializedName;
 
-public class MealDTO {
+public class DetailedMealDTO {
 
 	@SerializedName("strImageSource")
 	private Object strImageSource;
