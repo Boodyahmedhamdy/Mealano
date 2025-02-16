@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import io.github.boodyahmedhamdy.mealano.R;
+import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,13 +37,7 @@ public class SignupFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        hideToolbar();
-        hideBottomBar();
-    }
-    private void hideToolbar() {
-        getActivity().findViewById(R.id.toolbar).setVisibility(GONE);
-    }
-    private void hideBottomBar() {
-        getActivity().findViewById(R.id.bottomNavigationView).setVisibility(GONE);
+        UiUtils.hideToolbar(getActivity());
+        UiUtils.hideBottomBar(getActivity());
     }
 }

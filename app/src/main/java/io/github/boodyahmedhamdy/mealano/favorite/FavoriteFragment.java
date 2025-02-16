@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import io.github.boodyahmedhamdy.mealano.R;
+import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 
 public class FavoriteFragment extends Fragment {
@@ -32,15 +33,7 @@ public class FavoriteFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        showToolbar();
-        showBottomBar();
-    }
-
-    private void showToolbar() {
-        getActivity().findViewById(R.id.toolbar).setVisibility(VISIBLE);
-    }
-
-    private void showBottomBar() {
-        getActivity().findViewById(R.id.bottomNavigationView).setVisibility(VISIBLE);
+        UiUtils.showToolbar(getActivity());
+        UiUtils.showBottomBar(getActivity());
     }
 }

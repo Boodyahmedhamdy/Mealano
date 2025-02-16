@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.data.network.SharedPreferencesManager;
+import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 
 public class SplashFragment extends Fragment {
@@ -42,14 +43,17 @@ public class SplashFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        hideToolbar();
-        hideBottomBar();
+        UiUtils.hideToolbar(getActivity());
+        UiUtils.hideBottomBar(getActivity());
         sharedPreferencesManager = SharedPreferencesManager.getInstance(getActivity());
 
         new Handler().postDelayed(() -> {
             NavController navController = Navigation.findNavController(view);
             if(isFirstTime()) {
                 // navigate to onboarding screens
+                navController.navigate(
+                        SplashFragmentDirections.actionSplashFragmentToOnBoardingFragment()
+                );
             } else {
                 if(userLoggedIn()) {
                     navController.navigate(
@@ -68,13 +72,6 @@ public class SplashFragment extends Fragment {
 
     private boolean isFirstTime() {
         return sharedPreferencesManager.isFirstTime();
-    }
-
-    private void hideToolbar() {
-        getActivity().findViewById(R.id.toolbar).setVisibility(GONE);
-    }
-    private void hideBottomBar() {
-        getActivity().findViewById(R.id.bottomNavigationView).setVisibility(GONE);
     }
 
     private boolean userLoggedIn() {

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import io.github.boodyahmedhamdy.mealano.R;
+import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 
 public class PlansFragment extends Fragment {
@@ -32,15 +33,8 @@ public class PlansFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        showToolbar();
-        showBottomBar();
+        UiUtils.showToolbar(getActivity());
+        UiUtils.showBottomBar(getActivity());
     }
 
-    private void showToolbar() {
-        getActivity().findViewById(R.id.toolbar).setVisibility(VISIBLE);
-    }
-
-    private void showBottomBar() {
-        getActivity().findViewById(R.id.bottomNavigationView).setVisibility(VISIBLE);
-    }
 }
