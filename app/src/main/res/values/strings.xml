@@ -11,4 +11,7 @@
     <string name="plans">Plans</string>
     <string name="meal_details">Meal Details</string>
     <string name="about">About</string>
+    <string name="first_onboading_title">First Onboading Title</string>
+    <string name="first_onboarding_description">First Onboarding Description</string>
+    <string name="next">Next</string>
 </resources>

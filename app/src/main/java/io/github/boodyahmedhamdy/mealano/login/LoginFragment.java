@@ -15,11 +15,6 @@ import android.view.ViewGroup;
 import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LoginFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LoginFragment extends Fragment {
 
     @Override
@@ -37,8 +32,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        UiUtils.hideToolbar(getActivity());
-        UiUtils.hideBottomBar(getActivity());
+        UiUtils.hideToolbar(requireActivity());
+        UiUtils.hideBottomBar(requireActivity());
 
     }
 }
