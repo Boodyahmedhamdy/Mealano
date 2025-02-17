@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "110969076776",
+    "project_id": "mealano",
+    "storage_bucket": "mealano.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:110969076776:android:8073a1b1cf237e201c491d",
+        "android_client_info": {
+          "package_name": "io.github.boodyahmedhamdy.mealano"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDt6Umnw_YtDcvO4IAIeN6qlUfB83lqaB8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

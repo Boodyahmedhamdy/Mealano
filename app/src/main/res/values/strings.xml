@@ -14,4 +14,16 @@
     <string name="first_onboading_title">First Onboading Title</string>
     <string name="first_onboarding_description">First Onboarding Description</string>
     <string name="next">Next</string>
+    <string name="continue_as_guest">Continue as Guest</string>
+    <string name="welcome">Welcome</string>
+    <string name="back">Back</string>
+    <string name="login_description">use the email and password you enterd while\nregisteration</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="or_login_using">Or Login using</string>
+    <string name="don_t_have_account">Don\'t have Account?</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="already_have_account">already have Account?</string>
+    <string name="or_signup_using">Or Signup using</string>
+    <string name="signup_description">enter email and password to let us know you</string>
 </resources>

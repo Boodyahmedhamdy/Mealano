@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha="0.4"
+        android:backgroundTint="@android:color/transparent"
         android:scaleType="centerCrop"
         android:src="@drawable/splash_background_image"
         app:layout_constraintBottom_toBottomOf="parent"

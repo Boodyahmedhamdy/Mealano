@@ -1,21 +1,23 @@
 package io.github.boodyahmedhamdy.mealano.login;
 
-import static android.view.View.GONE;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 public class LoginFragment extends Fragment {
+
+    TextView tvSignup; // will go to signup screen
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,12 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         UiUtils.hideToolbar(requireActivity());
         UiUtils.hideBottomBar(requireActivity());
+        tvSignup = view.findViewById(R.id.tvLogin);
+        tvSignup.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(
+                    LoginFragmentDirections.actionLoginFragmentToSignupFragment()
+            );
+        });
 
     }
 }
