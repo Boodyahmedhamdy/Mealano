@@ -3,6 +3,7 @@ package io.github.boodyahmedhamdy.mealano.signup;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ public class SignupFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     SharedPreferencesManager sharedPreferencesManager;
     private static final String TAG = "SignupFragment";
+    View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +62,7 @@ public class SignupFragment extends Fragment {
         UiUtils.hideToolbar(requireActivity());
         UiUtils.hideBottomBar(requireActivity());
         findUI(view);
+        this.view = view;
 
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -77,7 +80,6 @@ public class SignupFragment extends Fragment {
 
             if(isValid(email, password, confirmPassword)) {
                 createAccountUsingEmailAndPassword(email, password);
-                Navigation.findNavController(view).navigate(SignupFragmentDirections.actionSignupFragmentToHomeFragment());
             } else {
                 Toast.makeText(getContext(), "error", Toast.LENGTH_SHORT).show();
             }
@@ -99,11 +101,17 @@ public class SignupFragment extends Fragment {
                 Log.i(TAG, "createAccountUsingEmailAndPassword: provider id: " + user.getProviderId() );
                 sharedPreferencesManager.updateUserId(user.getUid());
                 changeInProgress(false);
+                Navigation.findNavController(view).navigate(SignupFragmentDirections.actionSignupFragmentToHomeFragment());
+
 
             } else {
                 // failure
-                Toast.makeText(getContext(), task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                 changeInProgress(false);
+                Log.e(TAG, "createAccountUsingEmailAndPassword: ", task.getException());
+                Log.d(TAG, "createAccountUsingEmailAndPassword: " + task.getException().getLocalizedMessage());
+                AlertDialog dialog = new AlertDialog.Builder(view.getContext())
+                        .setMessage(task.getException().getLocalizedMessage()).create();
+                dialog.show();
             }
         });
 
