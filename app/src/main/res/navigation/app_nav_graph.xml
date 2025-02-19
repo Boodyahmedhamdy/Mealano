@@ -23,7 +23,7 @@
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
-        android:name="io.github.boodyahmedhamdy.mealano.signup.SignupFragment"
+        android:name="io.github.boodyahmedhamdy.mealano.signup.view.SignupFragment"
         android:label="@string/sign_up"
         tools:layout="@layout/fragment_signup">
         <action
