@@ -70,12 +70,12 @@ public class SignupFragment extends Fragment implements SignupView, OnSignupCall
 
         sharedPreferencesManager = SharedPreferencesManager.getInstance(requireActivity());
 
-        binding.tvLogin.setOnClickListener(v -> {
+        binding.tvGoToLogin.setOnClickListener(v -> {
             Navigation.findNavController(binding.getRoot()).navigate(
                     SignupFragmentDirections.actionSignupFragmentToLoginFragment()
             );
         });
-        binding.btnContinueAsGuestSignupScreen.setOnClickListener(v -> {
+        binding.btnContinueAsGuest.setOnClickListener(v -> {
             Navigation.findNavController(binding.getRoot()).navigate(
                     SignupFragmentDirections.actionSignupFragmentToHomeFragment()
             );
@@ -126,6 +126,7 @@ public class SignupFragment extends Fragment implements SignupView, OnSignupCall
     @Override
     public void setErrorMessage(String errorMessage) {
         Log.e(TAG, "setErrorMessage: " + errorMessage);
+        binding.tvError.setText(errorMessage);
     }
 
     @Override

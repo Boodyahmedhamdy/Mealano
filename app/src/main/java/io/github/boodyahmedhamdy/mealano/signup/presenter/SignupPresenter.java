@@ -1,5 +1,7 @@
 package io.github.boodyahmedhamdy.mealano.signup.presenter;
 
+import static io.github.boodyahmedhamdy.mealano.constants.AuthConstants.MIN_PASSWORD_LENGTH;
+
 import android.util.Log;
 import android.util.Patterns;
 
@@ -8,7 +10,7 @@ import io.github.boodyahmedhamdy.mealano.signup.contract.OnSignupCallback;
 import io.github.boodyahmedhamdy.mealano.signup.contract.SignupView;
 
 public class SignupPresenter {
-    private static final int MIN_PASSWORD_LENGTH = 6;
+
     private static final String TAG = "SignupPresenter";
 
     SignupView view;
@@ -28,6 +30,8 @@ public class SignupPresenter {
         if(isValidInput(email, password, confirmPassword)) {
             view.setIsLoading(true);
             usersRepository.signupWithEmailAndPassword(email, password, callback);
+        } else {
+            view.setErrorMessage("Some error happend. input isn't valid");
         }
 
     }

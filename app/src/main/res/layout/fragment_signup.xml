@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnContinueAsGuestSignupScreen"
+        android:id="@+id/btnContinueAsGuest"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -192,7 +192,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivLoginWithGoogle" />
 
     <TextView
-        android:id="@+id/tvLogin"
+        android:id="@+id/tvGoToLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -211,7 +211,20 @@
         app:layout_constraintBottom_toBottomOf="@+id/btnSignup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnSignup" />
+        app:layout_constraintTop_toTopOf="@+id/btnSignup"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tvError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/md_theme_error"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvGoToLogin"
+        app:layout_constraintStart_toStartOf="@+id/tvGoToLogin"
+        app:layout_constraintTop_toBottomOf="@+id/tvGoToLogin"
+        tools:text="Some Error" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.LoginFragment">
+    tools:context=".login.view.LoginFragment">
 
     <TextView
         android:id="@+id/textView2"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnContinueAsGuestSignupScreen"
+        android:id="@+id/btnContinueAsGuest"
         style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilEmailSignupScreen"
+        android:id="@+id/tilEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -88,14 +88,14 @@
         app:startIconDrawable="@drawable/baseline_email_24">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietEmailSignupScreen"
+            android:id="@+id/tietEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilPasswordSignupScreen"
+        android:id="@+id/tilPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -104,12 +104,12 @@
         app:endIconMode="password_toggle"
         app:helperText="put at least 6 characters"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tilEmailSignupScreen"
-        app:layout_constraintTop_toBottomOf="@+id/tilEmailSignupScreen"
+        app:layout_constraintStart_toStartOf="@+id/tilEmail"
+        app:layout_constraintTop_toBottomOf="@+id/tilEmail"
         app:startIconDrawable="@drawable/baseline_lock_outline_24">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tietPasswordSignupScreen"
+            android:id="@+id/tietPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -117,15 +117,15 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/btnSignup"
+        android:id="@+id/btnLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/login"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tilPasswordSignupScreen"
-        app:layout_constraintTop_toBottomOf="@+id/tilPasswordSignupScreen" />
+        app:layout_constraintStart_toStartOf="@+id/tilPassword"
+        app:layout_constraintTop_toBottomOf="@+id/tilPassword" />
 
     <TextView
         android:id="@+id/textView13"
@@ -135,8 +135,8 @@
         android:elevation="3dp"
         android:text="@string/or_login_using"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/btnSignup"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignup" />
+        app:layout_constraintStart_toStartOf="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
 
     <View
         android:id="@+id/divider2"
@@ -155,7 +155,7 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="@+id/textView13"
         app:layout_constraintEnd_toStartOf="@+id/textView13"
-        app:layout_constraintStart_toStartOf="@+id/btnSignup"
+        app:layout_constraintStart_toStartOf="@+id/btnLogin"
         app:layout_constraintTop_toTopOf="@+id/textView13" />
 
     <ImageView
@@ -179,7 +179,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivLoginWithGoogle" />
 
     <TextView
-        android:id="@+id/tvLogin"
+        android:id="@+id/tvGoToSignup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -188,5 +188,28 @@
         app:layout_constraintEnd_toEndOf="@+id/textView14"
         app:layout_constraintStart_toStartOf="@+id/textView14"
         app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/tvLoginError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/md_theme_error"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvGoToSignup"
+        app:layout_constraintStart_toStartOf="@+id/tvGoToSignup"
+        app:layout_constraintTop_toBottomOf="@+id/tvGoToSignup"
+        tools:text="Some Error" />
+
+    <ProgressBar
+        android:id="@+id/pbLogin"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/btnLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnLogin" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

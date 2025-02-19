@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import io.github.boodyahmedhamdy.mealano.login.contract.OnLoginCallBack;
 import io.github.boodyahmedhamdy.mealano.signup.contract.OnSignupCallback;
 
 public class UsersRemoteDataSource {
@@ -37,5 +38,18 @@ public class UsersRemoteDataSource {
                     }
                 }
         );
+    }
+
+    public void signInWithEmailAndPassword(String email, String password, OnLoginCallBack callBack) {
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()) {
+                    callBack.onSuccess();
+                } else {
+                    callBack.onFailure(task.getException().getLocalizedMessage());
+                }
+            }
+        });
     }
 }
