@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -47,7 +46,7 @@ public class OnBoardingThirdFragment extends Fragment {
         btnNext.setOnClickListener(v -> {
             Toast.makeText(getContext(), "Navigating To Login", Toast.LENGTH_SHORT).show();
             sharedPreferencesManager = SharedPreferencesManager.getInstance(getContext());
-            sharedPreferencesManager.updateIsFirstTime(false); // indicates that user saw onboarding before
+            sharedPreferencesManager.setIsFirstTime(false); // indicates that user saw onboarding before
             Navigation.findNavController(view).navigate(
                     OnBoardingFragmentDirections.actionOnBoardingFragmentToLoginFragment()
             );

@@ -40,8 +40,8 @@ public class UsersRemoteDataSource {
         );
     }
 
-    public void signInWithEmailAndPassword(String email, String password, OnLoginCallBack callBack) {
-        Log.i(TAG, "signInWithEmailAndPassword: started");
+    public void loginWithEmailAndPassword(String email, String password, OnLoginCallBack callBack) {
+        Log.i(TAG, "loginWithEmailAndPassword: started");
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

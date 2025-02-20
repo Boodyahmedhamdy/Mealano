@@ -20,12 +20,12 @@ public class LoginPresenter {
         this.usersRepository = usersRepository;
     }
 
-    public void signUpWithEmailAndPassword(String email, String password, OnLoginCallBack callBack) {
+    public void loginWithEmailAndPassword(String email, String password, OnLoginCallBack callBack) {
         Log.i(TAG, "signUpWithEmailAndPassword: started");
         if(isValidInput(email, password)) {
             view.setIsLoading(true);
             view.setErrorMessage("");
-            usersRepository.signInWithEmailAndPassword(email, password, callBack);
+            usersRepository.loginWithEmailAndPassword(email, password, callBack);
         } else {
             view.setErrorMessage("input isn't valid");
             view.setIsLoading(false);

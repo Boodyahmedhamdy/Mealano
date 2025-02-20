@@ -13,8 +13,17 @@ public class UsersRepository {
     UsersLocalDataSource localDataSource;
     UsersRemoteDataSource remoteDataSource;
 
+    private static UsersRepository instance;
 
-    public UsersRepository(UsersLocalDataSource localDataSource, UsersRemoteDataSource remoteDataSource) {
+    public static UsersRepository getInstance(UsersLocalDataSource localDataSource, UsersRemoteDataSource remoteDataSource) {
+        if(instance == null) {
+            instance = new UsersRepository(localDataSource, remoteDataSource);
+        }
+        return instance;
+    }
+
+
+    private UsersRepository(UsersLocalDataSource localDataSource, UsersRemoteDataSource remoteDataSource) {
         this.localDataSource = localDataSource;
         this.remoteDataSource = remoteDataSource;
     }
@@ -25,10 +34,18 @@ public class UsersRepository {
         Log.i(TAG, "signupWithEmailAndPassword: finished");
     }
 
-    public void signInWithEmailAndPassword(String email, String password, OnLoginCallBack callBack) {
-        Log.i(TAG, "signInWithEmailAndPassword: started");
-        remoteDataSource.signInWithEmailAndPassword(email, password, callBack);
-        Log.i(TAG, "signInWithEmailAndPassword: finished");
+    public void loginWithEmailAndPassword(String email, String password, OnLoginCallBack callBack) {
+        Log.i(TAG, "loginWithEmailAndPassword: started");
+        remoteDataSource.loginWithEmailAndPassword(email, password, callBack);
+        Log.i(TAG, "loginWithEmailAndPassword: finished");
 
+    }
+
+    public Boolean isFirstTime() {
+        return localDataSource.isFirstTime();
+    }
+
+    public Boolean isLoggedIn() {
+        return localDataSource.isLoggedIn();
     }
 }

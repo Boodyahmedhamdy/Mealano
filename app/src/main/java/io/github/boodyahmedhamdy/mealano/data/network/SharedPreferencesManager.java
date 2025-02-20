@@ -34,7 +34,7 @@ public class SharedPreferencesManager {
         return sharedPreferences.getBoolean(IS_FIRST_TIME_FLAG, IS_FIRST_TIME_FLAG_DEFAULT_VALUE);
     }
 
-    public void updateIsFirstTime(boolean value) {
+    public void setIsFirstTime(boolean value) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(IS_FIRST_TIME_FLAG, value);
         editor.apply();

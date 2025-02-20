@@ -1,6 +1,5 @@
 package io.github.boodyahmedhamdy.mealano.login.view;
 
-import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
@@ -21,6 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 import io.github.boodyahmedhamdy.mealano.R;
+import io.github.boodyahmedhamdy.mealano.data.network.SharedPreferencesManager;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentLoginBinding;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
@@ -58,8 +58,11 @@ public class LoginFragment extends Fragment implements LoginView, OnLoginCallBac
 
         presenter = new LoginPresenter(
                 this,
-                new UsersRepository(
-                        new UsersLocalDataSource(),
+                UsersRepository.getInstance(
+                        new UsersLocalDataSource(
+                                SharedPreferencesManager.getInstance(getContext()),
+                                FirebaseAuth.getInstance()
+                        ),
                         new UsersRemoteDataSource(FirebaseAuth.getInstance())
                 )
         );
@@ -81,7 +84,7 @@ public class LoginFragment extends Fragment implements LoginView, OnLoginCallBac
             String password = binding.tietPassword.getText().toString();
 
             Log.i(TAG, "btn login clicked with " + email + " and " + password);
-            presenter.signUpWithEmailAndPassword(email, password, this);
+            presenter.loginWithEmailAndPassword(email, password, this);
             Log.i(TAG, "Line after presenter.signUpWithEmailAndPassword()");
 
         });
@@ -135,13 +138,23 @@ public class LoginFragment extends Fragment implements LoginView, OnLoginCallBac
                 .setTitle("error Sign in")
                 .setIcon(R.drawable.baseline_error_outline_24)
                 .setPositiveButton(
-                        "Positive", (dialog1, which) -> Log.i(TAG, "ok button clicked in dialog")
+                        "Positive", (dialog1, which) -> {
+                            Log.i(TAG, "ok button clicked in dialog");
+                            changeInProgress(false);
+                        }
+
                 )
                 .setNegativeButton(
-                        "Negative", (dialog1, which) -> Log.i(TAG, "negative button clicked")
+                        "Negative", (dialog1, which) -> {
+                            Log.i(TAG, "negative button clicked");
+                            changeInProgress(false);
+                        }
                 )
                 .setNeutralButton(
-                        "Neutral", (dialog1, which) -> Log.i(TAG, "Neutral button clicked")
+                        "Neutral", (dialog1, which) -> {
+                            Log.i(TAG, "Neutral button clicked");
+                            changeInProgress(false);
+                        }
                 )
                 .setMessage(errorMessage)
                 .create();

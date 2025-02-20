@@ -1,6 +1,5 @@
 package io.github.boodyahmedhamdy.mealano.signup.view;
 
-import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
@@ -13,19 +12,12 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
-import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.data.network.SharedPreferencesManager;
@@ -42,7 +34,6 @@ import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 public class SignupFragment extends Fragment implements SignupView, OnSignupCallback {
     private static final String TAG = "SignupFragment";
     FragmentSignupBinding binding;
-    SharedPreferencesManager sharedPreferencesManager;
     SignupPresenter presenter;
 
     @Override
@@ -64,13 +55,15 @@ public class SignupFragment extends Fragment implements SignupView, OnSignupCall
         UiUtils.hideBottomBar(requireActivity());
         presenter = new SignupPresenter(
                 this,
-                new UsersRepository(
-                        new UsersLocalDataSource(),
+                UsersRepository.getInstance(
+                        new UsersLocalDataSource(
+                                SharedPreferencesManager.getInstance(getContext()),
+                                FirebaseAuth.getInstance()
+                        ),
                         new UsersRemoteDataSource(FirebaseAuth.getInstance())
                 )
         );
 
-        sharedPreferencesManager = SharedPreferencesManager.getInstance(requireActivity());
 
         binding.tvGoToLogin.setOnClickListener(v -> {
             Navigation.findNavController(binding.getRoot()).navigate(

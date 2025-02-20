@@ -92,7 +92,7 @@
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/splashFragment"
-        android:name="io.github.boodyahmedhamdy.mealano.splash.SplashFragment"
+        android:name="io.github.boodyahmedhamdy.mealano.splash.view.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
