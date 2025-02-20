@@ -19,7 +19,9 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -68,9 +70,15 @@
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
-        android:name="io.github.boodyahmedhamdy.mealano.profile.ProfileFragment"
+        android:name="io.github.boodyahmedhamdy.mealano.profile.view.ProfileFragment"
         android:label="@string/profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/profileFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
     <fragment
         android:id="@+id/plansFragment"
         android:name="io.github.boodyahmedhamdy.mealano.plans.PlansFragment"

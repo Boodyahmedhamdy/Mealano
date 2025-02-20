@@ -138,7 +138,7 @@ public class SignupFragment extends Fragment implements SignupView, OnSignupCall
     @Override
     public void onFailure(String errorMessage) {
         AlertDialog dialog = new AlertDialog.Builder(binding.getRoot().getContext())
-                .setTitle("Error While Signing up")
+                .setTitle(R.string.error_happened)
                 .setMessage(errorMessage).create();
         dialog.show();
     }

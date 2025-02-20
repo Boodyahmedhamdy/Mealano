@@ -135,26 +135,15 @@ public class LoginFragment extends Fragment implements LoginView, OnLoginCallBac
     @Override
     public void onFailure(String errorMessage) {
         AlertDialog dialog = new AlertDialog.Builder(getContext())
-                .setTitle("error Sign in")
+                .setTitle(R.string.error_happened)
+                .setMessage(R.string.some_error_happend_while_logging_you_in_please_check_your_internet_connection_and_try_again)
                 .setIcon(R.drawable.baseline_error_outline_24)
                 .setPositiveButton(
-                        "Positive", (dialog1, which) -> {
+                        "Ok", (dialog1, which) -> {
                             Log.i(TAG, "ok button clicked in dialog");
                             changeInProgress(false);
                         }
 
-                )
-                .setNegativeButton(
-                        "Negative", (dialog1, which) -> {
-                            Log.i(TAG, "negative button clicked");
-                            changeInProgress(false);
-                        }
-                )
-                .setNeutralButton(
-                        "Neutral", (dialog1, which) -> {
-                            Log.i(TAG, "Neutral button clicked");
-                            changeInProgress(false);
-                        }
                 )
                 .setMessage(errorMessage)
                 .create();

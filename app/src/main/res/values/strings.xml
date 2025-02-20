@@ -28,4 +28,7 @@
     <string name="signup_description">enter email and password to let us know you</string>
     <string name="login_successfully">Login Successfully</string>
     <string name="signup_successfully">Signup Successfully</string>
+    <string name="signout">Signout</string>
+    <string name="some_error_happend_while_logging_you_in_please_check_your_internet_connection_and_try_again">some error happend while logging you in. please check your internet connection and try again</string>
+    <string name="error_happened">Error Happened</string>
 </resources>

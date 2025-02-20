@@ -2,9 +2,12 @@ package io.github.boodyahmedhamdy.mealano.datalayer.repos;
 
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseUser;
+
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.login.contract.OnLoginCallBack;
+import io.github.boodyahmedhamdy.mealano.profile.contract.OnSignOutCallback;
 import io.github.boodyahmedhamdy.mealano.signup.contract.OnSignupCallback;
 
 public class UsersRepository {
@@ -47,5 +50,15 @@ public class UsersRepository {
 
     public Boolean isLoggedIn() {
         return localDataSource.isLoggedIn();
+    }
+
+    public void signOut(OnSignOutCallback callback) {
+        Log.i(TAG, "signOut: started");
+        localDataSource.signOut(callback);
+        Log.i(TAG, "signOut: finished");
+    }
+
+    public FirebaseUser getCurrentUser() {
+        return localDataSource.getCurrentUser();
     }
 }
