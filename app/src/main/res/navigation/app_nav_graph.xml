@@ -43,7 +43,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="io.github.boodyahmedhamdy.mealano.home.HomeFragment"
+        android:name="io.github.boodyahmedhamdy.mealano.home.view.HomeFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_home">
         <action

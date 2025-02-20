@@ -1,4 +1,4 @@
-package io.github.boodyahmedhamdy.mealano.data.network;
+package io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote;
 
 import io.github.boodyahmedhamdy.mealano.data.network.dto.CategoriesResponse;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.IngredientsResponse;

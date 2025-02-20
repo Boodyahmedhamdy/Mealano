@@ -1,10 +1,7 @@
 package io.github.boodyahmedhamdy.mealano;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
@@ -16,18 +13,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import io.github.boodyahmedhamdy.mealano.data.network.MealsApi;
-import io.github.boodyahmedhamdy.mealano.data.network.MealsApiService;
-import io.github.boodyahmedhamdy.mealano.data.network.dto.CategoriesResponse;
-import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealsResponse;
-import io.github.boodyahmedhamdy.mealano.data.network.dto.IngredientsResponse;
-import io.github.boodyahmedhamdy.mealano.data.network.dto.SimpleAreasResponse;
-import io.github.boodyahmedhamdy.mealano.data.network.dto.SimpleCategoriesResponse;
-import io.github.boodyahmedhamdy.mealano.data.network.dto.SimpleMealsResponse;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
