@@ -26,4 +26,6 @@
     <string name="already_have_account">already have Account?</string>
     <string name="or_signup_using">Or Signup using</string>
     <string name="signup_description">enter email and password to let us know you</string>
+    <string name="login_successfully">Login Successfully</string>
+    <string name="signup_successfully">Signup Successfully</string>
 </resources>

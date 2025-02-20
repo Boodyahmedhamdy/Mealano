@@ -1,6 +1,7 @@
 package io.github.boodyahmedhamdy.mealano.signup.view;
 
 import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 import android.app.AlertDialog;
@@ -21,6 +22,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -94,10 +96,14 @@ public class SignupFragment extends Fragment implements SignupView, OnSignupCall
 
     private void changeInProgress(boolean inProgress) {
         if (inProgress) {
+            binding.getRoot().setAlpha(0.5f);
+            binding.pbSignup.setAlpha(1);
             binding.pbSignup.setVisibility(VISIBLE);
-            binding.btnSignup.setVisibility(GONE);
+            binding.btnSignup.setVisibility(INVISIBLE);
+
         } else {
-            binding.pbSignup.setVisibility(GONE);
+            binding.getRoot().setAlpha(1);
+            binding.pbSignup.setVisibility(INVISIBLE);
             binding.btnSignup.setVisibility(VISIBLE);
         }
     }
@@ -110,17 +116,17 @@ public class SignupFragment extends Fragment implements SignupView, OnSignupCall
 
     @Override
     public void setEmailValidationError(String errorMessage) {
-        binding.tietEmailSignupScreen.setError(errorMessage);
+        binding.tilEmailSignupScreen.setError(errorMessage);
     }
 
     @Override
     public void setPasswordValidationError(String errorMessage) {
-        binding.tietPasswordSignupScreen.setError(errorMessage);
+        binding.tilPasswordSignupScreen.setError(errorMessage);
     }
 
     @Override
     public void setConfirmPasswordValidationError(String errorMessage) {
-        binding.tietConfirmPasswordSignupScreen.setError(errorMessage);
+        binding.tilConfirmPasswordSignupScreen.setError(errorMessage);
     }
 
     @Override
@@ -131,6 +137,7 @@ public class SignupFragment extends Fragment implements SignupView, OnSignupCall
 
     @Override
     public void onSuccess() {
+        Snackbar.make(binding.getRoot(), R.string.signup_successfully, Snackbar.LENGTH_LONG).show();
         Navigation.findNavController(binding.getRoot()).
                 navigate(SignupFragmentDirections.actionSignupFragmentToHomeFragment());
     }

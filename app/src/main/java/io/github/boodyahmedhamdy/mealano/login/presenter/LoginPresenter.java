@@ -21,6 +21,7 @@ public class LoginPresenter {
     }
 
     public void signUpWithEmailAndPassword(String email, String password, OnLoginCallBack callBack) {
+        Log.i(TAG, "signUpWithEmailAndPassword: started");
         if(isValidInput(email, password)) {
             view.setIsLoading(true);
             view.setErrorMessage("");

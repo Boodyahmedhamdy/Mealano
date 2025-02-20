@@ -26,7 +26,9 @@ public class UsersRepository {
     }
 
     public void signInWithEmailAndPassword(String email, String password, OnLoginCallBack callBack) {
+        Log.i(TAG, "signInWithEmailAndPassword: started");
         remoteDataSource.signInWithEmailAndPassword(email, password, callBack);
+        Log.i(TAG, "signInWithEmailAndPassword: finished");
 
     }
 }

@@ -1,6 +1,7 @@
 package io.github.boodyahmedhamdy.mealano.login.view;
 
 import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 import android.app.AlertDialog;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 import io.github.boodyahmedhamdy.mealano.R;
@@ -78,8 +80,9 @@ public class LoginFragment extends Fragment implements LoginView, OnLoginCallBac
             String email = binding.tietEmail.getText().toString();
             String password = binding.tietPassword.getText().toString();
 
-
+            Log.i(TAG, "btn login clicked with " + email + " and " + password);
             presenter.signUpWithEmailAndPassword(email, password, this);
+            Log.i(TAG, "Line after presenter.signUpWithEmailAndPassword()");
 
         });
 
@@ -107,16 +110,20 @@ public class LoginFragment extends Fragment implements LoginView, OnLoginCallBac
     }
     private void changeInProgress(boolean inProgress) {
         if (inProgress) {
+            binding.getRoot().setAlpha(0.5f);
             binding.pbLogin.setVisibility(VISIBLE);
-            binding.btnLogin.setVisibility(GONE);
+            binding.pbLogin.setAlpha(1);
+            binding.btnLogin.setVisibility(INVISIBLE);
         } else {
-            binding.pbLogin.setVisibility(GONE);
+            binding.pbLogin.setVisibility(INVISIBLE);
             binding.btnLogin.setVisibility(VISIBLE);
+            binding.getRoot().setAlpha(1);
         }
     }
 
     @Override
     public void onSuccess() {
+        Snackbar.make(binding.getRoot(), R.string.login_successfully, Snackbar.LENGTH_LONG).show();
         navController.navigate(
                 LoginFragmentDirections.actionLoginFragmentToHomeFragment()
         );

@@ -41,13 +41,17 @@ public class UsersRemoteDataSource {
     }
 
     public void signInWithEmailAndPassword(String email, String password, OnLoginCallBack callBack) {
+        Log.i(TAG, "signInWithEmailAndPassword: started");
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                Log.i(TAG, "onComplete: completed");
                 if(task.isSuccessful()) {
                     callBack.onSuccess();
+                    Log.i(TAG, "onComplete: Completed Successfully");
                 } else {
                     callBack.onFailure(task.getException().getLocalizedMessage());
+                    Log.e(TAG, "onComplete: Completed with Error");
                 }
             }
         });
