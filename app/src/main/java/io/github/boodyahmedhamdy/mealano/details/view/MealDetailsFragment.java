@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +37,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
     private static final String TAG = "MealDetailsFragment";
     FragmentMealDetailsBinding binding;
+    IngredientsAndMeasurementsAdapter adapter;
     MealDetailsPresenter presenter;
 
 
@@ -61,9 +64,16 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
                         new MealsLocalDataSource(),
                         new MealsRemoteDataSource(MealsApi.getMealsApiService())
                 ));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        binding.rvIngredientsAndMeasurments.setLayoutManager(layoutManager);
+
+        adapter = new IngredientsAndMeasurementsAdapter(List.of());
+        binding.rvIngredientsAndMeasurments.setAdapter(adapter);
 
         Integer id = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealId();
         Log.i(TAG, "onViewCreated: id: " + id);
+
         presenter.getMealById(id);
 
     }
@@ -96,8 +106,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         List<SimpleIngredientAndMeasurement> ingredientAndMeasurements =
                 UiUtils.getIngredientsAndMeasurements(mealDTO);
 
-
-
+        adapter.setIngredientAndMeasurements(ingredientAndMeasurements);
 
         String youtubeUrl = UiUtils.transformYoutubeUrl(mealDTO.getStrYoutube());
         if(!youtubeUrl.isEmpty() || !youtubeUrl.equals(mealDTO.getStrYoutube())) {

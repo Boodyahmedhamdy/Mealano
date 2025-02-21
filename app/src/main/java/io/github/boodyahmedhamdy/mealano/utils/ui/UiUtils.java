@@ -5,6 +5,7 @@ import static android.view.View.VISIBLE;
 
 import androidx.fragment.app.FragmentActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -99,9 +100,14 @@ public class UiUtils {
                 mealDTO.getStrIngredient19(),
                 mealDTO.getStrIngredient20()
         );
-        List<SimpleIngredientAndMeasurement> components = List.of();
+        List<SimpleIngredientAndMeasurement> components = new ArrayList<>();
         for(int i = 0 ; i < ingredients.size() ; i++) {
-            if(ingredients.get(i) == null || measurements.get(i) == null) {
+            if(
+                    ingredients.get(i) == null
+                    || ingredients.get(i).isEmpty()
+                    || measurements.get(i) == null
+                    || measurements.get(i).isEmpty()
+            ) {
                 break;
             } else {
                 String bigImageUrl = getIngredientBigImageUrl(ingredients.get(i));

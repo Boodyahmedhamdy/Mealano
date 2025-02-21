@@ -83,6 +83,10 @@ public class HomeFragment extends Fragment implements HomeView, OnMealClickedLis
 
         presenter.getAllMeals();
 
+        binding.btnRefreshRandomMeal.setOnClickListener(v -> {
+            presenter.getRandomMeal();
+        });
+
 
     }
 

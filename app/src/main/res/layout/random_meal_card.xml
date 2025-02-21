@@ -34,10 +34,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/ivMealIsFavorite"
+            app:layout_constraintEnd_toStartOf="@+id/btnAddToFavoriteIcon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivMealThumbnail"
             tools:text="Three Fish Pie" />
@@ -68,16 +68,6 @@
             app:layout_constraintBottom_toBottomOf="@+id/tvMealArea"
             app:layout_constraintStart_toEndOf="@+id/tvMealCategory"
             app:layout_constraintTop_toTopOf="@+id/tvMealArea" />
-
-        <ImageView
-            android:id="@+id/ivMealIsFavorite"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/outline_favorite_border_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivMealThumbnail" />
 
         <Button
             android:id="@+id/btnMealAddToPlan"
@@ -114,5 +104,18 @@
             android:text="Tags"
             app:layout_constraintStart_toStartOf="@+id/tvMealCategory"
             app:layout_constraintTop_toBottomOf="@+id/tvMealCategory" />
+
+        <Button
+            android:id="@+id/btnAddToFavoriteIcon"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:icon="@drawable/outline_favorite_border_24"
+            app:iconSize="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvMealTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvMealTitle" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

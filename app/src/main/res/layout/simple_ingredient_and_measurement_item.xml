@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/ivIngredient"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginStart="16dp"
@@ -25,26 +25,26 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/textView15"
+            android:id="@+id/tvIngredient"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView6"
-            app:layout_constraintStart_toStartOf="@+id/imageView6"
-            app:layout_constraintTop_toBottomOf="@+id/imageView6"
+            app:layout_constraintEnd_toEndOf="@+id/ivIngredient"
+            app:layout_constraintStart_toStartOf="@+id/ivIngredient"
+            app:layout_constraintTop_toBottomOf="@+id/ivIngredient"
             tools:text="Tomato" />
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/tvMeasurement"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/imageView6"
-            app:layout_constraintStart_toStartOf="@+id/imageView6"
-            app:layout_constraintTop_toBottomOf="@+id/textView15"
+            app:layout_constraintEnd_toEndOf="@+id/ivIngredient"
+            app:layout_constraintStart_toStartOf="@+id/ivIngredient"
+            app:layout_constraintTop_toBottomOf="@+id/tvIngredient"
             tools:text="3 Cups" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
