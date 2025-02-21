@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="0dp"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="16dp"
     android:layout_marginTop="16dp"
@@ -22,20 +22,22 @@
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/second_onboarding_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/splash_background_image" />
 
         <TextView
             android:id="@+id/tvMealTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:textSize="24sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/ivMealIsFavorite"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivMealThumbnail"
             tools:text="Three Fish Pie" />
@@ -60,10 +62,9 @@
 
         <ImageView
             android:id="@+id/ivMealArea"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/england_meduim"
             app:layout_constraintBottom_toBottomOf="@+id/tvMealArea"
             app:layout_constraintStart_toEndOf="@+id/tvMealCategory"
             app:layout_constraintTop_toTopOf="@+id/tvMealArea" />
@@ -86,7 +87,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
-            android:text="Button"
+            android:text="Add To Plan"
+            app:icon="@drawable/baseline_edit_calendar_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivMealArea"
@@ -96,38 +98,21 @@
             android:id="@+id/cgMealTags"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnMealAddToPlan"
             app:layout_constraintStart_toStartOf="@+id/tvMealCategory"
-            app:layout_constraintTop_toBottomOf="@+id/tvMealCategory"
-            app:singleLine="false">
+            app:layout_constraintTop_toBottomOf="@+id/tvMealTags"
+            app:singleLine="false" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Seafood" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Dairy" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Fish" />
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Pie" />
-        </com.google.android.material.chip.ChipGroup>
+        <TextView
+            android:id="@+id/tvMealTags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Tags"
+            app:layout_constraintStart_toStartOf="@+id/tvMealCategory"
+            app:layout_constraintTop_toBottomOf="@+id/tvMealCategory" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
