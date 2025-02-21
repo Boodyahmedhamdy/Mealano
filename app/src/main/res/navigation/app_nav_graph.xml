@@ -90,7 +90,7 @@
     </fragment>
     <fragment
         android:id="@+id/mealDetailsFragment"
-        android:name="io.github.boodyahmedhamdy.mealano.details.MealDetailsFragment"
+        android:name="io.github.boodyahmedhamdy.mealano.details.view.MealDetailsFragment"
         android:label="@string/meal_details"
         tools:layout="@layout/fragment_meal_details" >
         <argument
