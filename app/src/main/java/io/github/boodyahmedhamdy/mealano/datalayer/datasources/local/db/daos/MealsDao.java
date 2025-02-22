@@ -22,7 +22,7 @@ public interface MealsDao {
 
 
     @Delete
-    void deleteMealById(MealEntity mealEntity);
+    void deleteMeal(MealEntity mealEntity);
 
 
 

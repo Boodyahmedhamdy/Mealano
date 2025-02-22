@@ -1,21 +1,28 @@
 package io.github.boodyahmedhamdy.mealano.home.presenter;
 
+import android.util.Log;
+
 import java.util.Collections;
 import java.util.List;
 
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.home.contract.HomeView;
+import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
 import io.github.boodyahmedhamdy.mealano.utils.network.CustomNetworkCallback;
 
 public class HomePresenter {
+    private static final String TAG = "HomePresenter";
 
-    MealsRepository mealsRepository;
     HomeView view;
+    MealsRepository mealsRepository;
+    UsersRepository usersRepository;
 
-    public HomePresenter(HomeView view, MealsRepository mealsRepository) {
-        this.mealsRepository = mealsRepository;
+    public HomePresenter(HomeView view, MealsRepository mealsRepository, UsersRepository usersRepository) {
         this.view = view;
+        this.mealsRepository = mealsRepository;
+        this.usersRepository = usersRepository;
     }
 
     public void getRandomMeal() {
@@ -65,6 +72,24 @@ public class HomePresenter {
                 view.setError(errorMessage);
             }
         });
+    }
+
+    public void addMealToFavorite(DetailedMealDTO mealDTO) {
+        mealsRepository.addMealToFavorite(
+                mealDTO, usersRepository.getCurrentUser().getUid(),
+                new CustomCallback<DetailedMealDTO>() {
+                    @Override
+                    public void onSuccess(DetailedMealDTO data) {
+                        Log.i(TAG, "onSuccess: ");
+                        view.setSuccessfullyAddedToFavorite(data);
+                    }
+
+                    @Override
+                    public void onFailure(String errorMessage) {
+                        Log.i(TAG, "onFailure: ");
+                    }
+                }
+        );
     }
 
 

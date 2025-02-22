@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -32,6 +33,11 @@ public class FavoriteMealsAdapter extends RecyclerView.Adapter<FavoriteMealsAdap
         this.onClickListener = onClickListener;
     }
 
+    public void setList(List<MealEntity> favoriteMeals) {
+        this.favoriteMeals = favoriteMeals;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public FavoriteMealViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,6 +54,7 @@ public class FavoriteMealsAdapter extends RecyclerView.Adapter<FavoriteMealsAdap
                 .load(meal.mealDTO.getStrMealThumb())
                 .error(R.drawable.baseline_broken_image_24)
                 .placeholder(R.drawable.loading)
+                .apply(RequestOptions.circleCropTransform())
                 .into(holder.binding.ivFavMealThumb);
         holder.binding.tvFavMealTitle.setText(meal.mealDTO.getStrMeal());
         holder.binding.tvFavMealCategory.setText(meal.mealDTO.getStrCategory());

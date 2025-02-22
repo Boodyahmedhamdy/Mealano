@@ -2,11 +2,16 @@ package io.github.boodyahmedhamdy.mealano.datalayer.repos;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+
 import java.util.List;
 
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.MealsLocalDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.MealEntity;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
+import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
+import io.github.boodyahmedhamdy.mealano.utils.callbacks.EmptyCallback;
 import io.github.boodyahmedhamdy.mealano.utils.network.CustomNetworkCallback;
 
 public class MealsRepository {
@@ -42,9 +47,17 @@ public class MealsRepository {
         remoteDataSource.getMealById(mealId, callback);
     }
 
-    public void addMealToFavorite(DetailedMealDTO mealDTO, String userId) {
+    public void addMealToFavorite(DetailedMealDTO mealDTO, String userId, CustomCallback<DetailedMealDTO> callback) {
         Log.i(TAG, "addMealToFavorite: started");
-        localDataSource.addMealToFavorite(mealDTO, userId);
+        localDataSource.addMealToFavorite(mealDTO, userId, callback);
         Log.i(TAG, "addMealToFavorite: finished");
+    }
+
+    public LiveData<List<MealEntity>> getFavoriteMeals(String userId) {
+        return localDataSource.getFavoriteMeals(userId);
+    }
+
+    public void deleteFavoriteMeal(MealEntity meal) {
+        localDataSource.deleteFavoriteMeal(meal);
     }
 }

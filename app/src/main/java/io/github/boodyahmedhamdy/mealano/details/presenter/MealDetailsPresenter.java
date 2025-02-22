@@ -7,6 +7,8 @@ import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.details.contract.IMealDetailsPresenter;
 import io.github.boodyahmedhamdy.mealano.details.contract.MealDetailsView;
+import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
+import io.github.boodyahmedhamdy.mealano.utils.callbacks.EmptyCallback;
 import io.github.boodyahmedhamdy.mealano.utils.network.CustomNetworkCallback;
 
 public class MealDetailsPresenter implements IMealDetailsPresenter {
@@ -46,7 +48,18 @@ public class MealDetailsPresenter implements IMealDetailsPresenter {
 
     public void addMealToFavorite(DetailedMealDTO mealDTO) {
         Log.i(TAG, "addMealToFavorite: started adding to favorite");
-        mealsRepository.addMealToFavorite(mealDTO, usersRepository.getCurrentUser().getUid());
+        mealsRepository.addMealToFavorite(mealDTO, usersRepository.getCurrentUser().getUid(), new CustomCallback<DetailedMealDTO>() {
+
+            @Override
+            public void onSuccess(DetailedMealDTO mealDTO) {
+                view.setSuccessfullyAddedToFavorite(mealDTO);
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+                Log.i(TAG, "onFailure: ");
+            }
+        });
         Log.i(TAG, "addMealToFavorite: finished adding to favorite");
     }
 }

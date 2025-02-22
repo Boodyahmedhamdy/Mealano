@@ -24,11 +24,25 @@ import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 public class DetailedMealsAdapter extends RecyclerView.Adapter<DetailedMealsAdapter.DetailedMealViewHolder> {
     private static final String TAG = "DetailedMealsAdapter";
     List<DetailedMealDTO> meals;
-    CustomClickListener<Integer> listener;
+    CustomClickListener<Integer> onClickListener;
+    CustomClickListener<DetailedMealDTO> onAddToPlanClickListener;
+    CustomClickListener<DetailedMealDTO> onLoveClickListener;
 
-    public DetailedMealsAdapter(List<DetailedMealDTO> meals, CustomClickListener<Integer> listener) {
+    public DetailedMealsAdapter(
+            List<DetailedMealDTO> meals,
+            CustomClickListener<Integer> onClickListener,
+            CustomClickListener<DetailedMealDTO> onAddToPlanClickListener,
+            CustomClickListener<DetailedMealDTO> onLoveClickListener
+    ) {
         this.meals = meals;
-        this.listener = listener;
+        this.onClickListener = onClickListener;
+        this.onAddToPlanClickListener = onAddToPlanClickListener;
+        this.onLoveClickListener = onLoveClickListener;
+    }
+
+    public DetailedMealsAdapter(List<DetailedMealDTO> meals, CustomClickListener<Integer> onClickListener) {
+        this.meals = meals;
+        this.onClickListener = onClickListener;
         Log.i(TAG, "DetailedMealsAdapter: current meals size: " + meals.size() );
     }
 
@@ -50,7 +64,7 @@ public class DetailedMealsAdapter extends RecyclerView.Adapter<DetailedMealsAdap
     public void onBindViewHolder(@NonNull DetailedMealViewHolder holder, int position) {
         DetailedMealDTO meal = meals.get(position);
         holder.binding.getRoot().setOnClickListener(v -> {
-            listener.onClick(Integer.valueOf(meal.getIdMeal()));
+            onClickListener.onClick(Integer.valueOf(meal.getIdMeal()));
         });
         holder.binding.tvMealTitle.setText(meal.getStrMeal());
         holder.binding.tvMealArea.setText(meal.getStrArea());
@@ -65,6 +79,19 @@ public class DetailedMealsAdapter extends RecyclerView.Adapter<DetailedMealsAdap
                 .placeholder(R.drawable.loading)
                 .into(holder.binding.ivMealThumbnail);
         holder.binding.tvMealTags.setVisibility(INVISIBLE);
+
+        // favorite button
+        holder.binding.btnAddToFavoriteIcon.setOnClickListener(v -> {
+            Log.i(TAG, "clicked on favorite button in meal: " + meal.getStrMeal());
+            onLoveClickListener.onClick(meal);
+        });
+
+        // add to plan
+        holder.binding.btnMealAddToPlan.setOnClickListener(v -> {
+            Log.i(TAG, "clicked on add to plan button in meal: " + meal.getStrMeal());
+            onAddToPlanClickListener.onClick(meal);
+        });
+
 
 //        List<String> tags = meal.getStrTags() == null ? List.of() : Arrays.asList(
 //                meal.getStrTags().toString().split(",")

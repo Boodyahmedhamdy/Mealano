@@ -20,6 +20,8 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,10 +30,14 @@ import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentHomeBinding;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.MealsLocalDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.SharedPreferencesManager;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.MealanoDatabase;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsApi;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.home.contract.HomeView;
 import io.github.boodyahmedhamdy.mealano.home.presenter.HomePresenter;
 import io.github.boodyahmedhamdy.mealano.utils.listeners.CustomClickListener;
@@ -69,18 +75,22 @@ public class HomeFragment extends Fragment implements HomeView{
                 this, MealsRepository.getInstance(
                         new MealsLocalDataSource(MealanoDatabase.getInstance(requireContext()).mealsDao()),
                         new MealsRemoteDataSource(MealsApi.getMealsApiService())
+                ),
+                UsersRepository.getInstance(
+                        new UsersLocalDataSource(SharedPreferencesManager.getInstance(requireContext()), FirebaseAuth.getInstance()),
+                        new UsersRemoteDataSource(FirebaseAuth.getInstance())
                 )
         );
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         binding.rvAllMeals.setLayoutManager(layoutManager);
-        adapter = new DetailedMealsAdapter(List.of(), new CustomClickListener<Integer>() {
-            @Override
-            public void onClick(Integer mealId) {
-                presenter.getMealById(mealId);
-            }
-        });
+        adapter = new DetailedMealsAdapter(
+                List.of(),
+                mealId -> {presenter.getMealById(mealId);},
+                data -> { },
+                mealDTO -> { presenter.addMealToFavorite(mealDTO); }
+        );
         binding.rvAllMeals.setAdapter(adapter);
 
 
@@ -122,6 +132,20 @@ public class HomeFragment extends Fragment implements HomeView{
             chip.setText(tag);
             binding.randomCard.cgMealTags.addView(chip);
         });
+
+        // favorite button
+        binding.randomCard.btnAddToFavoriteIcon.setOnClickListener(v -> {
+            Log.i(TAG, "clicked on favorite button onRandom meal in meal: " + detailedMealDTO.getStrMeal());
+            presenter.addMealToFavorite(detailedMealDTO);
+        });
+
+        // add to plan
+        binding.randomCard.btnMealAddToPlan.setOnClickListener(v -> {
+            Log.i(TAG, "clicked on add to plan button onRandome in meal: " + detailedMealDTO.getStrMeal());
+//            onAddToPlanClickListener.onClick(meal);
+
+        });
+
     }
 
     @Override
@@ -160,6 +184,15 @@ public class HomeFragment extends Fragment implements HomeView{
     @Override
     public void setIsOnline(Boolean isOnline) {
         Log.i(TAG, "setIsOnline: isonline: " + isOnline);
+    }
+
+    @Override
+    public void setSuccessfullyAddedToFavorite(DetailedMealDTO mealDTO) {
+        Snackbar.make(
+                binding.getRoot(),
+                "added " + mealDTO.getStrMeal() + " Successfully to Favorite",
+                Snackbar.LENGTH_LONG).show();
+
     }
 
 }

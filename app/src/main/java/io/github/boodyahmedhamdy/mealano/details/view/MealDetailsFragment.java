@@ -20,6 +20,7 @@ import android.webkit.WebChromeClient;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
@@ -173,5 +174,16 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     @Override
     public void setIsOnline(Boolean isOnline) {
 
+    }
+
+    @Override
+    public void setSuccessfullyAddedToFavorite(DetailedMealDTO mealDTO) {
+        Snackbar.make(
+                binding.getRoot(),
+                "added " + mealDTO.getStrMeal() + " Successfully to Favorite",
+                Snackbar.LENGTH_LONG).show();
+        binding.btnAddToFavoriteDetail.setText("Saved to Favorite");
+        binding.btnAddToFavoriteDetail.setEnabled(false);
+//        binding.btnAddToFavoriteDetail.setVisibility(INVISIBLE);
     }
 }

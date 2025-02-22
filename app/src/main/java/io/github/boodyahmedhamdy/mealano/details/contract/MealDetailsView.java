@@ -10,4 +10,5 @@ public interface MealDetailsView {
     void setIsOnline(Boolean isOnline);
 
 
+    void setSuccessfullyAddedToFavorite(DetailedMealDTO mealDTO);
 }
