@@ -11,4 +11,7 @@ public interface HomeView {
     void goToMeal(Integer mealId);
 
     void setError(String errorMessage);
+
+    void setIsLoading(Boolean isLoading);
+    void setIsOnline(Boolean isOnline);
 }

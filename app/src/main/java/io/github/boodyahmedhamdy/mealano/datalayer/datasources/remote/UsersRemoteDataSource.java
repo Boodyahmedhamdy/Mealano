@@ -9,8 +9,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import io.github.boodyahmedhamdy.mealano.login.contract.OnLoginCallBack;
-import io.github.boodyahmedhamdy.mealano.signup.contract.OnSignupCallback;
+import io.github.boodyahmedhamdy.mealano.utils.network.EmptyNetworkCallback;
 
 public class UsersRemoteDataSource {
     private static final String TAG = "UsersRemoteDataSource";
@@ -21,7 +20,7 @@ public class UsersRemoteDataSource {
         this.firebaseAuth = firebaseAuth;
     }
 
-    public void signupWithEmailAndPassword(String email, String password, OnSignupCallback callback) {
+    public void signupWithEmailAndPassword(String email, String password, EmptyNetworkCallback callback) {
         Log.i(TAG, "signupWithEmailAndPassword: started");
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
                 new OnCompleteListener<AuthResult>() {
@@ -40,7 +39,7 @@ public class UsersRemoteDataSource {
         );
     }
 
-    public void loginWithEmailAndPassword(String email, String password, OnLoginCallBack callBack) {
+    public void loginWithEmailAndPassword(String email, String password, EmptyNetworkCallback callBack) {
         Log.i(TAG, "loginWithEmailAndPassword: started");
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

@@ -1,5 +1,8 @@
 package io.github.boodyahmedhamdy.mealano.home.view;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
 
@@ -20,7 +23,6 @@ import com.google.android.material.chip.Chip;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
@@ -30,15 +32,12 @@ import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsApi;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
 import io.github.boodyahmedhamdy.mealano.home.contract.HomeView;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnAllMealsReceivedCallback;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnMealClickedCallback;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnMealClickedListener;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnRandomMealReceivedCallback;
 import io.github.boodyahmedhamdy.mealano.home.presenter.HomePresenter;
+import io.github.boodyahmedhamdy.mealano.utils.listeners.CustomClickListener;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 
-public class HomeFragment extends Fragment implements HomeView, OnMealClickedListener{
+public class HomeFragment extends Fragment implements HomeView{
     private static final String TAG = "HomeFragment";
     FragmentHomeBinding binding;
     HomePresenter presenter;
@@ -75,7 +74,12 @@ public class HomeFragment extends Fragment implements HomeView, OnMealClickedLis
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         binding.rvAllMeals.setLayoutManager(layoutManager);
-        adapter = new DetailedMealsAdapter(List.of(), this);
+        adapter = new DetailedMealsAdapter(List.of(), new CustomClickListener<Integer>() {
+            @Override
+            public void onClick(Integer mealId) {
+                presenter.getMealById(mealId);
+            }
+        });
         binding.rvAllMeals.setAdapter(adapter);
 
 
@@ -90,11 +94,10 @@ public class HomeFragment extends Fragment implements HomeView, OnMealClickedLis
 
     }
 
-
     @Override
     public void setRandomMeal(DetailedMealDTO detailedMealDTO) {
         binding.randomCard.getRoot().setOnClickListener(v -> {
-            onClick(Integer.valueOf(detailedMealDTO.getIdMeal()));
+            presenter.getMealById(Integer.valueOf(detailedMealDTO.getIdMeal()));
         });
         binding.randomCard.tvMealTitle.setText(detailedMealDTO.getStrMeal());
         binding.randomCard.tvMealArea.setText(detailedMealDTO.getStrArea());
@@ -140,7 +143,22 @@ public class HomeFragment extends Fragment implements HomeView, OnMealClickedLis
     }
 
     @Override
-    public void onClick(Integer mealId) {
-        presenter.getMealById(mealId);
+    public void setIsLoading(Boolean isLoading) {
+        if(isLoading) {
+            binding.getRoot().setAlpha(0.5f);
+            binding.pbHomeScreen.setVisibility(VISIBLE);
+            binding.pbHomeScreen.setAlpha(1);
+            Log.i(TAG, "setIsLoading: isLoading: " + isLoading);
+        } else {
+            binding.getRoot().setAlpha(1);
+            binding.pbHomeScreen.setVisibility(INVISIBLE);
+            Log.i(TAG, "setIsLoading: isLoading: " + isLoading);
+        }
     }
+
+    @Override
+    public void setIsOnline(Boolean isOnline) {
+        Log.i(TAG, "setIsOnline: isonline: " + isOnline);
+    }
+
 }

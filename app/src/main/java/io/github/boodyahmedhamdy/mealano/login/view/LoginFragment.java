@@ -26,11 +26,10 @@ import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalD
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.login.contract.LoginView;
-import io.github.boodyahmedhamdy.mealano.login.contract.OnLoginCallBack;
 import io.github.boodyahmedhamdy.mealano.login.presenter.LoginPresenter;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
-public class LoginFragment extends Fragment implements LoginView, OnLoginCallBack {
+public class LoginFragment extends Fragment implements LoginView {
     private static final String TAG = "LoginFragment";
     FragmentLoginBinding binding;
     NavController navController;
@@ -84,7 +83,7 @@ public class LoginFragment extends Fragment implements LoginView, OnLoginCallBac
             String password = binding.tietPassword.getText().toString();
 
             Log.i(TAG, "btn login clicked with " + email + " and " + password);
-            presenter.loginWithEmailAndPassword(email, password, this);
+            presenter.loginWithEmailAndPassword(email, password);
             Log.i(TAG, "Line after presenter.signUpWithEmailAndPassword()");
 
         });
@@ -94,7 +93,21 @@ public class LoginFragment extends Fragment implements LoginView, OnLoginCallBac
 
     @Override
     public void setErrorMessage(String errorMessage) {
+        Log.e(TAG, "setErrorMessage: " + errorMessage);
         binding.tvLoginError.setText(errorMessage);
+        AlertDialog dialog = new AlertDialog.Builder(getContext())
+                .setTitle(R.string.error_happened)
+                .setMessage(R.string.some_error_happend_while_logging_you_in_please_check_your_internet_connection_and_try_again)
+                .setIcon(R.drawable.baseline_error_outline_24)
+                .setPositiveButton(
+                        "Ok", (dialog1, which) -> {
+                            Log.i(TAG, "ok button clicked in dialog");
+                            changeInProgress(false);
+                        }
+                )
+                .setMessage(errorMessage)
+                .create();
+        dialog.show();
     }
 
     @Override
@@ -111,6 +124,15 @@ public class LoginFragment extends Fragment implements LoginView, OnLoginCallBac
     public void setIsLoading(Boolean isLoading) {
         changeInProgress(isLoading);
     }
+
+    @Override
+    public void goToHomeScreen() {
+        Snackbar.make(binding.getRoot(), R.string.login_successfully, Snackbar.LENGTH_LONG).show();
+        navController.navigate(
+                LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+        );
+    }
+
     private void changeInProgress(boolean inProgress) {
         if (inProgress) {
             binding.getRoot().setAlpha(0.5f);
@@ -124,30 +146,5 @@ public class LoginFragment extends Fragment implements LoginView, OnLoginCallBac
         }
     }
 
-    @Override
-    public void onSuccess() {
-        Snackbar.make(binding.getRoot(), R.string.login_successfully, Snackbar.LENGTH_LONG).show();
-        navController.navigate(
-                LoginFragmentDirections.actionLoginFragmentToHomeFragment()
-        );
-    }
 
-    @Override
-    public void onFailure(String errorMessage) {
-        AlertDialog dialog = new AlertDialog.Builder(getContext())
-                .setTitle(R.string.error_happened)
-                .setMessage(R.string.some_error_happend_while_logging_you_in_please_check_your_internet_connection_and_try_again)
-                .setIcon(R.drawable.baseline_error_outline_24)
-                .setPositiveButton(
-                        "Ok", (dialog1, which) -> {
-                            Log.i(TAG, "ok button clicked in dialog");
-                            changeInProgress(false);
-                        }
-
-                )
-                .setMessage(errorMessage)
-                .create();
-        dialog.show();
-
-    }
 }

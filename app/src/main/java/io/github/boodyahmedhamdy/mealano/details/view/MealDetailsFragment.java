@@ -1,5 +1,8 @@
 package io.github.boodyahmedhamdy.mealano.details.view;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -132,7 +135,16 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
     @Override
     public void setIsLoading(Boolean isLoading) {
-
+        if(isLoading) {
+            binding.getRoot().setAlpha(0.5f);
+            binding.pbDetailsScreen.setVisibility(VISIBLE);
+            binding.pbDetailsScreen.setAlpha(1);
+            Log.i(TAG, "setIsLoading: isLoading: " + isLoading);
+        } else {
+            binding.getRoot().setAlpha(1);
+            binding.pbDetailsScreen.setVisibility(INVISIBLE);
+            Log.i(TAG, "setIsLoading: isLoading: " + isLoading);
+        }
     }
 
     @Override

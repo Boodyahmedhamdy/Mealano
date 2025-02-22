@@ -7,4 +7,6 @@ public interface SignupView {
     void setPasswordValidationError(String errorMessage);
     void setConfirmPasswordValidationError(String errorMessage);
     void setErrorMessage(String errorMessage);
+
+    void goToHomeScreen();
 }

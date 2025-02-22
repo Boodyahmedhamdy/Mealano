@@ -8,7 +8,7 @@ import android.util.Patterns;
 
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.login.contract.LoginView;
-import io.github.boodyahmedhamdy.mealano.login.contract.OnLoginCallBack;
+import io.github.boodyahmedhamdy.mealano.utils.network.EmptyNetworkCallback;
 
 public class LoginPresenter {
     private static final String TAG = "LoginPresenter";
@@ -20,12 +20,21 @@ public class LoginPresenter {
         this.usersRepository = usersRepository;
     }
 
-    public void loginWithEmailAndPassword(String email, String password, OnLoginCallBack callBack) {
+    public void loginWithEmailAndPassword(String email, String password) {
         Log.i(TAG, "signUpWithEmailAndPassword: started");
         if(isValidInput(email, password)) {
             view.setIsLoading(true);
-            view.setErrorMessage("");
-            usersRepository.loginWithEmailAndPassword(email, password, callBack);
+            usersRepository.loginWithEmailAndPassword(email, password, new EmptyNetworkCallback() {
+                @Override
+                public void onSuccess() {
+                    view.goToHomeScreen();
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    view.setErrorMessage(errorMessage);
+                }
+            });
         } else {
             view.setErrorMessage("input isn't valid");
             view.setIsLoading(false);

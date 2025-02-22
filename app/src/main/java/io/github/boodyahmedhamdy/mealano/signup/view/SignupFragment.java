@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -25,16 +26,16 @@ import io.github.boodyahmedhamdy.mealano.databinding.FragmentSignupBinding;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
-import io.github.boodyahmedhamdy.mealano.signup.contract.OnSignupCallback;
 import io.github.boodyahmedhamdy.mealano.signup.contract.SignupView;
 import io.github.boodyahmedhamdy.mealano.signup.presenter.SignupPresenter;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 
-public class SignupFragment extends Fragment implements SignupView, OnSignupCallback {
+public class SignupFragment extends Fragment implements SignupView {
     private static final String TAG = "SignupFragment";
     FragmentSignupBinding binding;
     SignupPresenter presenter;
+    NavController navController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,15 +64,16 @@ public class SignupFragment extends Fragment implements SignupView, OnSignupCall
                         new UsersRemoteDataSource(FirebaseAuth.getInstance())
                 )
         );
+        navController = Navigation.findNavController(view);
 
 
         binding.tvGoToLogin.setOnClickListener(v -> {
-            Navigation.findNavController(binding.getRoot()).navigate(
+            navController.navigate(
                     SignupFragmentDirections.actionSignupFragmentToLoginFragment()
             );
         });
         binding.btnContinueAsGuest.setOnClickListener(v -> {
-            Navigation.findNavController(binding.getRoot()).navigate(
+            navController.navigate(
                     SignupFragmentDirections.actionSignupFragmentToHomeFragment()
             );
         });
@@ -81,7 +83,7 @@ public class SignupFragment extends Fragment implements SignupView, OnSignupCall
             String confirmPassword = binding.tietConfirmPasswordSignupScreen.getText().toString();
             Log.i(TAG, "onViewCreated: clicked on signup Button from SignupFragment");
 
-            presenter.signupWithEmailAndPassword(email, password, confirmPassword, this);
+            presenter.signupWithEmailAndPassword(email, password, confirmPassword);
             Log.i(TAG, "onViewCreated: line after presenter.signupWithEmailAndPassword");
 
         });
@@ -126,20 +128,17 @@ public class SignupFragment extends Fragment implements SignupView, OnSignupCall
     public void setErrorMessage(String errorMessage) {
         Log.e(TAG, "setErrorMessage: " + errorMessage);
         binding.tvError.setText(errorMessage);
-    }
-
-    @Override
-    public void onSuccess() {
-        Snackbar.make(binding.getRoot(), R.string.signup_successfully, Snackbar.LENGTH_LONG).show();
-        Navigation.findNavController(binding.getRoot()).
-                navigate(SignupFragmentDirections.actionSignupFragmentToHomeFragment());
-    }
-
-    @Override
-    public void onFailure(String errorMessage) {
         AlertDialog dialog = new AlertDialog.Builder(binding.getRoot().getContext())
                 .setTitle(R.string.error_happened)
                 .setMessage(errorMessage).create();
         dialog.show();
     }
+
+    @Override
+    public void goToHomeScreen() {
+        Snackbar.make(binding.getRoot(), R.string.signup_successfully, Snackbar.LENGTH_LONG).show();
+        Navigation.findNavController(binding.getRoot()).
+                navigate(SignupFragmentDirections.actionSignupFragmentToHomeFragment());
+    }
+
 }

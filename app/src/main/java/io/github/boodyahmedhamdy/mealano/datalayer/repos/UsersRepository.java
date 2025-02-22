@@ -6,9 +6,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
-import io.github.boodyahmedhamdy.mealano.login.contract.OnLoginCallBack;
 import io.github.boodyahmedhamdy.mealano.profile.contract.OnSignOutCallback;
-import io.github.boodyahmedhamdy.mealano.signup.contract.OnSignupCallback;
+import io.github.boodyahmedhamdy.mealano.utils.network.EmptyNetworkCallback;
 
 public class UsersRepository {
 
@@ -31,13 +30,13 @@ public class UsersRepository {
         this.remoteDataSource = remoteDataSource;
     }
 
-    public void signupWithEmailAndPassword(String email, String password, OnSignupCallback callback) {
+    public void signupWithEmailAndPassword(String email, String password, EmptyNetworkCallback callback) {
         Log.i(TAG, "signupWithEmailAndPassword: started");
         remoteDataSource.signupWithEmailAndPassword(email, password, callback);
         Log.i(TAG, "signupWithEmailAndPassword: finished");
     }
 
-    public void loginWithEmailAndPassword(String email, String password, OnLoginCallBack callBack) {
+    public void loginWithEmailAndPassword(String email, String password, EmptyNetworkCallback callBack) {
         Log.i(TAG, "loginWithEmailAndPassword: started");
         remoteDataSource.loginWithEmailAndPassword(email, password, callBack);
         Log.i(TAG, "loginWithEmailAndPassword: finished");

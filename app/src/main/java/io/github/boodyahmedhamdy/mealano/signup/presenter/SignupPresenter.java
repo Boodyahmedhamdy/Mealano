@@ -6,8 +6,8 @@ import android.util.Log;
 import android.util.Patterns;
 
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
-import io.github.boodyahmedhamdy.mealano.signup.contract.OnSignupCallback;
 import io.github.boodyahmedhamdy.mealano.signup.contract.SignupView;
+import io.github.boodyahmedhamdy.mealano.utils.network.EmptyNetworkCallback;
 
 public class SignupPresenter {
 
@@ -23,13 +23,21 @@ public class SignupPresenter {
     }
 
     public void signupWithEmailAndPassword(
-            String email, String password, String confirmPassword,
-            OnSignupCallback callback
-    ) {
+            String email, String password, String confirmPassword) {
         Log.i(TAG, "signupWithEmailAndPassword: started");
         if(isValidInput(email, password, confirmPassword)) {
             view.setIsLoading(true);
-            usersRepository.signupWithEmailAndPassword(email, password, callback);
+            usersRepository.signupWithEmailAndPassword(email, password, new EmptyNetworkCallback() {
+                @Override
+                public void onSuccess() {
+                    view.goToHomeScreen();
+                }
+
+                @Override
+                public void onFailure(String errorMessage) {
+                    view.setErrorMessage(errorMessage);
+                }
+            });
         } else {
             view.setErrorMessage("Some error happend. input isn't valid");
         }

@@ -6,9 +6,8 @@ import java.util.List;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
 import io.github.boodyahmedhamdy.mealano.home.contract.HomeView;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnAllMealsReceivedCallback;
 import io.github.boodyahmedhamdy.mealano.home.contract.OnMealClickedCallback;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnRandomMealReceivedCallback;
+import io.github.boodyahmedhamdy.mealano.utils.network.CustomNetworkCallback;
 
 public class HomePresenter {
 
@@ -21,37 +20,42 @@ public class HomePresenter {
     }
 
     public void getRandomMeal() {
-        mealsRepository.getRandomMeal(new OnRandomMealReceivedCallback() {
+        view.setIsLoading(true);
+        mealsRepository.getRandomMeal(new CustomNetworkCallback<DetailedMealDTO>() {
             @Override
             public void onSuccess(DetailedMealDTO detailedMealDTO) {
                 view.setRandomMeal(detailedMealDTO);
-
+                view.setIsLoading(false);
             }
 
             @Override
             public void onFailure(String errorMessage) {
                 view.setError(errorMessage);
+                view.setIsLoading(false);
             }
         });
     }
 
     public void getAllMeals() {
-        mealsRepository.getAllMeals(new OnAllMealsReceivedCallback() {
+        view.setIsLoading(true);
+        mealsRepository.getAllMeals(new CustomNetworkCallback<List<DetailedMealDTO>>() {
             @Override
             public void onSuccess(List<DetailedMealDTO> meals) {
                 Collections.shuffle(meals);
                 view.setAllMeals(meals);
+                view.setIsLoading(false);
             }
 
             @Override
             public void onFailure(String errorMessage) {
                 view.setError(errorMessage);
+                view.setIsLoading(false);
             }
         });
     }
 
     public void getMealById(Integer mealId) {
-        mealsRepository.getMealById(mealId, new OnMealClickedCallback() {
+        mealsRepository.getMealById(mealId, new CustomNetworkCallback<DetailedMealDTO>() {
             @Override
             public void onSuccess(DetailedMealDTO mealDTO) {
                 view.goToMeal(Integer.valueOf(mealDTO.getIdMeal()));

@@ -1,10 +1,12 @@
 package io.github.boodyahmedhamdy.mealano.datalayer.repos;
 
+import java.util.List;
+
+import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.MealsLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnAllMealsReceivedCallback;
 import io.github.boodyahmedhamdy.mealano.home.contract.OnMealClickedCallback;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnRandomMealReceivedCallback;
+import io.github.boodyahmedhamdy.mealano.utils.network.CustomNetworkCallback;
 
 public class MealsRepository {
     
@@ -25,15 +27,15 @@ public class MealsRepository {
     }
 
 
-    public void getRandomMeal(OnRandomMealReceivedCallback callback) {
+    public void getRandomMeal(CustomNetworkCallback<DetailedMealDTO> callback) {
         remoteDataSource.getRandomMeal(callback);
     }
 
-    public void getAllMeals(OnAllMealsReceivedCallback callback) {
+    public void getAllMeals(CustomNetworkCallback<List<DetailedMealDTO>> callback) {
         remoteDataSource.getAllMeals(callback);
     }
 
-    public void getMealById(Integer mealId, OnMealClickedCallback callback) {
+    public void getMealById(Integer mealId, CustomNetworkCallback<DetailedMealDTO> callback) {
         remoteDataSource.getMealById(mealId, callback);
     }
 }

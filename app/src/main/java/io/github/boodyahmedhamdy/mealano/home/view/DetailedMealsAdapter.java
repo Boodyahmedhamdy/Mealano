@@ -18,15 +18,16 @@ import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.databinding.RandomMealCardBinding;
 import io.github.boodyahmedhamdy.mealano.home.contract.OnMealClickedListener;
+import io.github.boodyahmedhamdy.mealano.utils.listeners.CustomClickListener;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 
 public class DetailedMealsAdapter extends RecyclerView.Adapter<DetailedMealsAdapter.DetailedMealViewHolder> {
     private static final String TAG = "DetailedMealsAdapter";
     List<DetailedMealDTO> meals;
-    OnMealClickedListener listener;
+    CustomClickListener<Integer> listener;
 
-    public DetailedMealsAdapter(List<DetailedMealDTO> meals, OnMealClickedListener listener) {
+    public DetailedMealsAdapter(List<DetailedMealDTO> meals, CustomClickListener<Integer> listener) {
         this.meals = meals;
         this.listener = listener;
         Log.i(TAG, "DetailedMealsAdapter: current meals size: " + meals.size() );

@@ -5,4 +5,7 @@ public interface LoginView {
     void setEmailValidationErrorMessage(String errorMessage);
     void setPasswordValidationError(String errorMessage);
     void setIsLoading(Boolean isLoading);
+
+    void goToHomeScreen();
+
 }
