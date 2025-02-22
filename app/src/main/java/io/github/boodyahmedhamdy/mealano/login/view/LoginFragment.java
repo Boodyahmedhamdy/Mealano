@@ -77,6 +77,10 @@ public class LoginFragment extends Fragment implements LoginView {
                     LoginFragmentDirections.actionLoginFragmentToHomeFragment()
             );
         });
+
+        binding.ivLoginWithGoogle.setOnClickListener(v -> {
+        });
+
         binding.btnLogin.setOnClickListener(v -> {
 
             String email = binding.tietEmail.getText().toString();
@@ -90,6 +94,7 @@ public class LoginFragment extends Fragment implements LoginView {
 
 
     }
+
 
     @Override
     public void setErrorMessage(String errorMessage) {

@@ -12,7 +12,20 @@
           "package_name": "io.github.boodyahmedhamdy.mealano"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "110969076776-k9se74roqln79g590uvm6q858lek12b0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.github.boodyahmedhamdy.mealano",
+            "certificate_hash": "0b3c098e9ddfa8c40726d99ad7254746d3f99f9d"
+          }
+        },
+        {
+          "client_id": "110969076776-thpopm1qmvkfgag77g6oac4is4fis0qj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDt6Umnw_YtDcvO4IAIeN6qlUfB83lqaB8"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "110969076776-5mh85en8qf4oisqcskj0p1fc8g3js5u6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
