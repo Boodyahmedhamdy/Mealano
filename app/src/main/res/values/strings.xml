@@ -31,4 +31,20 @@
     <string name="signout">Signout</string>
     <string name="some_error_happend_while_logging_you_in_please_check_your_internet_connection_and_try_again">some error happend while logging you in. please check your internet connection and try again</string>
     <string name="error_happened">Error Happened</string>
+    <string name="second_onboarding_title">Second Onboarding Title</string>
+    <string name="second_onboarding_description">Second Onboarding Description</string>
+    <string name="third_onboarding_title">Third Onboarding Title</string>
+    <string name="finish">Finish</string>
+    <string name="third_onboarding_description">Third Onboarding Description</string>
+    <string name="popular_meals">Popular Meals</string>
+    <string name="today_s_random_meal">Today\'s Random Meal</string>
+    <string name="refresh">Refresh</string>
+    <string name="add_to_plan">Add To Plan</string>
+    <string name="tags">Tags</string>
+    <string name="category">Category:</string>
+    <string name="area">Area:</string>
+    <string name="instructions">Instructions</string>
+    <string name="ingredients_and_measurments">Ingredients and Measurments</string>
+    <string name="youtube_viedo">Youtube Viedo</string>
+    <string name="add_to_favorite">Add to Favorite</string>
 </resources>

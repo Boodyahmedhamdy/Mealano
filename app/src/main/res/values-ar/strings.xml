@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">Mealano</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sign_up">تسجيل جديد</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="home">الرئيسية</string>
+    <string name="search">البحث</string>
+    <string name="favorite">المفضلة</string>
+    <string name="profile">الملف الشخصي</string>
+    <string name="plans">الخطط</string>
+    <string name="meal_details">تفاصيل الوجبة</string>
+    <string name="about">حول</string>
+    <string name="first_onboading_title">العنوان الاول</string>
+    <string name="first_onboarding_description">الوصف الاول</string>
+    <string name="next">التالي</string>
+    <string name="continue_as_guest">الاستمرار كضيف</string>
+    <string name="welcome">مرحبا</string>
+    <string name="back">بعودتك</string>
+    <string name="login_description">use the email and password you enterd while\nregisteration</string>
+    <string name="email">البريد الالكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="or_login_using">او سجل الدخول باستخدام</string>
+    <string name="don_t_have_account">ليس لديك حساب ؟</string>
+    <string name="confirm_password">تاكيد كلمة المرور</string>
+    <string name="already_have_account">لديك حساب بالفعل ؟</string>
+    <string name="or_signup_using">او انشئ حساب باستخدام</string>
+    <string name="signup_description">enter email and password to let us know you</string>
+    <string name="login_successfully">تم تسجيل الدخول بنجاح</string>
+    <string name="signup_successfully">تمت انشاء الحساب بنجاح</string>
+    <string name="signout">تسجيل الخروج</string>
+    <string name="some_error_happend_while_logging_you_in_please_check_your_internet_connection_and_try_again">حدث خطا اثناء تسجيل الدخول. من فضلك تجقق من اتصال الانترنت لديك</string>
+    <string name="error_happened">حدث خطأ</string>
+    <string name="second_onboarding_title">العنوان الثاني</string>
+    <string name="second_onboarding_description">الوصف الثاني</string>
+    <string name="third_onboarding_title">العنوان الثالث</string>
+    <string name="finish">انهاء</string>
+    <string name="third_onboarding_description">الوصف الثالث</string>
+    <string name="popular_meals">الوجبات الرائجة</string>
+    <string name="today_s_random_meal">وجبة اليوم المقترحة</string>
+    <string name="refresh">اعادة التحميل</string>
+    <string name="add_to_plan">لضافة الى الخطة</string>
+    <string name="tags">عناوين</string>
+    <string name="category">الفئة:</string>
+    <string name="area">المنطقة:</string>
+    <string name="instructions">التعليمات</string>
+    <string name="ingredients_and_measurments">المكونات و المقادير</string>
+    <string name="youtube_viedo">مشاهدة فيديو</string>
+    <string name="add_to_favorite">اضافة الى المفضلة</string>
+
+
+</resources>

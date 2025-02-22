@@ -136,7 +136,31 @@ public class UiUtils {
             Map.entry("Canadian", R.drawable.canada_meduim),
             Map.entry("Chinese", R.drawable.china_meduim),
             Map.entry("Croatian", R.drawable.coratia_meduim),
-            Map.entry("Dutch", R.drawable.germany_meduim)
+            Map.entry("Dutch", R.drawable.germany_meduim),
+            Map.entry("Egyptian", R.drawable.egypt_meduim),
+            Map.entry("Filipino", R.drawable.baseline_broken_image_24), // not found
+            Map.entry("French", R.drawable.france_meduim),
+            Map.entry("Greek", R.drawable.greek_meduim),
+            Map.entry("Indian", R.drawable.india_meduim), // done
+            Map.entry("Irish", R.drawable.ireland_meduim),
+            Map.entry("Italian", R.drawable.italy_meduim),
+            Map.entry("Jamaican", R.drawable.jamica_meduim),
+            Map.entry("Japanese", R.drawable.japan_meduim),
+            Map.entry("Kenyan", R.drawable.kenya_meduim),
+            Map.entry("Malaysian", R.drawable.malasya_meduim), // done
+            Map.entry("Mexican", R.drawable.mixeco_meduim),
+            Map.entry("Moroccan", R.drawable.moroco_meduim),
+            Map.entry("Norwegian", R.drawable.norway_meduim), // done
+            Map.entry("Polish", R.drawable.poland_meduim), // done
+            Map.entry("Portuguese", R.drawable.portogal_meduim), // done
+            Map.entry("Russian", R.drawable.russia_meduim), // done
+            Map.entry("Spanish", R.drawable.spain_meduim), // done
+            Map.entry("Thai", R.drawable.thai_meduim), // done
+            Map.entry("Tunisian", R.drawable.tunis_meduim), // done
+            Map.entry("Turkish", R.drawable.turkey_meduim), // done
+            Map.entry("Ukrainian", R.drawable.ukrain_meduim), // done
+            Map.entry("Uruguayan", R.drawable.ukrain_meduim), // done
+            Map.entry("Vietnamese", R.drawable.vitnam_meduim) // done
     );
 
 
