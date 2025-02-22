@@ -57,7 +57,7 @@ public class HomePresenter {
         mealsRepository.getMealById(mealId, new CustomNetworkCallback<DetailedMealDTO>() {
             @Override
             public void onSuccess(DetailedMealDTO mealDTO) {
-                view.goToMeal(Integer.valueOf(mealDTO.getIdMeal()));
+                view.goToMeal(mealDTO.getIdMeal());
             }
 
             @Override

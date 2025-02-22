@@ -4,6 +4,7 @@ import android.util.Log;
 
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.details.contract.IMealDetailsPresenter;
 import io.github.boodyahmedhamdy.mealano.details.contract.MealDetailsView;
 import io.github.boodyahmedhamdy.mealano.utils.network.CustomNetworkCallback;
@@ -14,9 +15,12 @@ public class MealDetailsPresenter implements IMealDetailsPresenter {
     MealDetailsView view;
     MealsRepository mealsRepository;
 
-    public MealDetailsPresenter(MealDetailsView view, MealsRepository mealsRepository) {
+    UsersRepository usersRepository;
+
+    public MealDetailsPresenter(MealDetailsView view, MealsRepository mealsRepository, UsersRepository usersRepository) {
         this.view = view;
         this.mealsRepository = mealsRepository;
+        this.usersRepository = usersRepository;
     }
 
 
@@ -40,4 +44,9 @@ public class MealDetailsPresenter implements IMealDetailsPresenter {
         });
     }
 
+    public void addMealToFavorite(DetailedMealDTO mealDTO) {
+        Log.i(TAG, "addMealToFavorite: started adding to favorite");
+        mealsRepository.addMealToFavorite(mealDTO, usersRepository.getCurrentUser().getUid());
+        Log.i(TAG, "addMealToFavorite: finished adding to favorite");
+    }
 }

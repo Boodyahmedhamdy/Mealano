@@ -1,4 +1,4 @@
-package io.github.boodyahmedhamdy.mealano.data.network;
+package io.github.boodyahmedhamdy.mealano.datalayer.datasources.local;
 
 import android.content.Context;
 import android.content.SharedPreferences;

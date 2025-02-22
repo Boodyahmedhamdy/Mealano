@@ -16,8 +16,7 @@ import android.view.ViewGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import io.github.boodyahmedhamdy.mealano.R;
-import io.github.boodyahmedhamdy.mealano.data.network.SharedPreferencesManager;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.SharedPreferencesManager;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentProfileBinding;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;

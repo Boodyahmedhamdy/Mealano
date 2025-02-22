@@ -20,6 +20,7 @@ import android.webkit.WebChromeClient;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.chip.Chip;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,9 +29,14 @@ import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentMealDetailsBinding;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.MealsLocalDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.SharedPreferencesManager;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.MealanoDatabase;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsApi;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.details.contract.MealDetailsView;
 import io.github.boodyahmedhamdy.mealano.details.presenter.MealDetailsPresenter;
 import io.github.boodyahmedhamdy.mealano.utils.ui.SimpleIngredientAndMeasurement;
@@ -42,6 +48,8 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     FragmentMealDetailsBinding binding;
     IngredientsAndMeasurementsAdapter adapter;
     MealDetailsPresenter presenter;
+
+    DetailedMealDTO currentMeal;
 
 
     @Override
@@ -64,8 +72,12 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
         presenter = new MealDetailsPresenter(this,
                 MealsRepository.getInstance(
-                        new MealsLocalDataSource(),
+                        new MealsLocalDataSource(MealanoDatabase.getInstance(requireContext()).mealsDao()),
                         new MealsRemoteDataSource(MealsApi.getMealsApiService())
+                ),
+                UsersRepository.getInstance(
+                        new UsersLocalDataSource(SharedPreferencesManager.getInstance(requireContext()), FirebaseAuth.getInstance()),
+                        new UsersRemoteDataSource(FirebaseAuth.getInstance())
                 ));
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
@@ -74,15 +86,24 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         adapter = new IngredientsAndMeasurementsAdapter(List.of());
         binding.rvIngredientsAndMeasurments.setAdapter(adapter);
 
-        Integer id = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealId();
+        String id = MealDetailsFragmentArgs.fromBundle(getArguments()).getMealId();
         Log.i(TAG, "onViewCreated: id: " + id);
 
-        presenter.getMealById(id);
+
+        binding.btnAddToFavoriteDetail.setOnClickListener(v -> {
+            presenter.addMealToFavorite(currentMeal);
+        });
+
+
+        presenter.getMealById(Integer.valueOf(id));
 
     }
 
     @Override
     public void setMeal(DetailedMealDTO mealDTO) {
+        currentMeal = mealDTO;
+        Log.i(TAG, "setMeal: current meal is " + currentMeal);
+
         Log.i(TAG, "setMeal: Setting Meal started");
         Glide.with(binding.getRoot())
                 .load(mealDTO.getStrMealThumb())

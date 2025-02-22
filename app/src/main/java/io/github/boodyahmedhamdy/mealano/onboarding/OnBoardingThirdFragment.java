@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import io.github.boodyahmedhamdy.mealano.R;
-import io.github.boodyahmedhamdy.mealano.data.network.SharedPreferencesManager;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.SharedPreferencesManager;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 public class OnBoardingThirdFragment extends Fragment {

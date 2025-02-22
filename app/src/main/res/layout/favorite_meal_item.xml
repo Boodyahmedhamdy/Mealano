@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivFavMealThumb"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tvFavMealTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/ivFavMealThumb"
+            app:layout_constraintTop_toTopOf="@+id/ivFavMealThumb"
+            tools:text="Bigos (Hunters Stew)" />
+
+        <TextView
+            android:id="@+id/tvFavMealCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivFavMealThumb"
+            app:layout_constraintStart_toStartOf="@+id/tvFavMealTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvFavMealTitle"
+            tools:text="Pork" />
+
+        <ImageView
+            android:id="@+id/ivFavMealArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvFavMealCategory"
+            app:layout_constraintStart_toEndOf="@+id/tvFavMealCategory"
+            app:layout_constraintTop_toTopOf="@+id/tvFavMealCategory"
+            app:srcCompat="@drawable/america_meduim" />
+
+        <TextView
+            android:id="@+id/tvFavMealArea"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="TextView"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivFavMealArea"
+            app:layout_constraintStart_toEndOf="@+id/ivFavMealArea"
+            app:layout_constraintTop_toTopOf="@+id/ivFavMealArea"
+            app:layout_constraintVertical_bias="1.0"
+            tools:text="American" />
+
+        <Button
+            android:id="@+id/btnDeleteFavMeal"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/outline_delete_24"
+            app:iconSize="24dp"
+            app:iconTint="@color/md_theme_error"
+            app:layout_constraintBottom_toBottomOf="@+id/ivFavMealThumb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivFavMealThumb" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

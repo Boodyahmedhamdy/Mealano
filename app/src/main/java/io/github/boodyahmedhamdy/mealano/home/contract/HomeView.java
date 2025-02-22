@@ -8,7 +8,7 @@ public interface HomeView {
     void setRandomMeal(DetailedMealDTO detailedMealDTO);
     void setAllMeals(List<DetailedMealDTO> allMeals);
 
-    void goToMeal(Integer mealId);
+    void goToMeal(String mealId);
 
     void setError(String errorMessage);
 

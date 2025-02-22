@@ -1,5 +1,7 @@
 package io.github.boodyahmedhamdy.mealano.datalayer.repos;
 
+import android.util.Log;
+
 import java.util.List;
 
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
@@ -11,6 +13,8 @@ public class MealsRepository {
     
     MealsLocalDataSource localDataSource;
     MealsRemoteDataSource remoteDataSource;
+
+    private static final String TAG = "MealsRepository";
 
     private static MealsRepository instance;
     public static MealsRepository getInstance(MealsLocalDataSource localDataSource, MealsRemoteDataSource remoteDataSource) {
@@ -36,5 +40,11 @@ public class MealsRepository {
 
     public void getMealById(Integer mealId, CustomNetworkCallback<DetailedMealDTO> callback) {
         remoteDataSource.getMealById(mealId, callback);
+    }
+
+    public void addMealToFavorite(DetailedMealDTO mealDTO, String userId) {
+        Log.i(TAG, "addMealToFavorite: started");
+        localDataSource.addMealToFavorite(mealDTO, userId);
+        Log.i(TAG, "addMealToFavorite: finished");
     }
 }

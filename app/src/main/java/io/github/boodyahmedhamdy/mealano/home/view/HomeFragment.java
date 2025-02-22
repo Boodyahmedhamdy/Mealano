@@ -28,6 +28,7 @@ import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentHomeBinding;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.MealsLocalDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.MealanoDatabase;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsApi;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
@@ -66,7 +67,7 @@ public class HomeFragment extends Fragment implements HomeView{
 
         presenter = new HomePresenter(
                 this, MealsRepository.getInstance(
-                        new MealsLocalDataSource(),
+                        new MealsLocalDataSource(MealanoDatabase.getInstance(requireContext()).mealsDao()),
                         new MealsRemoteDataSource(MealsApi.getMealsApiService())
                 )
         );
@@ -129,7 +130,7 @@ public class HomeFragment extends Fragment implements HomeView{
     }
 
     @Override
-    public void goToMeal(Integer mealId) {
+    public void goToMeal(String mealId) {
         Navigation.findNavController(binding.getRoot())
                 .navigate(HomeFragmentDirections.actionHomeFragmentToMealDetailsFragment(mealId));
     }

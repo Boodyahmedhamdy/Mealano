@@ -20,7 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 
 import io.github.boodyahmedhamdy.mealano.R;
-import io.github.boodyahmedhamdy.mealano.data.network.SharedPreferencesManager;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.SharedPreferencesManager;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentLoginBinding;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
