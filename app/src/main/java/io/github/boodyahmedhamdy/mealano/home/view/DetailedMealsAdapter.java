@@ -17,7 +17,6 @@ import java.util.List;
 import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.databinding.RandomMealCardBinding;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnMealClickedListener;
 import io.github.boodyahmedhamdy.mealano.utils.listeners.CustomClickListener;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 

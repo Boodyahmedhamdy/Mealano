@@ -6,7 +6,6 @@ import java.util.List;
 
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealsResponse;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnMealClickedCallback;
 import io.github.boodyahmedhamdy.mealano.utils.network.CustomNetworkCallback;
 import retrofit2.Call;
 import retrofit2.Callback;

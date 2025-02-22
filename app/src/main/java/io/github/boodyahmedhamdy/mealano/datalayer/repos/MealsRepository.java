@@ -5,7 +5,6 @@ import java.util.List;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.MealsLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnMealClickedCallback;
 import io.github.boodyahmedhamdy.mealano.utils.network.CustomNetworkCallback;
 
 public class MealsRepository {

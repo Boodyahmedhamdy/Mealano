@@ -83,6 +83,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
     @Override
     public void setMeal(DetailedMealDTO mealDTO) {
+        Log.i(TAG, "setMeal: Setting Meal started");
         Glide.with(binding.getRoot())
                 .load(mealDTO.getStrMealThumb())
                 .placeholder(R.drawable.loading)
@@ -121,6 +122,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
             Log.i(TAG, "setMeal: youtube video must be loaded");
         }
 
+        Log.i(TAG, "setMeal: Setting Meal finished");
 
 
     }

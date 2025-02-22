@@ -6,7 +6,6 @@ import java.util.List;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
 import io.github.boodyahmedhamdy.mealano.home.contract.HomeView;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnMealClickedCallback;
 import io.github.boodyahmedhamdy.mealano.utils.network.CustomNetworkCallback;
 
 public class HomePresenter {

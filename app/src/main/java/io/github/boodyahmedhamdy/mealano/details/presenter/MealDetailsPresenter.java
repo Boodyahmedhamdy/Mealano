@@ -6,8 +6,6 @@ import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
 import io.github.boodyahmedhamdy.mealano.details.contract.IMealDetailsPresenter;
 import io.github.boodyahmedhamdy.mealano.details.contract.MealDetailsView;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnMealClickedCallback;
-import io.github.boodyahmedhamdy.mealano.home.contract.OnRandomMealReceivedCallback;
 import io.github.boodyahmedhamdy.mealano.utils.network.CustomNetworkCallback;
 
 public class MealDetailsPresenter implements IMealDetailsPresenter {
@@ -28,14 +26,14 @@ public class MealDetailsPresenter implements IMealDetailsPresenter {
         mealsRepository.getMealById(mealId, new CustomNetworkCallback<DetailedMealDTO>() {
             @Override
             public void onSuccess(DetailedMealDTO mealDTO) {
-                Log.i(TAG, "OnMealClickedCallback.onSuccess: " + mealDTO);
+                Log.i(TAG, "onSuccess: " + mealDTO);
                 view.setMeal(mealDTO);
                 view.setIsLoading(false);
             }
 
             @Override
             public void onFailure(String errorMessage) {
-                Log.e(TAG, "OnMealClickedCallback.onFailure: " + errorMessage);
+                Log.e(TAG, "onFailure: " + errorMessage);
                 view.setErrorMessage("error from Presenter: " + errorMessage);
                 view.setIsLoading(false);
             }
