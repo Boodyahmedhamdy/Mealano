@@ -64,7 +64,6 @@ public class PlansRemoteDataSource {
                 .child(userId).child("plans");
 
         List<PlanEntity> plans = new ArrayList<>();
-        plans.add(new PlanEntity("", "", "", new DetailedMealDTO()));
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -96,9 +95,6 @@ public class PlansRemoteDataSource {
                 callback.onFailure(error.getMessage());
             }
         });
-
-//        return plans;
-
 
     }
 
