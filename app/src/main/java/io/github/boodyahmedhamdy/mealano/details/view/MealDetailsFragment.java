@@ -22,7 +22,6 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
@@ -32,16 +31,20 @@ import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentMealDetailsBinding;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.MealsLocalDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.PlansLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.SharedPreferencesManager;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.MealanoDatabase;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsApi;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.PlansRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.PlansRepository;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.details.contract.MealDetailsView;
 import io.github.boodyahmedhamdy.mealano.details.presenter.MealDetailsPresenter;
+import io.github.boodyahmedhamdy.mealano.utils.ui.DatePickerUtils;
 import io.github.boodyahmedhamdy.mealano.utils.ui.SimpleIngredientAndMeasurement;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
@@ -81,6 +84,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
                 UsersRepository.getInstance(
                          UsersLocalDataSource.getInstance(SharedPreferencesManager.getInstance(requireContext()), FirebaseAuth.getInstance()),
                         UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
+                ),
+                PlansRepository.getInstance(
+                        PlansRemoteDataSource.getInstance(FirebaseDatabase.getInstance()),
+                        PlansLocalDataSource.getInstance(MealanoDatabase.getInstance(requireContext()).plansDao())
                 ));
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
@@ -95,6 +102,13 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
         binding.btnAddToFavoriteDetail.setOnClickListener(v -> {
             presenter.addMealToFavorite(currentMeal);
+        });
+
+        binding.btnAddToPlanDetail.setOnClickListener(v -> {
+            DatePickerUtils.showDatePicker(requireActivity(), date -> {
+                Log.i(TAG, "onViewCreated: DateSelected is " + date);
+                presenter.addMealToPlans(currentMeal, date);
+            });
         });
 
 

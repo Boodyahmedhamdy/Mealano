@@ -81,7 +81,7 @@
     </fragment>
     <fragment
         android:id="@+id/plansFragment"
-        android:name="io.github.boodyahmedhamdy.mealano.plans.PlansFragment"
+        android:name="io.github.boodyahmedhamdy.mealano.plans.view.PlansFragment"
         android:label="@string/plans"
         tools:layout="@layout/fragment_plans">
         <action

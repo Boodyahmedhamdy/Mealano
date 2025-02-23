@@ -6,8 +6,11 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -102,7 +105,29 @@ public class MealsRemoteDataSource {
     public void addToFavorite(DetailedMealDTO mealDTO, String userId, CustomCallback<DetailedMealDTO> callback) {
         DatabaseReference ref = firebaseDatabase.getReference("users").child(userId).child("favorites").child(mealDTO.getIdMeal());
         ref.setValue(mealDTO)
-                .addOnSuccessListener(unused -> callback.onSuccess(mealDTO))
+                .addOnSuccessListener(unused -> {
+                    callback.onSuccess(mealDTO);
+
+                    getAllFavorites(userId);
+                })
                 .addOnFailureListener(e -> callback.onFailure(e.getLocalizedMessage()));
+    }
+
+    public void getAllFavorites(String userId) {
+        DatabaseReference ref = firebaseDatabase.getReference("users").child(userId).child("favorites");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    DetailedMealDTO meal = dataSnapshot.getValue(DetailedMealDTO.class);
+                    Log.i(TAG, "onDataChange: meal:" + meal);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
