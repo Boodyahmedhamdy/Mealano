@@ -66,9 +66,16 @@ dependencies {
 //    implementation("androidx.room:room-rxjava3:$room_version")
 
 
-    // signin with google
-//
+     // signin with google
+
 //    implementation ("androidx.credentials:credentials:<latest version>")
 //    implementation ("androidx.credentials:credentials-play-services-auth:<latest version>")
 //    implementation ("com.google.android.libraries.identity.googleid:googleid:<latest version>")
+
+    implementation("androidx.credentials:credentials:1.5.0-rc01")
+    implementation("com.google.android.gms:play-services-auth:21.3.0")
+
+    // optional - needed for credentials support from play services, for devices running
+    // Android 13 and below.
+    implementation("androidx.credentials:credentials-play-services-auth:1.5.0-rc01")
 }
