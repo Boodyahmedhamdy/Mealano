@@ -68,11 +68,11 @@ public class SignupFragment extends Fragment implements SignupView {
         presenter = new SignupPresenter(
                 this,
                 UsersRepository.getInstance(
-                        new UsersLocalDataSource(
+                        UsersLocalDataSource.getInstance(
                                 SharedPreferencesManager.getInstance(getContext()),
                                 FirebaseAuth.getInstance()
                         ),
-                        new UsersRemoteDataSource(FirebaseAuth.getInstance())
+                        UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
                 )
         );
         navController = Navigation.findNavController(view);

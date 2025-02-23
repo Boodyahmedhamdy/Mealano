@@ -69,11 +69,11 @@ public class LoginFragment extends Fragment implements LoginView {
         presenter = new LoginPresenter(
                 this,
                 UsersRepository.getInstance(
-                        new UsersLocalDataSource(
+                        UsersLocalDataSource.getInstance(
                                 SharedPreferencesManager.getInstance(getContext()),
                                 FirebaseAuth.getInstance()
                         ),
-                        new UsersRemoteDataSource(FirebaseAuth.getInstance())
+                        UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
                 )
         );
 

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -66,12 +67,12 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
         presenter = new FavoritePresenter(
                 this,
                 MealsRepository.getInstance(
-                        new MealsLocalDataSource(MealanoDatabase.getInstance(requireContext()).mealsDao()),
-                        new MealsRemoteDataSource(MealsApi.getMealsApiService())
+                        MealsLocalDataSource.getInstance(MealanoDatabase.getInstance(requireContext()).mealsDao()),
+                        MealsRemoteDataSource.getInstance(MealsApi.getMealsApiService(), FirebaseDatabase.getInstance())
                 ),
                 UsersRepository.getInstance(
-                        new UsersLocalDataSource(SharedPreferencesManager.getInstance(requireContext()), FirebaseAuth.getInstance()),
-                        new UsersRemoteDataSource(FirebaseAuth.getInstance())
+                        UsersLocalDataSource.getInstance(SharedPreferencesManager.getInstance(requireContext()), FirebaseAuth.getInstance()),
+                        UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
                 )
         );
 

@@ -56,8 +56,8 @@ public class ProfileFragment extends Fragment implements ProfileView, OnSignOutC
         presenter = new ProfilePresenter(
                 this,
                 UsersRepository.getInstance(
-                        new UsersLocalDataSource(SharedPreferencesManager.getInstance(getContext()), FirebaseAuth.getInstance()),
-                        new UsersRemoteDataSource(FirebaseAuth.getInstance())
+                        UsersLocalDataSource.getInstance(SharedPreferencesManager.getInstance(getContext()), FirebaseAuth.getInstance()),
+                        UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
                 )
         );
 

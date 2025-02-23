@@ -17,8 +17,16 @@ public class MealsLocalDataSource {
     private static final String TAG = "MealsLocalDataSource";
     MealsDao mealsDao;
 
-    public MealsLocalDataSource(MealsDao mealsDao) {
+    private MealsLocalDataSource(MealsDao mealsDao) {
         this.mealsDao = mealsDao;
+    }
+
+    private static MealsLocalDataSource instance;
+    public static MealsLocalDataSource getInstance(MealsDao mealsDao) {
+        if(instance == null) {
+            instance = new MealsLocalDataSource(mealsDao);
+        }
+        return instance;
     }
 
 

@@ -12,9 +12,18 @@ public class UsersLocalDataSource {
     SharedPreferencesManager sharedPreferencesManager;
     FirebaseAuth firebaseAuth;
 
-    public UsersLocalDataSource(SharedPreferencesManager sharedPreferencesManager, FirebaseAuth firebaseAuth) {
+    private UsersLocalDataSource(SharedPreferencesManager sharedPreferencesManager, FirebaseAuth firebaseAuth) {
         this.sharedPreferencesManager = sharedPreferencesManager;
         this.firebaseAuth = firebaseAuth;
+    }
+
+    private static UsersLocalDataSource instance;
+
+    public static UsersLocalDataSource getInstance(SharedPreferencesManager sharedPreferencesManager, FirebaseAuth firebaseAuth) {
+        if(instance == null) {
+            instance = new UsersLocalDataSource(sharedPreferencesManager, firebaseAuth);
+        }
+        return instance;
     }
 
     public Boolean isFirstTime() {

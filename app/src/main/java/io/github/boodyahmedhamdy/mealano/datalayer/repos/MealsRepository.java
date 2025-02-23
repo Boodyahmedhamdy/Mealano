@@ -51,6 +51,7 @@ public class MealsRepository {
         Log.i(TAG, "addMealToFavorite: started");
         localDataSource.addMealToFavorite(mealDTO, userId, callback);
         Log.i(TAG, "addMealToFavorite: finished");
+        remoteDataSource.addToFavorite(mealDTO, userId, callback);
     }
 
     public LiveData<List<MealEntity>> getFavoriteMeals(String userId) {

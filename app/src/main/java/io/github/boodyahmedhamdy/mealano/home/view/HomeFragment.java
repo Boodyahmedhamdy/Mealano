@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Arrays;
 import java.util.List;
@@ -73,12 +74,12 @@ public class HomeFragment extends Fragment implements HomeView{
 
         presenter = new HomePresenter(
                 this, MealsRepository.getInstance(
-                        new MealsLocalDataSource(MealanoDatabase.getInstance(requireContext()).mealsDao()),
-                        new MealsRemoteDataSource(MealsApi.getMealsApiService())
+                        MealsLocalDataSource.getInstance(MealanoDatabase.getInstance(requireContext()).mealsDao()),
+                        MealsRemoteDataSource.getInstance(MealsApi.getMealsApiService(), FirebaseDatabase.getInstance())
                 ),
                 UsersRepository.getInstance(
-                        new UsersLocalDataSource(SharedPreferencesManager.getInstance(requireContext()), FirebaseAuth.getInstance()),
-                        new UsersRemoteDataSource(FirebaseAuth.getInstance())
+                        UsersLocalDataSource.getInstance(SharedPreferencesManager.getInstance(requireContext()), FirebaseAuth.getInstance()),
+                        UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
                 )
         );
 

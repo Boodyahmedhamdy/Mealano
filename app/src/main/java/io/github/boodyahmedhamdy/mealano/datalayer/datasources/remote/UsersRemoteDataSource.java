@@ -16,8 +16,17 @@ public class UsersRemoteDataSource {
 
     FirebaseAuth firebaseAuth;
 
-    public UsersRemoteDataSource(FirebaseAuth firebaseAuth) {
+    private UsersRemoteDataSource(FirebaseAuth firebaseAuth) {
         this.firebaseAuth = firebaseAuth;
+    }
+
+    private static UsersRemoteDataSource instance;
+
+    public static UsersRemoteDataSource getInstance(FirebaseAuth firebaseAuth) {
+        if(instance == null) {
+            instance = new UsersRemoteDataSource(firebaseAuth);
+        }
+        return instance;
     }
 
     public void signupWithEmailAndPassword(String email, String password, EmptyNetworkCallback callback) {

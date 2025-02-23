@@ -56,11 +56,11 @@ public class SplashFragment extends Fragment implements SplashView {
         presenter = new SplashPresenter(
                 this,
                 UsersRepository.getInstance(
-                        new UsersLocalDataSource(
+                        UsersLocalDataSource.getInstance(
                                 SharedPreferencesManager.getInstance(getContext()),
                                 FirebaseAuth.getInstance()
                         ),
-                        new UsersRemoteDataSource(FirebaseAuth.getInstance())
+                        UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
                 )
         );
 
