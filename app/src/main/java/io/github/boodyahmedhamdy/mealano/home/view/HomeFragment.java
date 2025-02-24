@@ -31,17 +31,22 @@ import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentHomeBinding;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.MealsLocalDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.PlansLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.SharedPreferencesManager;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.MealanoDatabase;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.PlanEntity;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsApi;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.PlansRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.PlansRepository;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.home.contract.HomeView;
 import io.github.boodyahmedhamdy.mealano.home.presenter.HomePresenter;
 import io.github.boodyahmedhamdy.mealano.utils.listeners.CustomClickListener;
+import io.github.boodyahmedhamdy.mealano.utils.ui.DatePickerUtils;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 
@@ -80,6 +85,10 @@ public class HomeFragment extends Fragment implements HomeView{
                 UsersRepository.getInstance(
                         UsersLocalDataSource.getInstance(SharedPreferencesManager.getInstance(requireContext()), FirebaseAuth.getInstance()),
                         UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
+                ),
+                PlansRepository.getInstance(
+                        PlansRemoteDataSource.getInstance(FirebaseDatabase.getInstance()),
+                        PlansLocalDataSource.getInstance(MealanoDatabase.getInstance(requireContext()).plansDao())
                 )
         );
 
@@ -89,7 +98,13 @@ public class HomeFragment extends Fragment implements HomeView{
         adapter = new DetailedMealsAdapter(
                 List.of(),
                 mealId -> {presenter.getMealById(mealId);},
-                data -> { },
+                mealDTO -> {
+                    DatePickerUtils.showDatePicker(requireActivity(), date -> {
+                        presenter.addMealToPlans(
+                                mealDTO, date
+                        );
+                    });
+                },
                 mealDTO -> { presenter.addMealToFavorite(mealDTO); }
         );
         binding.rvAllMeals.setAdapter(adapter);
@@ -143,8 +158,11 @@ public class HomeFragment extends Fragment implements HomeView{
         // add to plan
         binding.randomCard.btnMealAddToPlan.setOnClickListener(v -> {
             Log.i(TAG, "clicked on add to plan button onRandome in meal: " + detailedMealDTO.getStrMeal());
-//            onAddToPlanClickListener.onClick(meal);
-
+            DatePickerUtils.showDatePicker(requireActivity(), date -> {
+                        presenter.addMealToPlans(
+                                detailedMealDTO, date
+                        );
+                    });
         });
 
     }

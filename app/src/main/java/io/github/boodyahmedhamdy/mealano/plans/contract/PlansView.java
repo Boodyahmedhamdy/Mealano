@@ -7,4 +7,10 @@ import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities
 public interface PlansView {
 
     void setPlans(List<PlanEntity> plans);
+
+    void setErrorMessage(String errorMessage);
+
+    void goToMealDetailsScreen(String mealId);
+
+    void setSyncMessage(String syncMessage);
 }

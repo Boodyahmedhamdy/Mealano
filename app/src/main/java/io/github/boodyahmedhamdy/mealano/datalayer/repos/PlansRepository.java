@@ -1,16 +1,16 @@
 package io.github.boodyahmedhamdy.mealano.datalayer.repos;
 
-import android.util.Log;
-
-import androidx.lifecycle.LiveData;
+import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
-import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.PlansLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.PlanEntity;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.PlansRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Observable;
 
 public class PlansRepository {
 
@@ -33,26 +33,34 @@ public class PlansRepository {
     }
 
 
-    public void addPlan(String userId, DetailedMealDTO mealDTO, String date) {
-        PlanEntity entity = new PlanEntity(userId, date, mealDTO.getIdMeal(), mealDTO);
-        remoteDataSource.addPlan(entity);
+    public Task<Void> addPlanToRemote(PlanEntity planEntity) {
+
+        return remoteDataSource.addPlan(planEntity);
 //        localDataSource.insertPlan(entity);
     }
 
-    public LiveData<List<PlanEntity>> getAllPlans(String userId) {
+    public Flowable<List<PlanEntity>> getAllPlansFromLocal(String userId) {
 
-        remoteDataSource.getAllPlans(userId, new CustomCallback<List<PlanEntity>>() {
-            @Override
-            public void onSuccess(List<PlanEntity> data) {
-                localDataSource.insertPlans(data);
-            }
-
-            @Override
-            public void onFailure(String errorMessage) {
-                Log.e(TAG, errorMessage);
-            }
-        });
+//        remoteDataSource.getAllPlans(userId, new CustomCallback<List<PlanEntity>>() {
+//            @Override
+//            public void onSuccess(List<PlanEntity> data) {
+//                localDataSource.insertPlans(data);
+//            }
+//
+//            @Override
+//            public void onFailure(String errorMessage) {
+//                Log.e(TAG, errorMessage);
+//            }
+//        });
 
         return localDataSource.getAllPlans(userId);
+    }
+
+    public Observable<List<PlanEntity>> getAllPlansFromRemote(String userId) {
+        return remoteDataSource.getAllPlans(userId);
+    }
+
+    public Completable insertAllPlansToLocal(List<PlanEntity> planEntities) {
+        return localDataSource.insertPlans(planEntities);
     }
 }

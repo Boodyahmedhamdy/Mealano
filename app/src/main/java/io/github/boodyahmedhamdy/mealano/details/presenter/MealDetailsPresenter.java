@@ -2,14 +2,19 @@ package io.github.boodyahmedhamdy.mealano.details.presenter;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.MealEntity;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.PlanEntity;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.PlansRepository;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.details.contract.IMealDetailsPresenter;
 import io.github.boodyahmedhamdy.mealano.details.contract.MealDetailsView;
-import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
 import io.github.boodyahmedhamdy.mealano.utils.rx.OnBackgroundTransformer;
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -66,6 +71,18 @@ public class MealDetailsPresenter implements IMealDetailsPresenter {
     }
 
     public void addMealToPlans(DetailedMealDTO currentMeal, String date) {
-        plansRepository.addPlan(usersRepository.getCurrentUser().getUid(), currentMeal, date);
+        PlanEntity planEntity = new PlanEntity(
+                usersRepository.getCurrentUser().getUid(), date, currentMeal.getIdMeal(), currentMeal
+        );
+
+        plansRepository.addPlanToRemote(planEntity)
+                .addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                view.setSuccessfullyAddedToPlans(true);
+            } else {
+                Log.e(TAG, "onComplete: failed to add plan to firebase");
+                view.setErrorMessage("Failed to add meal to plan");
+            }
+        });
     }
 }

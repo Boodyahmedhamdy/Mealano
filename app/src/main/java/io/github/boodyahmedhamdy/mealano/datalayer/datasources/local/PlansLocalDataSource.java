@@ -8,6 +8,8 @@ import java.util.List;
 
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.daos.PlansDao;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.PlanEntity;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 
 public class PlansLocalDataSource {
     private static final String TAG = "PlansLocalDataSource";
@@ -27,20 +29,17 @@ public class PlansLocalDataSource {
         return instance;
     }
 
-    public LiveData<List<PlanEntity>> getAllPlans(String userId) {
+    public Flowable<List<PlanEntity>> getAllPlans(String userId) {
         return plansDao.getAllPlans(userId);
     }
 
-    public void insertPlan(PlanEntity entity) {
-        new Thread(() -> {
-            plansDao.insertPlan(entity);
-        }).start();
+    public Completable insertPlan(PlanEntity entity) {
+            return plansDao.insertPlan(entity);
     }
 
-    public void insertPlans(List<PlanEntity> entities) {
-        new Thread(() -> {
-            plansDao.insertPlans(entities);
-            Log.i(TAG, "insertPlans: added successfully entities" + entities + " with size: " + entities.size());
-        }).start();
+    public Completable insertPlans(List<PlanEntity> entities) {
+        Log.i(TAG, "insertPlans: added successfully entities" + entities + " with size: " + entities.size());
+        return plansDao.insertPlans(entities);
+
     }
 }

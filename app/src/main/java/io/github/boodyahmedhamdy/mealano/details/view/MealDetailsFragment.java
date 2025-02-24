@@ -174,6 +174,11 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
     }
 
     @Override
+    public void setSuccessMessage(String successMessage) {
+
+    }
+
+    @Override
     public void setIsLoading(Boolean isLoading) {
         if(isLoading) {
             binding.getRoot().setAlpha(0.5f);
@@ -201,5 +206,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         binding.btnAddToFavoriteDetail.setText("Saved to Favorite");
         binding.btnAddToFavoriteDetail.setEnabled(false);
 //        binding.btnAddToFavoriteDetail.setVisibility(INVISIBLE);
+    }
+
+    @Override
+    public void setSuccessfullyAddedToPlans(boolean isAddedToPlans) {
+
     }
 }

@@ -6,10 +6,11 @@ import java.util.Collections;
 
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.MealEntity;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.PlanEntity;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.PlansRepository;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.home.contract.HomeView;
-import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
 import io.github.boodyahmedhamdy.mealano.utils.rx.OnBackgroundTransformer;
 import io.reactivex.rxjava3.disposables.Disposable;
 
@@ -19,11 +20,14 @@ public class HomePresenter {
     HomeView view;
     MealsRepository mealsRepository;
     UsersRepository usersRepository;
+    PlansRepository plansRepository;
 
-    public HomePresenter(HomeView view, MealsRepository mealsRepository, UsersRepository usersRepository) {
+
+    public HomePresenter(HomeView view, MealsRepository mealsRepository, UsersRepository usersRepository, PlansRepository plansRepository) {
         this.view = view;
         this.mealsRepository = mealsRepository;
         this.usersRepository = usersRepository;
+        this.plansRepository = plansRepository;
     }
 
     public void getRandomMeal() {
@@ -88,5 +92,9 @@ public class HomePresenter {
     }
 
 
-
+    public void addMealToPlans(DetailedMealDTO mealDTO, String date) {
+        plansRepository.addPlanToRemote(
+                new PlanEntity(usersRepository.getCurrentUser().getUid(), date, mealDTO.getIdMeal(), mealDTO)
+        );
+    }
 }
