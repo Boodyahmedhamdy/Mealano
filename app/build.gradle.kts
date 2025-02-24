@@ -91,4 +91,11 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.3.0")
     implementation("androidx.credentials:credentials-play-services-auth:1.5.0-rc01")
     //---------------- Sign in with google Ended -----------------------
+
+
+    //---------------- Lottie Started -----------------------
+    val lottieVersion = "3.4.0"
+    implementation ("com.airbnb.android:lottie:$lottieVersion")
+    //---------------- Lottie Ended -----------------------
+
 }

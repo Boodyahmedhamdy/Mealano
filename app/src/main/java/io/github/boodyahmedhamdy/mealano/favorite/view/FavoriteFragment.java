@@ -1,5 +1,9 @@
 package io.github.boodyahmedhamdy.mealano.favorite.view;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,6 +37,7 @@ import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.favorite.contract.FavoriteView;
 import io.github.boodyahmedhamdy.mealano.favorite.presenter.FavoritePresenter;
 import io.github.boodyahmedhamdy.mealano.utils.listeners.CustomClickListener;
+import io.github.boodyahmedhamdy.mealano.utils.network.NetworkMonitor;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 
@@ -73,7 +78,8 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
                 UsersRepository.getInstance(
                         UsersLocalDataSource.getInstance(SharedPreferencesManager.getInstance(requireContext()), FirebaseAuth.getInstance()),
                         UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
-                )
+                ),
+                NetworkMonitor.getInstance(requireContext().getSystemService(ConnectivityManager.class))
         );
 
         adapter = new FavoriteMealsAdapter(
@@ -123,5 +129,30 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
     @Override
     public void setErrorMessage(String errorMessage) {
         Log.i(TAG, "setErrorMessage: " + errorMessage);
+    }
+
+    @Override
+    public void setIsOnline(boolean isOnline) {
+        if(isOnline) {
+            binding.rvFavoriteMeals.setVisibility(VISIBLE);
+            binding.noWifiLayoutFav.getRoot().setVisibility(INVISIBLE);
+        } else {
+            binding.rvFavoriteMeals.setVisibility(INVISIBLE);
+            binding.noWifiLayoutFav.getRoot().setVisibility(VISIBLE);
+        }
+    }
+
+    @Override
+    public void setIsAuthorized(boolean isAuthorized) {
+        if(isAuthorized) {
+            binding.rvFavoriteMeals.setVisibility(VISIBLE);
+            binding.noWifiLayoutFav.getRoot().setVisibility(INVISIBLE);
+            binding.lockLayoutFavorite.getRoot().setVisibility(INVISIBLE);
+        } else {
+            binding.rvFavoriteMeals.setVisibility(INVISIBLE);
+            binding.noWifiLayoutFav.getRoot().setVisibility(INVISIBLE);
+            binding.lockLayoutFavorite.getRoot().setVisibility(VISIBLE);
+
+        }
     }
 }

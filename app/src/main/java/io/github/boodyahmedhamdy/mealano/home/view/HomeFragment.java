@@ -4,6 +4,8 @@ import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -46,6 +48,7 @@ import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.home.contract.HomeView;
 import io.github.boodyahmedhamdy.mealano.home.presenter.HomePresenter;
 import io.github.boodyahmedhamdy.mealano.utils.listeners.CustomClickListener;
+import io.github.boodyahmedhamdy.mealano.utils.network.NetworkMonitor;
 import io.github.boodyahmedhamdy.mealano.utils.ui.DatePickerUtils;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
@@ -89,6 +92,9 @@ public class HomeFragment extends Fragment implements HomeView{
                 PlansRepository.getInstance(
                         PlansRemoteDataSource.getInstance(FirebaseDatabase.getInstance()),
                         PlansLocalDataSource.getInstance(MealanoDatabase.getInstance(requireContext()).plansDao())
+                ),
+                NetworkMonitor.getInstance(
+                        (ConnectivityManager) requireContext().getSystemService(Context.CONNECTIVITY_SERVICE)
                 )
         );
 
@@ -203,6 +209,23 @@ public class HomeFragment extends Fragment implements HomeView{
     @Override
     public void setIsOnline(Boolean isOnline) {
         Log.i(TAG, "setIsOnline: isonline: " + isOnline);
+        if(isOnline) {
+            Snackbar.make(binding.getRoot(), "Back Online", Snackbar.LENGTH_SHORT).show();
+            binding.randomCard.getRoot().setVisibility(VISIBLE);
+            binding.rvAllMeals.setVisibility(VISIBLE);
+            binding.textView15.setVisibility(VISIBLE);
+            binding.textView18.setVisibility(VISIBLE);
+            binding.btnRefreshRandomMeal.setVisibility(VISIBLE);
+            binding.lockCard.getRoot().setVisibility(INVISIBLE);
+        } else {
+            binding.randomCard.getRoot().setVisibility(INVISIBLE);
+            binding.rvAllMeals.setVisibility(INVISIBLE);
+            binding.textView15.setVisibility(INVISIBLE);
+            binding.textView18.setVisibility(INVISIBLE);
+            binding.btnRefreshRandomMeal.setVisibility(INVISIBLE);
+            binding.lockCard.getRoot().setVisibility(VISIBLE);
+            Snackbar.make(binding.getRoot(), "you are Offline", Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override

@@ -12,4 +12,8 @@ public interface FavoriteView {
 
 
     void setErrorMessage(String errorMessage);
+
+    void setIsOnline(boolean isOnline);
+
+    void setIsAuthorized(boolean isAuthorized);
 }
