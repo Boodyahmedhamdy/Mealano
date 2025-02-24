@@ -28,9 +28,6 @@ public class PlanEntity {
     }
 
 
-    public PlanEntity() {
-    }
-
 
     public String getUserId() {
         return userId;

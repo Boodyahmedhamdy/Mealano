@@ -60,7 +60,7 @@ public class HomePresenter {
 
     }
 
-    public void getMealById(Integer mealId) {
+    public void getMealById(String mealId) {
         Disposable dis =  mealsRepository.getMealById(mealId)
                 .compose(new OnBackgroundTransformer<>())
                 .map(detailedMealsResponse -> detailedMealsResponse.getMeals().get(0))
@@ -69,13 +69,12 @@ public class HomePresenter {
                 }, throwable -> {
                     view.setError(throwable.getLocalizedMessage());
                 });
-        ;
     }
 
     public void addMealToFavorite(DetailedMealDTO mealDTO) {
 
         Disposable dis = mealsRepository.addMealToFavorite(
-                new MealEntity(mealDTO, usersRepository.getCurrentUser().getUid())
+                new MealEntity(mealDTO, usersRepository.getCurrentUser().getUid(), mealDTO.getIdMeal())
         )
         .compose(new OnBackgroundTransformer<>())
         .subscribe(() -> {

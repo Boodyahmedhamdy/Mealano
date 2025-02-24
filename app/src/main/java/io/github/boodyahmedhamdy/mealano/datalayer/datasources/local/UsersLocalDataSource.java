@@ -2,8 +2,12 @@ package io.github.boodyahmedhamdy.mealano.datalayer.datasources.local;
 
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.internal.IdTokenListener;
+import com.google.firebase.internal.InternalTokenResult;
 
 import io.github.boodyahmedhamdy.mealano.profile.contract.OnSignOutCallback;
 
@@ -32,7 +36,6 @@ public class UsersLocalDataSource {
 
     public Boolean isLoggedIn() {
         return firebaseAuth.getCurrentUser() != null;
-//        return sharedPreferencesManager.isUserLoggedIn();
     }
 
     public void signOut(OnSignOutCallback callback) {

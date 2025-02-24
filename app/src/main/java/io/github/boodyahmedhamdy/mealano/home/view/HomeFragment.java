@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment implements HomeView{
     @Override
     public void setRandomMeal(DetailedMealDTO detailedMealDTO) {
         binding.randomCard.getRoot().setOnClickListener(v -> {
-            presenter.getMealById(Integer.valueOf(detailedMealDTO.getIdMeal()));
+            presenter.getMealById(detailedMealDTO.getIdMeal());
         });
         binding.randomCard.tvMealTitle.setText(detailedMealDTO.getStrMeal());
         binding.randomCard.tvMealArea.setText(detailedMealDTO.getStrArea());

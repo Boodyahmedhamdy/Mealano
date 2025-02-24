@@ -29,39 +29,16 @@ public class UsersRemoteDataSource {
         return instance;
     }
 
-    public void signupWithEmailAndPassword(String email, String password, EmptyNetworkCallback callback) {
+    public Task<AuthResult> signupWithEmailAndPassword(String email, String password) {
         Log.i(TAG, "signupWithEmailAndPassword: started");
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(
-                new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.i(TAG, "signupWithEmailAndPassword: Completed");
-                        if(task.isSuccessful()) {
-                            callback.onSuccess();
-                            Log.i(TAG, "signupWithEmailAndPassword: Completed Successfully");
-                        } else {
-                            callback.onFailure(task.getException().getLocalizedMessage());
-                            Log.i(TAG, "signupWithEmailAndPassword: Completed with Error");
-                        }
-                    }
-                }
+        return firebaseAuth.createUserWithEmailAndPassword(
+                email, password
         );
     }
 
-    public void loginWithEmailAndPassword(String email, String password, EmptyNetworkCallback callBack) {
+    public Task<AuthResult> loginWithEmailAndPassword(String email, String password) {
         Log.i(TAG, "loginWithEmailAndPassword: started");
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                Log.i(TAG, "onComplete: completed");
-                if(task.isSuccessful()) {
-                    callBack.onSuccess();
-                    Log.i(TAG, "onComplete: Completed Successfully");
-                } else {
-                    callBack.onFailure(task.getException().getLocalizedMessage());
-                    Log.e(TAG, "onComplete: Completed with Error");
-                }
-            }
-        });
+
+        return firebaseAuth.signInWithEmailAndPassword(email, password);
     }
 }

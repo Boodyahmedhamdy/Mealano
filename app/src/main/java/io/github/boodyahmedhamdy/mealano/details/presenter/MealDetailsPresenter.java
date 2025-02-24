@@ -33,7 +33,7 @@ public class MealDetailsPresenter implements IMealDetailsPresenter {
 
 
     @Override
-    public void getMealById(Integer mealId) {
+    public void getMealById(String mealId) {
         view.setIsLoading(true);
         Disposable disposable =  mealsRepository.getMealById(mealId)
                 .compose(new OnBackgroundTransformer<>())
@@ -52,7 +52,7 @@ public class MealDetailsPresenter implements IMealDetailsPresenter {
 
         // TODO: if user is authenticated and is online
         Disposable dis = mealsRepository.addMealToFavorite(
-                new MealEntity(mealDTO, usersRepository.getCurrentUser().getUid())
+                new MealEntity(mealDTO, usersRepository.getCurrentUser().getUid(), mealDTO.getIdMeal())
             )
             .compose(new OnBackgroundTransformer<>())
             .subscribe(() -> {

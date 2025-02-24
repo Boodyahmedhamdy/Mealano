@@ -14,7 +14,7 @@ import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.daos.Pla
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.MealEntity;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.PlanEntity;
 
-@Database(entities = {MealEntity.class, PlanEntity.class}, version = 1)
+@Database(entities = {MealEntity.class, PlanEntity.class}, version = 1, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class MealanoDatabase extends RoomDatabase {
     private static final String TAG = "MealanoDatabase";

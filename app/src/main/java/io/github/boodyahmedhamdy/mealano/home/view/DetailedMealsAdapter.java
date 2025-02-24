@@ -24,13 +24,13 @@ import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 public class DetailedMealsAdapter extends RecyclerView.Adapter<DetailedMealsAdapter.DetailedMealViewHolder> {
     private static final String TAG = "DetailedMealsAdapter";
     List<DetailedMealDTO> meals;
-    CustomClickListener<Integer> onClickListener;
+    CustomClickListener<String> onClickListener;
     CustomClickListener<DetailedMealDTO> onAddToPlanClickListener;
     CustomClickListener<DetailedMealDTO> onLoveClickListener;
 
     public DetailedMealsAdapter(
             List<DetailedMealDTO> meals,
-            CustomClickListener<Integer> onClickListener,
+            CustomClickListener<String> onClickListener,
             CustomClickListener<DetailedMealDTO> onAddToPlanClickListener,
             CustomClickListener<DetailedMealDTO> onLoveClickListener
     ) {
@@ -40,11 +40,6 @@ public class DetailedMealsAdapter extends RecyclerView.Adapter<DetailedMealsAdap
         this.onLoveClickListener = onLoveClickListener;
     }
 
-    public DetailedMealsAdapter(List<DetailedMealDTO> meals, CustomClickListener<Integer> onClickListener) {
-        this.meals = meals;
-        this.onClickListener = onClickListener;
-        Log.i(TAG, "DetailedMealsAdapter: current meals size: " + meals.size() );
-    }
 
     public void setMeals(List<DetailedMealDTO> meals) {
         this.meals = meals;
@@ -64,7 +59,7 @@ public class DetailedMealsAdapter extends RecyclerView.Adapter<DetailedMealsAdap
     public void onBindViewHolder(@NonNull DetailedMealViewHolder holder, int position) {
         DetailedMealDTO meal = meals.get(position);
         holder.binding.getRoot().setOnClickListener(v -> {
-            onClickListener.onClick(Integer.valueOf(meal.getIdMeal()));
+            onClickListener.onClick(meal.getIdMeal());
         });
         holder.binding.tvMealTitle.setText(meal.getStrMeal());
         holder.binding.tvMealArea.setText(meal.getStrArea());

@@ -52,7 +52,7 @@ public class MealsRemoteDataSource {
         return service.getAllMeals();
     }
 
-    public Single<DetailedMealsResponse> getMealById(Integer mealId) {
+    public Single<DetailedMealsResponse> getMealById(String mealId) {
         return service.getMealById(mealId);
     }
 

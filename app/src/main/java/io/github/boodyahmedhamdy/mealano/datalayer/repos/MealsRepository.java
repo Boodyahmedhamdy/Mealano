@@ -45,7 +45,7 @@ public class MealsRepository {
         return remoteDataSource.getAllMeals();
     }
 
-    public Single<DetailedMealsResponse> getMealById(Integer mealId) {
+    public Single<DetailedMealsResponse> getMealById(String mealId) {
         return remoteDataSource.getMealById(mealId);
     }
 

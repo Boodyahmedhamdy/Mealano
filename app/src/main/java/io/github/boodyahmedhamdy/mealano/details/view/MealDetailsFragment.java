@@ -112,7 +112,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
         });
 
 
-        presenter.getMealById(Integer.valueOf(id));
+        presenter.getMealById(id);
 
     }
 

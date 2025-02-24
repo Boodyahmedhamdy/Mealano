@@ -47,5 +47,5 @@ public interface MealsApiService {
 
 
     @GET("lookup.php")
-    Single<DetailedMealsResponse> getMealById(@Query("i") Integer id);
+    Single<DetailedMealsResponse> getMealById(@Query("i") String id);
 }

@@ -5,6 +5,12 @@ import static io.github.boodyahmedhamdy.mealano.constants.AuthConstants.MIN_PASS
 import android.util.Log;
 import android.util.Patterns;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.signup.contract.SignupView;
 import io.github.boodyahmedhamdy.mealano.utils.network.EmptyNetworkCallback;
@@ -23,21 +29,19 @@ public class SignupPresenter {
     }
 
     public void signupWithEmailAndPassword(
-            String email, String password, String confirmPassword) {
+            String email, String password, String confirmPassword
+    ) {
         Log.i(TAG, "signupWithEmailAndPassword: started");
         if(isValidInput(email, password, confirmPassword)) {
             view.setIsLoading(true);
-            usersRepository.signupWithEmailAndPassword(email, password, new EmptyNetworkCallback() {
-                @Override
-                public void onSuccess() {
-                    view.goToHomeScreen();
-                }
-
-                @Override
-                public void onFailure(String errorMessage) {
-                    view.setErrorMessage(errorMessage);
-                }
-            });
+            usersRepository.signupWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()) {
+                            view.goToHomeScreen();
+                        } else {
+                            view.setErrorMessage(task.getException().getLocalizedMessage());
+                        }
+                    });
         } else {
             view.setErrorMessage("Some error happend. input isn't valid");
         }

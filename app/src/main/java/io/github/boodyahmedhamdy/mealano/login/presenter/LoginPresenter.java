@@ -6,6 +6,12 @@ import static io.github.boodyahmedhamdy.mealano.constants.AuthConstants.MIN_PASS
 import android.util.Log;
 import android.util.Patterns;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.login.contract.LoginView;
 import io.github.boodyahmedhamdy.mealano.utils.network.EmptyNetworkCallback;
@@ -24,17 +30,16 @@ public class LoginPresenter {
         Log.i(TAG, "signUpWithEmailAndPassword: started");
         if(isValidInput(email, password)) {
             view.setIsLoading(true);
-            usersRepository.loginWithEmailAndPassword(email, password, new EmptyNetworkCallback() {
-                @Override
-                public void onSuccess() {
-                    view.goToHomeScreen();
-                }
+            usersRepository.loginWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+                        if(task.isSuccessful()) {
+                            view.goToHomeScreen();
+                        } else {
+                            view.setErrorMessage(task.getException().getLocalizedMessage());
+                            view.setIsLoading(false);
+                        }
+                    });
 
-                @Override
-                public void onFailure(String errorMessage) {
-                    view.setErrorMessage(errorMessage);
-                }
-            });
         } else {
             view.setErrorMessage("input isn't valid");
             view.setIsLoading(false);

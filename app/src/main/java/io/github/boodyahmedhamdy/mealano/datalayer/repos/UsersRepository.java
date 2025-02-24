@@ -2,6 +2,8 @@ package io.github.boodyahmedhamdy.mealano.datalayer.repos;
 
 import android.util.Log;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
@@ -30,16 +32,14 @@ public class UsersRepository {
         this.remoteDataSource = remoteDataSource;
     }
 
-    public void signupWithEmailAndPassword(String email, String password, EmptyNetworkCallback callback) {
-        Log.i(TAG, "signupWithEmailAndPassword: started");
-        remoteDataSource.signupWithEmailAndPassword(email, password, callback);
-        Log.i(TAG, "signupWithEmailAndPassword: finished");
+    public Task<AuthResult> signupWithEmailAndPassword(String email, String password) {
+
+        return remoteDataSource.signupWithEmailAndPassword(email, password);
+
     }
 
-    public void loginWithEmailAndPassword(String email, String password, EmptyNetworkCallback callBack) {
-        Log.i(TAG, "loginWithEmailAndPassword: started");
-        remoteDataSource.loginWithEmailAndPassword(email, password, callBack);
-        Log.i(TAG, "loginWithEmailAndPassword: finished");
+    public Task<AuthResult> loginWithEmailAndPassword(String email, String password) {
+        return remoteDataSource.loginWithEmailAndPassword(email, password);
 
     }
 
