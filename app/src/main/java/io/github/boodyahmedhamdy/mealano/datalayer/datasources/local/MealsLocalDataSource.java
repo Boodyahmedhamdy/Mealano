@@ -11,6 +11,8 @@ import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.daos.MealsDao;
 import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
 import io.github.boodyahmedhamdy.mealano.utils.callbacks.EmptyCallback;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 
 public class MealsLocalDataSource {
 
@@ -30,29 +32,16 @@ public class MealsLocalDataSource {
     }
 
 
-    public void addMealToFavorite(DetailedMealDTO mealDTO, String userId, CustomCallback<DetailedMealDTO> callback) {
-        Log.i(TAG, "addMealToFavorite: started");
-        MealEntity entity = new MealEntity(mealDTO, userId);
-        try {
-            new Thread(() -> {
-                Log.i(TAG, "addMealToFavorite: started on thread");
-                mealsDao.insertMeal(entity);
-                Log.i(TAG, "addMealToFavorite: finished on thread");
-            }).start();
-            callback.onSuccess(mealDTO);
-        } catch (Exception e) {
-            callback.onFailure(e.getLocalizedMessage());
-        }
+    public Completable addMealToFavorite(MealEntity mealEntity) {
+        return mealsDao.insertMeal(mealEntity);
     }
 
-    public LiveData<List<MealEntity>> getFavoriteMeals(String userId) {
+    public Flowable<List<MealEntity>> getFavoriteMeals(String userId) {
 
         return mealsDao.getAllMeals(userId);
     }
 
-    public void deleteFavoriteMeal(MealEntity meal) {
-        new Thread(() -> {
-            mealsDao.deleteMeal(meal);
-        }).start();
+    public Completable deleteFavoriteMeal(MealEntity meal) {
+            return mealsDao.deleteMeal(meal);
     }
 }

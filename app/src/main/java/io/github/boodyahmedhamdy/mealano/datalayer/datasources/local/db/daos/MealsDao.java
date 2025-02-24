@@ -10,19 +10,21 @@ import androidx.room.Query;
 import java.util.List;
 
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.MealEntity;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
 
 @Dao
 public interface MealsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertMeal(MealEntity meal);
+    Completable insertMeal(MealEntity meal);
 
     @Query("SELECT * FROM MEALS where user_id = :userId")
-    LiveData<List<MealEntity>> getAllMeals(String userId);
+    Flowable<List<MealEntity>> getAllMeals(String userId);
 
 
     @Delete
-    void deleteMeal(MealEntity mealEntity);
+    Completable deleteMeal(MealEntity mealEntity);
 
 
 

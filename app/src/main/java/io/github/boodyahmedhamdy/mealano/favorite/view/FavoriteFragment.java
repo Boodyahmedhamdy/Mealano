@@ -104,9 +104,7 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
 
         binding.rvFavoriteMeals.setAdapter(adapter);
 
-        presenter.getFavoriteMeals().observe(getViewLifecycleOwner(), mealEntities -> {
-            setFavoriteMeals(mealEntities);
-        });
+        presenter.getFavoriteMeals();
 
     }
 
@@ -120,5 +118,10 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
     @Override
     public void goToDetailsScreen() {
 
+    }
+
+    @Override
+    public void setErrorMessage(String errorMessage) {
+        Log.i(TAG, "setErrorMessage: " + errorMessage);
     }
 }

@@ -3,13 +3,15 @@ package io.github.boodyahmedhamdy.mealano.details.presenter;
 import android.util.Log;
 
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.MealEntity;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.PlansRepository;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.details.contract.IMealDetailsPresenter;
 import io.github.boodyahmedhamdy.mealano.details.contract.MealDetailsView;
 import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
-import io.github.boodyahmedhamdy.mealano.utils.network.CustomNetworkCallback;
+import io.github.boodyahmedhamdy.mealano.utils.rx.OnBackgroundTransformer;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 public class MealDetailsPresenter implements IMealDetailsPresenter {
 
@@ -33,40 +35,34 @@ public class MealDetailsPresenter implements IMealDetailsPresenter {
     @Override
     public void getMealById(Integer mealId) {
         view.setIsLoading(true);
-        mealsRepository.getMealById(mealId, new CustomNetworkCallback<DetailedMealDTO>() {
-            @Override
-            public void onSuccess(DetailedMealDTO mealDTO) {
-                Log.i(TAG, "onSuccess: " + mealDTO);
-                view.setMeal(mealDTO);
-                view.setIsLoading(false);
-            }
-
-            @Override
-            public void onFailure(String errorMessage) {
-                Log.e(TAG, "onFailure: " + errorMessage);
-                view.setErrorMessage("error from Presenter: " + errorMessage);
-                view.setIsLoading(false);
-            }
-        });
+        Disposable disposable =  mealsRepository.getMealById(mealId)
+                .compose(new OnBackgroundTransformer<>())
+                .map(detailedMealsResponse -> detailedMealsResponse.getMeals().get(0))
+                .subscribe(mealDTO -> {
+                    view.setMeal(mealDTO);
+                    view.setIsLoading(false);
+                }, throwable -> {
+                    view.setErrorMessage(throwable.getLocalizedMessage());
+                    view.setIsLoading(false);
+                });
     }
 
     public void addMealToFavorite(DetailedMealDTO mealDTO) {
         Log.i(TAG, "addMealToFavorite: started adding to favorite");
-        mealsRepository.addMealToFavorite(
-                mealDTO, usersRepository.getCurrentUser().getUid(), new CustomCallback<DetailedMealDTO>() {
 
-            @Override
-            public void onSuccess(DetailedMealDTO mealDTO) {
+        // TODO: if user is authenticated and is online
+        Disposable dis = mealsRepository.addMealToFavorite(
+                new MealEntity(mealDTO, usersRepository.getCurrentUser().getUid())
+            )
+            .compose(new OnBackgroundTransformer<>())
+            .subscribe(() -> {
                 view.setSuccessfullyAddedToFavorite(mealDTO);
-            }
-
-            @Override
-            public void onFailure(String errorMessage) {
-                Log.i(TAG, "onFailure: ");
-                view.setErrorMessage(errorMessage);
-            }
-        });
-        Log.i(TAG, "addMealToFavorite: finished adding to favorite");
+                Log.i(TAG, "addMealToFavorite: finished adding to favorite");
+            },
+                    throwable -> {
+                view.setErrorMessage(throwable.getLocalizedMessage());
+                Log.e(TAG, "addMealToFavorite: ", throwable);
+            });
     }
 
     public void addMealToPlans(DetailedMealDTO currentMeal, String date) {

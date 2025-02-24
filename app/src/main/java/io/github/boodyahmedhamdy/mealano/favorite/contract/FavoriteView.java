@@ -11,4 +11,5 @@ public interface FavoriteView {
     void goToDetailsScreen();
 
 
+    void setErrorMessage(String errorMessage);
 }

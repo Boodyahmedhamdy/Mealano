@@ -7,12 +7,14 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
+import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealsResponse;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.MealsLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.MealEntity;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
-import io.github.boodyahmedhamdy.mealano.utils.callbacks.EmptyCallback;
-import io.github.boodyahmedhamdy.mealano.utils.network.CustomNetworkCallback;
+import io.reactivex.rxjava3.core.Completable;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 
 public class MealsRepository {
     
@@ -35,31 +37,30 @@ public class MealsRepository {
     }
 
 
-    public void getRandomMeal(CustomNetworkCallback<DetailedMealDTO> callback) {
-        remoteDataSource.getRandomMeal(callback);
+    public Single<DetailedMealsResponse> getRandomMeal() {
+        return remoteDataSource.getRandomMeal();
     }
 
-    public void getAllMeals(CustomNetworkCallback<List<DetailedMealDTO>> callback) {
-        remoteDataSource.getAllMeals(callback);
+    public Single<DetailedMealsResponse> getAllMeals() {
+        return remoteDataSource.getAllMeals();
     }
 
-    public void getMealById(Integer mealId, CustomNetworkCallback<DetailedMealDTO> callback) {
-        remoteDataSource.getMealById(mealId, callback);
+    public Single<DetailedMealsResponse> getMealById(Integer mealId) {
+        return remoteDataSource.getMealById(mealId);
     }
 
-    public void addMealToFavorite(DetailedMealDTO mealDTO, String userId, CustomCallback<DetailedMealDTO> callback) {
-        Log.i(TAG, "addMealToFavorite: started");
-        localDataSource.addMealToFavorite(mealDTO, userId, callback);
-        Log.i(TAG, "addMealToFavorite: finished");
-        remoteDataSource.addToFavorite(mealDTO, userId, callback);
+    public Completable addMealToFavorite(MealEntity mealEntity) {
+        return localDataSource.addMealToFavorite(mealEntity);
+
+//        remoteDataSource.addToFavorite(mealDTO, userId, callback);
     }
 
-    public LiveData<List<MealEntity>> getFavoriteMeals(String userId) {
+    public Flowable<List<MealEntity>> getFavoriteMeals(String userId) {
         return localDataSource.getFavoriteMeals(userId);
     }
 
-    public void deleteFavoriteMeal(MealEntity meal) {
-        localDataSource.deleteFavoriteMeal(meal);
+    public Completable deleteFavoriteMeal(MealEntity meal) {
+        return localDataSource.deleteFavoriteMeal(meal);
     }
 
 

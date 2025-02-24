@@ -50,33 +50,45 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    
 
-    //Glide
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    //---------------- Retrofit Started -----------------------
     //Retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.11.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation ("com.google.code.gson:gson:2.12.1")
+    // Retrofit with Rxjava
+    implementation ("com.squareup.retrofit2:adapter-rxjava3:2.9.0")
 
-    // room
+    //Glide
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    //---------------- Retrofit Ended -----------------------
+
+
+
+    //---------------- Room Started -----------------------
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
-
     // room with rxjava
-//    implementation("androidx.room:room-rxjava3:$room_version")
+    implementation("androidx.room:room-rxjava3:$room_version")
+    //---------------- Room Ended -----------------------
 
 
+
+    //---------------- Rxjava Started -----------------------
+    implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
+    implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
+    //---------------- Rxjava Ended -----------------------
+
+
+    //---------------- Sign in with google Started -----------------------
      // signin with google
-
 //    implementation ("androidx.credentials:credentials:<latest version>")
 //    implementation ("androidx.credentials:credentials-play-services-auth:<latest version>")
 //    implementation ("com.google.android.libraries.identity.googleid:googleid:<latest version>")
-
     implementation("androidx.credentials:credentials:1.5.0-rc01")
     implementation("com.google.android.gms:play-services-auth:21.3.0")
-
-    // optional - needed for credentials support from play services, for devices running
-    // Android 13 and below.
     implementation("androidx.credentials:credentials-play-services-auth:1.5.0-rc01")
+    //---------------- Sign in with google Ended -----------------------
 }
