@@ -55,16 +55,22 @@ public class SignupPresenter {
             Log.i(TAG, "isValidInput: finished validating email false");
             return false;
         }
+        view.setEmailValidationError("");
+
         if(password.trim().length() < MIN_PASSWORD_LENGTH) {
             view.setPasswordValidationError("password must be at least " + MIN_PASSWORD_LENGTH + " letters");
             Log.i(TAG, "isValidInput: finished validating password false");
             return false;
         }
+        view.setPasswordValidationError("");
+
         if(!password.equals(confirmPassword)) {
             view.setConfirmPasswordValidationError("confirm password isn't the same as password");
             Log.i(TAG, "isValidInput: finished validating confirmPassword false");
             return false;
         }
+        view.setConfirmPasswordValidationError("");
+
         Log.i(TAG, "isValidInput: finished validating true");
         return true;
     }

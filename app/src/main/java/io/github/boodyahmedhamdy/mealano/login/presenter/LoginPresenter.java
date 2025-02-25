@@ -35,6 +35,8 @@ public class LoginPresenter {
                         if(task.isSuccessful()) {
                             view.goToHomeScreen();
                         } else {
+                            view.setPasswordValidationError("");
+                            view.setEmailValidationErrorMessage("");
                             view.setErrorMessage(task.getException().getLocalizedMessage());
                             view.setIsLoading(false);
                         }
@@ -53,11 +55,15 @@ public class LoginPresenter {
             Log.i(TAG, "isValidInput: finished validating email false");
             return false;
         }
+        view.setEmailValidationErrorMessage("");
+
         if(password.trim().length() < MIN_PASSWORD_LENGTH) {
             view.setPasswordValidationError("password must be at least " + MIN_PASSWORD_LENGTH + " letters");
             Log.i(TAG, "isValidInput: finished validating password false");
             return false;
         }
+        view.setPasswordValidationError("");
+
         Log.i(TAG, "isValidInput: finished validating true");
         return true;
     }

@@ -10,16 +10,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
-
+import io.github.boodyahmedhamdy.mealano.data.network.dto.CategoriesResponse;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealsResponse;
+import io.github.boodyahmedhamdy.mealano.data.network.dto.IngredientsResponse;
+import io.github.boodyahmedhamdy.mealano.data.network.dto.SimpleAreasResponse;
 import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
-import io.github.boodyahmedhamdy.mealano.utils.network.CustomNetworkCallback;
 import io.reactivex.rxjava3.core.Single;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MealsRemoteDataSource {
 
@@ -83,5 +80,17 @@ public class MealsRemoteDataSource {
 
             }
         });
+    }
+
+    public Single<CategoriesResponse> getAllCategories() {
+        return service.getAllCategories();
+    }
+
+    public Single<IngredientsResponse> getAllIngredients() {
+        return service.getAllIngredients();
+    }
+
+    public Single<SimpleAreasResponse> getAllAreas() {
+        return service.getAllAreasSimple();
     }
 }

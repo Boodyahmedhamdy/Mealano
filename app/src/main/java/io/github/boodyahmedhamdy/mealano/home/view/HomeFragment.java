@@ -188,7 +188,7 @@ public class HomeFragment extends Fragment implements HomeView{
 
     @Override
     public void setError(String errorMessage) {
-        new AlertDialog.Builder(getContext())
+        new AlertDialog.Builder(binding.getRoot().getContext())
                 .setTitle("ERROR")
                 .setMessage(errorMessage)
                 .create().show();

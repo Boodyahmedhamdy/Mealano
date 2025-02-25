@@ -146,6 +146,6 @@ public class PlansFragment extends Fragment implements PlansView {
 
     @Override
     public void setSyncMessage(String syncMessage) {
-        Snackbar.make(binding.getRoot(), syncMessage, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(binding.getRoot(), syncMessage, Snackbar.LENGTH_LONG).show(); // error when navigating out
     }
 }

@@ -48,4 +48,8 @@
     <string name="youtube_viedo">Youtube Viedo</string>
     <string name="add_to_favorite">Add to Favorite</string>
     <string name="client_id">110969076776-thpopm1qmvkfgag77g6oac4is4fis0qj.apps.googleusercontent.com</string>
+    <string name="category_in_search">Category</string>
+    <string name="area_in_search">Area</string>
+    <string name="ingredient_in_search">Ingredient</string>
+    <string name="search_by">Search By</string>
 </resources>

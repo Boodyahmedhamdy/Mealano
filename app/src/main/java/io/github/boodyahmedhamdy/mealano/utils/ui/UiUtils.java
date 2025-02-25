@@ -6,6 +6,7 @@ import static android.view.View.VISIBLE;
 import androidx.fragment.app.FragmentActivity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -167,4 +168,83 @@ public class UiUtils {
     );
 
 
+    public static String getIngredientImgPath(String strIngredient) {
+        return "https://www.themealdb.com/images/ingredients/" + strIngredient + "-small.png";
+    }
+
+    private static Map<String, String> countryCodeMap = Map.ofEntries(
+        Map.entry("American", "US"),
+        Map.entry("British", "GB"),
+        Map.entry("Canadian", "CA"),
+        Map.entry("Chinese", "CN"),
+        Map.entry("Croatian", "HR"),
+        Map.entry("Dutch", "NL"),
+        Map.entry("Egyptian", "EG"),
+        Map.entry("Filipino", "PH"),
+        Map.entry("French", "FR"),
+        Map.entry("Greek", "GR"),
+        Map.entry("Indian", "IN"),
+        Map.entry("Irish", "IE"),
+        Map.entry("Italian", "IT"),
+        Map.entry("Jamaican", "JM"),
+        Map.entry("Japanese", "JP"),
+        Map.entry("Kenyan", "KE"),
+        Map.entry("Malaysian", "MY"),
+        Map.entry("Mexican", "MX"),
+        Map.entry("Moroccan", "MA"),
+        Map.entry("Norwegian", "NO"),
+        Map.entry("Polish", "PL"),
+        Map.entry("Portuguese", "PT"),
+        Map.entry("Russian", "RU"),
+        Map.entry("Spanish", "ES"),
+        Map.entry("Thai", "TH"),
+        Map.entry("Tunisian", "TN"),
+        Map.entry("Turkish", "TR"),
+        Map.entry("Ukrainian", "UA"),
+        Map.entry("Uruguayan", "UY"),
+        Map.entry("Vietnamese", "VN")
+    );
+
+    private static Map<String, String> createCountryCodeMap() {
+        Map<String, String> map = new HashMap<>();
+
+        // Add mappings for countries in the response
+        map.put("American", "US");
+        map.put("British", "GB");
+        map.put("Canadian", "CA");
+        map.put("Chinese", "CN");
+        map.put("Croatian", "HR");
+        map.put("Dutch", "NL");
+        map.put("Egyptian", "EG");
+        map.put("Filipino", "PH");
+        map.put("French", "FR");
+        map.put("Greek", "GR");
+        map.put("Indian", "IN");
+        map.put("Irish", "IE");
+        map.put("Italian", "IT");
+        map.put("Jamaican", "JM");
+        map.put("Japanese", "JP");
+        map.put("Kenyan", "KE");
+        map.put("Malaysian", "MY");
+        map.put("Mexican", "MX");
+        map.put("Moroccan", "MA");
+        map.put("Norwegian", "NO");
+        map.put("Polish", "PL");
+        map.put("Portuguese", "PT");
+        map.put("Russian", "RU");
+        map.put("Spanish", "ES");
+        map.put("Thai", "TH");
+        map.put("Tunisian", "TN");
+        map.put("Turkish", "TR");
+        map.put("Ukrainian", "UA");
+        map.put("Uruguayan", "UY");
+        map.put("Vietnamese", "VN");
+
+        return map;
+    }
+
+    public static String getAreaImgPath(String strArea) {
+        String countryCode = countryCodeMap.getOrDefault(strArea, "unknown");
+        return "https://www.themealdb.com/images/icons/flags/big/64/" + countryCode.toLowerCase() + ".png";
+    }
 }
