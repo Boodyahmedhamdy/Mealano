@@ -1,6 +1,7 @@
 package io.github.boodyahmedhamdy.mealano.profile.view;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.SharedPreferencesManager;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentProfileBinding;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
@@ -89,7 +91,6 @@ public class ProfileFragment extends Fragment implements ProfileView, OnSignOutC
     @Override
     public void onFailure(String errorMessage) {
         Log.e(TAG, "onFailure: error message: " + errorMessage);
-
     }
 
     @Override

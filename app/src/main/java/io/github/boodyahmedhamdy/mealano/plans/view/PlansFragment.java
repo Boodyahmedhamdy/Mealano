@@ -1,6 +1,7 @@
 package io.github.boodyahmedhamdy.mealano.plans.view;
 
 import android.content.Context;
+import android.icu.util.Calendar;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,12 +14,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentPlansBinding;
@@ -95,6 +101,20 @@ public class PlansFragment extends Fragment implements PlansView {
                 presenter.getMealById(planEntity.getMealId());
             }
         );
+
+        // Get today's date
+        Calendar calendar = Calendar.getInstance();
+        binding.calendarView.setMinDate(calendar.getTimeInMillis());
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
+        binding.calendarView.setMaxDate(calendar.getTimeInMillis());
+        binding.calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+            String selectedDate = sdf.format(new Date(calendar.getTimeInMillis()));
+
+            Toast.makeText(binding.getRoot().getContext(), selectedDate, Toast.LENGTH_SHORT).show();
+        });
+
 
         binding.rvPlans.setAdapter(adapter);
 

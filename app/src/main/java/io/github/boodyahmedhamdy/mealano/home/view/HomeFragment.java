@@ -140,17 +140,19 @@ public class HomeFragment extends Fragment implements HomeView{
         }
         binding.randomCard.tvMealCategory.setText(detailedMealDTO.getStrCategory());
 
-        Glide.with(requireContext())
+        Glide.with(binding.getRoot())
                 .load(detailedMealDTO.getStrMealThumb())
                 .error(R.drawable.baseline_broken_image_24)
                 .placeholder(R.drawable.loading)
                 .into(binding.randomCard.ivMealThumbnail);
+
+        binding.randomCard.cgMealTags.removeViews(0, binding.randomCard.cgMealTags.getChildCount());
         List<String> tags = detailedMealDTO.getStrTags() == null ? List.of() : Arrays.asList(
                 detailedMealDTO.getStrTags().toString().split(",")
         );
         Log.i(TAG, "setRandomMeal: tags: " + tags);
         tags.forEach(tag -> {
-            Chip chip = new Chip(requireContext());
+            Chip chip = new Chip(binding.getRoot().getContext());
             chip.setText(tag);
             binding.randomCard.cgMealTags.addView(chip);
         });
@@ -210,21 +212,21 @@ public class HomeFragment extends Fragment implements HomeView{
     public void setIsOnline(Boolean isOnline) {
         Log.i(TAG, "setIsOnline: isonline: " + isOnline);
         if(isOnline) {
-            Snackbar.make(binding.getRoot(), "Back Online", Snackbar.LENGTH_SHORT).show();
+//            Snackbar.make(binding.getRoot(), "Back Online", Snackbar.LENGTH_SHORT).show();
             binding.randomCard.getRoot().setVisibility(VISIBLE);
             binding.rvAllMeals.setVisibility(VISIBLE);
             binding.textView15.setVisibility(VISIBLE);
             binding.textView18.setVisibility(VISIBLE);
             binding.btnRefreshRandomMeal.setVisibility(VISIBLE);
-            binding.lockCard.getRoot().setVisibility(INVISIBLE);
+            binding.noWifiCardHome.getRoot().setVisibility(INVISIBLE);
         } else {
             binding.randomCard.getRoot().setVisibility(INVISIBLE);
             binding.rvAllMeals.setVisibility(INVISIBLE);
             binding.textView15.setVisibility(INVISIBLE);
             binding.textView18.setVisibility(INVISIBLE);
             binding.btnRefreshRandomMeal.setVisibility(INVISIBLE);
-            binding.lockCard.getRoot().setVisibility(VISIBLE);
-            Snackbar.make(binding.getRoot(), "you are Offline", Snackbar.LENGTH_SHORT).show();
+            binding.noWifiCardHome.getRoot().setVisibility(VISIBLE);
+//            Snackbar.make(binding.getRoot(), "you are Offline", Snackbar.LENGTH_SHORT).show();
         }
     }
 
