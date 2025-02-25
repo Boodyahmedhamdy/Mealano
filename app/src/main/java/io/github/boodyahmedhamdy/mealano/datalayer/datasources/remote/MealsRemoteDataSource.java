@@ -15,6 +15,7 @@ import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealsResponse;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.IngredientsResponse;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.SimpleAreasResponse;
+import io.github.boodyahmedhamdy.mealano.data.network.dto.SimpleMealsResponse;
 import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
 import io.reactivex.rxjava3.core.Single;
 
@@ -92,5 +93,17 @@ public class MealsRemoteDataSource {
 
     public Single<SimpleAreasResponse> getAllAreas() {
         return service.getAllAreasSimple();
+    }
+
+    public Single<SimpleMealsResponse> getAllMealsByIngredient(String ingredient) {
+        return service.getMealsByMainIngredient(ingredient);
+    }
+
+    public Single<SimpleMealsResponse> getAllMealsByCategory(String category) {
+        return service.getMealsByCategory(category);
+    }
+
+    public Single<SimpleMealsResponse> getAllMealsByArea(String area) {
+        return service.getMealsByArea(area);
     }
 }

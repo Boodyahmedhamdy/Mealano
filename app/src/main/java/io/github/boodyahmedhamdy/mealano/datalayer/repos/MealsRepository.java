@@ -1,11 +1,13 @@
 package io.github.boodyahmedhamdy.mealano.datalayer.repos;
 
 import java.util.List;
+import java.util.function.DoubleUnaryOperator;
 
 import io.github.boodyahmedhamdy.mealano.data.network.dto.CategoriesResponse;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealsResponse;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.IngredientsResponse;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.SimpleAreasResponse;
+import io.github.boodyahmedhamdy.mealano.data.network.dto.SimpleMealsResponse;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.MealsLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.MealEntity;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
@@ -71,5 +73,17 @@ public class MealsRepository {
 
     public Single<SimpleAreasResponse> getAllAreas() {
         return remoteDataSource.getAllAreas();
+    }
+
+    public Single<SimpleMealsResponse> getAllMealsByIngredient(String ingredient) {
+        return remoteDataSource.getAllMealsByIngredient(ingredient);
+    }
+
+    public Single<SimpleMealsResponse> getAllMealsByCategory(String category) {
+        return remoteDataSource.getAllMealsByCategory(category);
+    }
+
+    public Single<SimpleMealsResponse> getAllMealsByArea(String area) {
+        return remoteDataSource.getAllMealsByArea(area);
     }
 }

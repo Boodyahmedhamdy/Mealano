@@ -107,6 +107,8 @@ public class PlansFragment extends Fragment implements PlansView {
         binding.calendarView.setMinDate(calendar.getTimeInMillis());
         calendar.add(Calendar.DAY_OF_MONTH, 7);
         binding.calendarView.setMaxDate(calendar.getTimeInMillis());
+        // TODO: return back for today
+
         binding.calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
             sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
