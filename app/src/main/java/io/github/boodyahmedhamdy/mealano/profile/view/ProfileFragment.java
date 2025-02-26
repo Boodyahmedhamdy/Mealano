@@ -1,5 +1,9 @@
 package io.github.boodyahmedhamdy.mealano.profile.view;
 
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -7,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -14,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -33,6 +39,7 @@ public class ProfileFragment extends Fragment implements ProfileView, OnSignOutC
     private static final String TAG = "ProfileFragment";
     FragmentProfileBinding binding;
     ProfilePresenter presenter;
+    NavController navController;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +61,7 @@ public class ProfileFragment extends Fragment implements ProfileView, OnSignOutC
         super.onViewCreated(view, savedInstanceState);
         UiUtils.showToolbar(requireActivity());
         UiUtils.showBottomBar(requireActivity());
+        navController = Navigation.findNavController(binding.getRoot());
 
         presenter = new ProfilePresenter(
                 this,
@@ -80,12 +88,24 @@ public class ProfileFragment extends Fragment implements ProfileView, OnSignOutC
             dialog.show();
         });
 
+        binding.btnAbout.setOnClickListener(v -> {
+            navController.navigate(
+                    ProfileFragmentDirections.actionProfileFragmentToAboutFragment()
+            );
+        });
+
+        binding.btnLoginProfile.setOnClickListener(v -> {
+            navController.navigate(ProfileFragmentDirections.actionProfileFragmentToLoginFragment());
+        });
+
+
     }
 
     @Override
     public void onSuccess() {
-        Navigation.findNavController(binding.getRoot())
-                .navigate(ProfileFragmentDirections.actionProfileFragmentToLoginFragment());
+        navController.navigate(
+                ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
+        );
     }
 
     @Override
@@ -98,8 +118,37 @@ public class ProfileFragment extends Fragment implements ProfileView, OnSignOutC
         if(user != null) {
             String email = user.getEmail();
             binding.tvUserEmail.setText(email);
-        } else {
-            binding.tvUserEmail.setText("you arn't Logged in");
+
+            if(user.getDisplayName() != null) {
+                binding.tvUserName.setText(user.getDisplayName());
+            } else {
+                binding.tvUserName.setText(user.getEmail().split("@")[0]);
+            }
+
+            if(user.getEmail() != null) {
+                binding.tvUserEmail.setText(user.getEmail());
+            }
+            Glide.with(binding.getRoot())
+                    .load(user.getPhotoUrl())
+                    .error(R.drawable.baseline_face_24)
+                    .into(binding.ivUser);
+
+            binding.lockLayoutProfile.getRoot().setVisibility(INVISIBLE);
+            binding.btnLoginProfile.setVisibility(GONE);
+
+            binding.ivUser.setVisibility(VISIBLE);
+            binding.tvUserName.setVisibility(VISIBLE);
+            binding.tvUserEmail.setVisibility(VISIBLE);
+            binding.btnSignout.setVisibility(VISIBLE);
+        } else { // logged out
+
+            binding.lockLayoutProfile.getRoot().setVisibility(VISIBLE);
+            binding.btnLoginProfile.setVisibility(VISIBLE);
+
+            binding.ivUser.setVisibility(INVISIBLE);
+            binding.tvUserName.setVisibility(INVISIBLE);
+            binding.tvUserEmail.setVisibility(INVISIBLE);
+            binding.btnSignout.setVisibility(INVISIBLE);
         }
 
     }
