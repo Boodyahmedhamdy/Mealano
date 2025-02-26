@@ -76,7 +76,7 @@ public class HomePresenter {
     }
 
     public void getMealById(String mealId) {
-        Disposable dis =  mealsRepository.getMealById(mealId)
+        Disposable dis =  mealsRepository.getMealByIdFromRemote(mealId)
                 .compose(new OnBackgroundTransformer<>())
                 .map(detailedMealsResponse -> detailedMealsResponse.getMeals().get(0))
                 .subscribe(mealDTO -> {
@@ -88,7 +88,7 @@ public class HomePresenter {
 
     public void addMealToFavorite(DetailedMealDTO mealDTO) {
 
-        Disposable dis = mealsRepository.addMealToFavorite(
+        Disposable dis = mealsRepository.addMealToLocalFavorite(
                 new MealEntity(mealDTO, usersRepository.getCurrentUser().getUid(), mealDTO.getIdMeal())
         )
         .compose(new OnBackgroundTransformer<>())
@@ -103,9 +103,18 @@ public class HomePresenter {
     }
 
 
-    public void addMealToPlans(DetailedMealDTO mealDTO, String date) {
-        plansRepository.addPlanToRemote(
+    public void addMealToPlans(DetailedMealDTO mealDTO, Long date) {
+//        plansRepository.addPlanToRemote(
+//                new PlanEntity(usersRepository.getCurrentUser().getUid(), date, mealDTO.getIdMeal(), mealDTO)
+//        );
+
+        Disposable dis = plansRepository.addPlanToLocal(
                 new PlanEntity(usersRepository.getCurrentUser().getUid(), date, mealDTO.getIdMeal(), mealDTO)
-        );
+        ).compose(new OnBackgroundTransformer<>())
+                .subscribe(() -> {
+                    view.setSuccessMessage("added " + mealDTO.getStrMeal() + " to Plans Successfully");
+                }, throwable -> {
+                    view.setError("failed to add" + mealDTO.getStrMeal() + " to Plans");
+                });
     }
 }

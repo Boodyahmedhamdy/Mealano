@@ -1,5 +1,8 @@
 package io.github.boodyahmedhamdy.mealano.utils.ui;
 
+import static com.google.android.material.datepicker.MaterialDatePicker.INPUT_MODE_CALENDAR;
+
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentActivity;
@@ -15,33 +18,35 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.utils.listeners.CustomClickListener;
 
 public class DatePickerUtils {
+    private static final String TAG = "DatePickerUtils";
 
-    public static void showDatePicker(FragmentActivity activity, CustomClickListener<String> listener) {
+    public static void showDatePicker(FragmentActivity activity, CustomClickListener<Long> listener) {
         FragmentManager fragmentManager = activity.getSupportFragmentManager();
 
         // Get today's date in UTC
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
         long today = calendar.getTimeInMillis();
 
-        // Get the date for next 7 days
         calendar.add(Calendar.DAY_OF_YEAR, 7);
         long nextWeek = calendar.getTimeInMillis();
 
-        // Calendar constraints to limit selection to the next 7 days
         CalendarConstraints constraints = new CalendarConstraints.Builder()
                 .setValidator(DateValidatorPointForward.now()) // Disable past dates
-                .setStart(today)  // Set the minimum date to today
-                .setEnd(nextWeek) // Set the maximum date to 7 days from today
+                .setStart(today)
+                .setEnd(nextWeek)
                 .build();
 
-        // Build the Material DatePicker
+        calendar.setTimeInMillis(today);
+
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
-                .setTitleText("Select a Date")
+                .setTitleText(R.string.select_a_date)
                 .setSelection(today)  // Default selection is today
                 .setCalendarConstraints(constraints) // Apply date constraints
+                .setInputMode(INPUT_MODE_CALENDAR)
                 .build();
 
         // Show the DatePicker
@@ -49,13 +54,17 @@ public class DatePickerUtils {
 
         // Handle date selection
         datePicker.addOnPositiveButtonClickListener(selection -> {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-            String selectedDate = sdf.format(new Date(selection));
+            listener.onClick(selection);
 
-            listener.onClick(selectedDate);
+            String selectedDate = formatDateToString(selection);
+            Log.i(TAG, "showDatePicker: " + selectedDate);
             Toast.makeText(activity, "Selected Date: " + selectedDate, Toast.LENGTH_SHORT).show();
         });
+    }
+    public static String formatDateToString(Long date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return sdf.format(new Date(date));
     }
 
 }

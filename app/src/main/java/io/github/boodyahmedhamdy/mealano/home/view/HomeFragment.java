@@ -239,4 +239,9 @@ public class HomeFragment extends Fragment implements HomeView{
 
     }
 
+    @Override
+    public void setSuccessMessage(String successMessage) {
+        Snackbar.make(binding.getRoot(), successMessage, Snackbar.LENGTH_SHORT).show();
+    }
+
 }

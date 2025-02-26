@@ -16,4 +16,6 @@ public interface HomeView {
     void setIsOnline(Boolean isOnline);
 
     void setSuccessfullyAddedToFavorite(DetailedMealDTO mealDTO);
+
+    void setSuccessMessage(String successMessage);
 }

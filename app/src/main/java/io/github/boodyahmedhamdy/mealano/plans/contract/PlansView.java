@@ -12,5 +12,7 @@ public interface PlansView {
 
     void goToMealDetailsScreen(String mealId);
 
-    void setSyncMessage(String syncMessage);
+    void setSuccessMessage(String successMessage);
+
+    void setIsAuthenticated(boolean isAuthenticated);
 }

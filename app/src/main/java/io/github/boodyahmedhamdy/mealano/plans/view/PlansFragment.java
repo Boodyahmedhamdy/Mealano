@@ -1,7 +1,12 @@
 package io.github.boodyahmedhamdy.mealano.plans.view;
 
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 import android.content.Context;
 import android.icu.util.Calendar;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -40,6 +45,8 @@ import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.favorite.view.FavoriteFragmentDirections;
 import io.github.boodyahmedhamdy.mealano.plans.contract.PlansView;
 import io.github.boodyahmedhamdy.mealano.plans.presenter.PlansPresenter;
+import io.github.boodyahmedhamdy.mealano.utils.network.NetworkMonitor;
+import io.github.boodyahmedhamdy.mealano.utils.ui.DatePickerUtils;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 
@@ -81,7 +88,8 @@ public class PlansFragment extends Fragment implements PlansView {
                                 SharedPreferencesManager.getInstance(requireContext()),
                                 FirebaseAuth.getInstance()
                         ),
-                        UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance()))
+                        UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())),
+                NetworkMonitor.getInstance(requireContext().getSystemService(ConnectivityManager.class))
                 );
 
         adapter = new PlansAdapter(
@@ -102,41 +110,27 @@ public class PlansFragment extends Fragment implements PlansView {
             }
         );
 
-        // Get today's date
-        Calendar calendar = Calendar.getInstance();
-        binding.calendarView.setMinDate(calendar.getTimeInMillis());
-        calendar.add(Calendar.DAY_OF_MONTH, 7);
-        binding.calendarView.setMaxDate(calendar.getTimeInMillis());
-        // TODO: return back for today
-
-        binding.calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-            String selectedDate = sdf.format(new Date(calendar.getTimeInMillis()));
-
-            Toast.makeText(binding.getRoot().getContext(), selectedDate, Toast.LENGTH_SHORT).show();
-        });
-
-
         binding.rvPlans.setAdapter(adapter);
 
-        presenter.syncPlans();
         presenter.getAllPlans();
+
 
     }
 
-
-
     @Override
     public void setPlans(List<PlanEntity> plans) {
-
+        if(plans.isEmpty()) {
+            binding.tvNoPlansYet.setVisibility(VISIBLE);
+        } else {
+            binding.tvNoPlansYet.setVisibility(INVISIBLE);
+        }
         adapter.setList(plans);
-
     }
 
     @Override
     public void setErrorMessage(String errorMessage) {
-
+        Log.e(TAG, "setErrorMessage:" + errorMessage);
+        UiUtils.showErrorSnackBar(binding.getRoot(), errorMessage);
     }
 
     @Override
@@ -147,7 +141,24 @@ public class PlansFragment extends Fragment implements PlansView {
     }
 
     @Override
-    public void setSyncMessage(String syncMessage) {
-        Snackbar.make(binding.getRoot(), syncMessage, Snackbar.LENGTH_LONG).show(); // error when navigating out
+    public void setSuccessMessage(String successMessage) {
+        UiUtils.showSuccessSnackBar(binding.getRoot(), successMessage);
+    }
+
+    @Override
+    public void setIsAuthenticated(boolean isAuthenticated) {
+        if (isAuthenticated) {
+
+            binding.lockLayoutPlans.getRoot().setVisibility(INVISIBLE);
+            binding.calendarView.setVisibility(VISIBLE);
+            binding.rvPlans.setVisibility(VISIBLE);
+            binding.tvNoPlansYet.setVisibility(VISIBLE);
+
+        } else {
+            binding.lockLayoutPlans.getRoot().setVisibility(VISIBLE);
+            binding.calendarView.setVisibility(INVISIBLE);
+            binding.rvPlans.setVisibility(INVISIBLE);
+            binding.tvNoPlansYet.setVisibility(INVISIBLE);
+        }
     }
 }

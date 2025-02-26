@@ -78,8 +78,7 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
                 UsersRepository.getInstance(
                         UsersLocalDataSource.getInstance(SharedPreferencesManager.getInstance(requireContext()), FirebaseAuth.getInstance()),
                         UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
-                ),
-                NetworkMonitor.getInstance(requireContext().getSystemService(ConnectivityManager.class))
+                )
         );
 
         adapter = new FavoriteMealsAdapter(
@@ -118,7 +117,12 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
 
     @Override
     public void setFavoriteMeals(List<MealEntity> meals) {
-        adapter.setList(meals);
+        if(meals.isEmpty()) {
+            binding.tvNoFavMealsYet.setVisibility(VISIBLE);
+        } else {
+            binding.tvNoFavMealsYet.setVisibility(INVISIBLE);
+        }
+            adapter.setList(meals);
     }
 
     @Override
@@ -135,10 +139,10 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
     public void setIsOnline(boolean isOnline) {
         if(isOnline) {
             binding.rvFavoriteMeals.setVisibility(VISIBLE);
-            binding.noWifiLayoutFav.getRoot().setVisibility(INVISIBLE);
+//            binding.noWifiLayoutFav.getRoot().setVisibility(INVISIBLE);
         } else {
             binding.rvFavoriteMeals.setVisibility(INVISIBLE);
-            binding.noWifiLayoutFav.getRoot().setVisibility(VISIBLE);
+//            binding.noWifiLayoutFav.getRoot().setVisibility(VISIBLE);
         }
     }
 
@@ -146,11 +150,11 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
     public void setIsAuthorized(boolean isAuthorized) {
         if(isAuthorized) {
             binding.rvFavoriteMeals.setVisibility(VISIBLE);
-            binding.noWifiLayoutFav.getRoot().setVisibility(INVISIBLE);
+//            binding.noWifiLayoutFav.getRoot().setVisibility(INVISIBLE);
             binding.lockLayoutFavorite.getRoot().setVisibility(INVISIBLE);
         } else {
             binding.rvFavoriteMeals.setVisibility(INVISIBLE);
-            binding.noWifiLayoutFav.getRoot().setVisibility(INVISIBLE);
+//            binding.noWifiLayoutFav.getRoot().setVisibility(INVISIBLE);
             binding.lockLayoutFavorite.getRoot().setVisibility(VISIBLE);
 
         }

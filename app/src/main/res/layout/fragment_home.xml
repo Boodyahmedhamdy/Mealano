@@ -35,6 +35,7 @@
 
             android:text="@string/popular_meals"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@id/random_card"
             app:layout_constraintTop_toBottomOf="@id/random_card"
             tools:text="Popular Meals" />
@@ -59,6 +60,7 @@
             android:layout_marginEnd="8dp"
             android:text="@string/today_s_random_meal"
             android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/btnRefreshRandomMeal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -21,14 +21,13 @@ public class FavoritePresenter {
     MealsRepository mealsRepository;
     UsersRepository usersRepository;
 
-    NetworkMonitor networkMonitor;
 
 
-    public FavoritePresenter(FavoriteView view, MealsRepository mealsRepository, UsersRepository usersRepository, NetworkMonitor networkMonitor) {
+
+    public FavoritePresenter(FavoriteView view, MealsRepository mealsRepository, UsersRepository usersRepository) {
         this.view = view;
         this.mealsRepository = mealsRepository;
         this.usersRepository = usersRepository;
-        this.networkMonitor = networkMonitor;
     }
 
     public void getFavoriteMeals() {
@@ -50,17 +49,14 @@ public class FavoritePresenter {
     }
 
     public void deleteFavoriteMeal(MealEntity meal) {
-        if(networkMonitor.isConnected()) {
-            view.setIsOnline(true);
-            Disposable dis =  mealsRepository.deleteFavoriteMeal(meal)
-                    .compose(new OnBackgroundTransformer<>())
-                    .subscribe(
-                            () -> Log.i(TAG, "deleteFavoriteMeal: deleted " + meal.mealDTO.getStrMeal() + " successfully"),
-                            throwable -> Log.e(TAG, "deleteFavoriteMeal: ", throwable)
-                    );
-        } else {
-            view.setIsOnline(false);
-        }
+
+        Disposable dis =  mealsRepository.deleteFavoriteMeal(meal)
+                .compose(new OnBackgroundTransformer<>())
+                .subscribe(
+                        () -> Log.i(TAG, "deleteFavoriteMeal: deleted " + meal.mealDTO.getStrMeal() + " successfully"),
+                        throwable -> Log.e(TAG, "deleteFavoriteMeal: ", throwable)
+                );
+
 
 
     }

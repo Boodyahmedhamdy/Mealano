@@ -16,6 +16,7 @@ import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.databinding.PlanItemBinding;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.PlanEntity;
 import io.github.boodyahmedhamdy.mealano.utils.listeners.CustomClickListener;
+import io.github.boodyahmedhamdy.mealano.utils.ui.DatePickerUtils;
 
 public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlanViewHolder> {
 
@@ -53,7 +54,9 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlanViewHold
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.binding.ivPlan);
         holder.binding.tvPlanMealTitle.setText(planEntity.getMealDTO().getStrMeal());
-        holder.binding.tvPlanDate.setText(planEntity.getStrDate());
+        holder.binding.tvPlanDate.setText(
+                DatePickerUtils.formatDateToString(planEntity.getDate())
+        );
 
         holder.binding.getRoot().setOnClickListener(v -> {
             onPlanCardClickListener.onClick(planEntity);

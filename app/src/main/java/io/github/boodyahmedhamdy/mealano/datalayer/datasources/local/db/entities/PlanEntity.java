@@ -6,23 +6,23 @@ import androidx.room.Entity;
 
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 
-@Entity(tableName = "plans", primaryKeys = {"user_id", "str_date", "meal_id"})
+@Entity(tableName = "plans", primaryKeys = {"user_id", "date", "meal_id"})
 public class PlanEntity {
     @NonNull
     @ColumnInfo(name = "user_id")
     private String userId;
     @NonNull
-    @ColumnInfo(name = "str_date")
-    private String strDate;
+    @ColumnInfo(name = "date")
+    private Long date;
     @NonNull
     @ColumnInfo(name = "meal_id")
     private String mealId;
     private DetailedMealDTO mealDTO;
 
 
-    public PlanEntity(String userId, String strDate, String mealId, DetailedMealDTO mealDTO) {
+    public PlanEntity(String userId, Long date, String mealId, DetailedMealDTO mealDTO) {
         this.userId = userId;
-        this.strDate = strDate;
+        this.date = date;
         this.mealId = mealId;
         this.mealDTO = mealDTO;
     }
@@ -37,12 +37,24 @@ public class PlanEntity {
         this.userId = userId;
     }
 
-    public String getStrDate() {
-        return strDate;
+
+    @NonNull
+    public Long getDate() {
+        return date;
     }
 
-    public void setStrDate(String strDate) {
-        this.strDate = strDate;
+    public void setDate(@NonNull Long date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "PlanEntity{" +
+                "userId='" + userId + '\'' +
+                ", date=" + date +
+                ", mealId='" + mealId + '\'' +
+                ", mealDTO=" + mealDTO +
+                '}';
     }
 
     public DetailedMealDTO getMealDTO() {

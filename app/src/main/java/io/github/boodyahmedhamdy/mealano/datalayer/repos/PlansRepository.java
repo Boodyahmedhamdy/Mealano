@@ -7,10 +7,10 @@ import java.util.List;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.PlansLocalDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.PlanEntity;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.PlansRemoteDataSource;
-import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class PlansRepository {
 
@@ -34,25 +34,14 @@ public class PlansRepository {
 
 
     public Task<Void> addPlanToRemote(PlanEntity planEntity) {
-
         return remoteDataSource.addPlan(planEntity);
-//        localDataSource.insertPlan(entity);
+    }
+
+    public Completable addPlanToLocal(PlanEntity planEntity) {
+        return localDataSource.insertPlan(planEntity);
     }
 
     public Flowable<List<PlanEntity>> getAllPlansFromLocal(String userId) {
-
-//        remoteDataSource.getAllPlans(userId, new CustomCallback<List<PlanEntity>>() {
-//            @Override
-//            public void onSuccess(List<PlanEntity> data) {
-//                localDataSource.insertPlans(data);
-//            }
-//
-//            @Override
-//            public void onFailure(String errorMessage) {
-//                Log.e(TAG, errorMessage);
-//            }
-//        });
-
         return localDataSource.getAllPlans(userId);
     }
 
@@ -62,5 +51,21 @@ public class PlansRepository {
 
     public Completable insertAllPlansToLocal(List<PlanEntity> planEntities) {
         return localDataSource.insertPlans(planEntities);
+    }
+
+    public Flowable<List<PlanEntity>> getPlansFromLocalByDate(String userId, Long date) {
+        return localDataSource.getPlansByDate(userId, date);
+    }
+
+    public Single<PlanEntity> getPlanFromLocalByMealId(String mealId) {
+        return localDataSource.getPlanByMealId(mealId);
+    }
+
+    public Completable deletePlanFromLocal(PlanEntity planEntity) {
+        return localDataSource.deletePlan(planEntity);
+    }
+
+    public Task<Void> deletePlanFromRemote(PlanEntity planEntity) {
+        return remoteDataSource.deletePlan(planEntity);
     }
 }

@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.PlanEntity;
@@ -43,7 +44,7 @@ public class PlansRemoteDataSource {
     public Task<Void> addPlan(PlanEntity entity) {
         DatabaseReference ref = firebaseDatabase.getReference("users")
                 .child(entity.getUserId()).child("plans")
-                .child(entity.getStrDate())
+                .child(entity.getDate().toString())
                 .child(entity.getMealId());
 
         return ref.setValue(entity.getMealDTO());
@@ -61,7 +62,8 @@ public class PlansRemoteDataSource {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot dateSnapShot : snapshot.getChildren()) {
-                        String strDate = dateSnapShot.getKey();
+                        Long date = Long.valueOf(Objects.requireNonNull(dateSnapShot.getKey()));
+
 
                         for (DataSnapshot mealSnapShot : dateSnapShot.getChildren()) {
                             String mealId = mealSnapShot.getKey();
@@ -69,7 +71,7 @@ public class PlansRemoteDataSource {
 
                             if (mealDTO != null) {
                                 plans.add(
-                                        new PlanEntity(userId, strDate, mealId, mealDTO)
+                                        new PlanEntity(userId, date, mealId, mealDTO)
                                 );
                             }
                         }
@@ -131,5 +133,14 @@ public class PlansRemoteDataSource {
     }*/
         });
 
+    }
+
+    public Task<Void> deletePlan(PlanEntity planEntity) {
+        DatabaseReference ref = firebaseDatabase.getReference("users")
+                .child(planEntity.getUserId())
+                .child("plans")
+                .child(planEntity.getDate().toString())
+                .child(planEntity.getMealId());
+        return ref.removeValue();
     }
 }

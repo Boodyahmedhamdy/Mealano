@@ -12,6 +12,7 @@ import java.util.List;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.MealEntity;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 
 @Dao
 public interface MealsDao {
@@ -27,5 +28,6 @@ public interface MealsDao {
     Completable deleteMeal(MealEntity mealEntity);
 
 
-
+    @Query("SELECT * FROM MEALS WHERE meal_id = :mealId limit 1")
+    Single<MealEntity> getMealById(String mealId);
 }

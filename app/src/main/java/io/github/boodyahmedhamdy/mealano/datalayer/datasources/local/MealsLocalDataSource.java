@@ -13,6 +13,7 @@ import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
 import io.github.boodyahmedhamdy.mealano.utils.callbacks.EmptyCallback;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.Single;
 
 public class MealsLocalDataSource {
 
@@ -43,5 +44,9 @@ public class MealsLocalDataSource {
 
     public Completable deleteFavoriteMeal(MealEntity meal) {
             return mealsDao.deleteMeal(meal);
+    }
+
+    public Single<MealEntity> getMealById(String mealId) {
+        return mealsDao.getMealById(mealId);
     }
 }

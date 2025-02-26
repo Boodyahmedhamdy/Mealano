@@ -3,6 +3,7 @@ package io.github.boodyahmedhamdy.mealano.details.view;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -44,6 +45,7 @@ import io.github.boodyahmedhamdy.mealano.datalayer.repos.PlansRepository;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.details.contract.MealDetailsView;
 import io.github.boodyahmedhamdy.mealano.details.presenter.MealDetailsPresenter;
+import io.github.boodyahmedhamdy.mealano.utils.network.NetworkMonitor;
 import io.github.boodyahmedhamdy.mealano.utils.ui.DatePickerUtils;
 import io.github.boodyahmedhamdy.mealano.utils.ui.SimpleIngredientAndMeasurement;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
@@ -88,7 +90,10 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
                 PlansRepository.getInstance(
                         PlansRemoteDataSource.getInstance(FirebaseDatabase.getInstance()),
                         PlansLocalDataSource.getInstance(MealanoDatabase.getInstance(requireContext()).plansDao())
-                ));
+                ),
+                NetworkMonitor.getInstance(requireContext().getSystemService(ConnectivityManager.class))
+        );
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.HORIZONTAL);
         binding.rvIngredientsAndMeasurments.setLayoutManager(layoutManager);
@@ -175,7 +180,7 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
     @Override
     public void setSuccessMessage(String successMessage) {
-
+        UiUtils.showSuccessSnackBar(binding.getRoot(), successMessage);
     }
 
     @Override
@@ -194,6 +199,39 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
     @Override
     public void setIsOnline(Boolean isOnline) {
+        if(isOnline) {
+
+            binding.ivMealThumbnailDetail.setVisibility(VISIBLE);
+            binding.tvMealTitleDetail.setVisibility(VISIBLE);
+
+            binding.textView21.setVisibility(VISIBLE);
+            binding.textView22.setVisibility(VISIBLE);
+            binding.textView24.setVisibility(VISIBLE);
+            binding.textView26.setVisibility(VISIBLE);
+            binding.textView27.setVisibility(VISIBLE);
+
+            binding.btnAddToFavoriteDetail.setVisibility(VISIBLE);
+            binding.btnAddToPlanDetail.setVisibility(VISIBLE);
+
+            binding.noWifiDetails.getRoot().setVisibility(INVISIBLE);
+
+        } else {
+            binding.ivMealThumbnailDetail.setVisibility(INVISIBLE);
+            binding.tvMealTitleDetail.setVisibility(INVISIBLE);
+
+            binding.textView21.setVisibility(INVISIBLE);
+            binding.textView22.setVisibility(INVISIBLE);
+            binding.textView24.setVisibility(INVISIBLE);
+            binding.textView26.setVisibility(INVISIBLE);
+            binding.textView27.setVisibility(INVISIBLE);
+
+            binding.btnAddToFavoriteDetail.setVisibility(INVISIBLE);
+            binding.btnAddToPlanDetail.setVisibility(INVISIBLE);
+
+            binding.noWifiDetails.getRoot().setVisibility(VISIBLE);
+
+        }
+
 
     }
 
@@ -205,7 +243,6 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
                 Snackbar.LENGTH_LONG).show();
         binding.btnAddToFavoriteDetail.setText("Saved to Favorite");
         binding.btnAddToFavoriteDetail.setEnabled(false);
-//        binding.btnAddToFavoriteDetail.setVisibility(INVISIBLE);
     }
 
     @Override

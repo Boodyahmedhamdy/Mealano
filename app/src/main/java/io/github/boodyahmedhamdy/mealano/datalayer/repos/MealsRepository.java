@@ -1,7 +1,6 @@
 package io.github.boodyahmedhamdy.mealano.datalayer.repos;
 
 import java.util.List;
-import java.util.function.DoubleUnaryOperator;
 
 import io.github.boodyahmedhamdy.mealano.data.network.dto.CategoriesResponse;
 import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealsResponse;
@@ -44,11 +43,11 @@ public class MealsRepository {
         return remoteDataSource.getAllMeals();
     }
 
-    public Single<DetailedMealsResponse> getMealById(String mealId) {
+    public Single<DetailedMealsResponse> getMealByIdFromRemote(String mealId) {
         return remoteDataSource.getMealById(mealId);
     }
 
-    public Completable addMealToFavorite(MealEntity mealEntity) {
+    public Completable addMealToLocalFavorite(MealEntity mealEntity) {
         return localDataSource.addMealToFavorite(mealEntity);
 
 //        remoteDataSource.addToFavorite(mealDTO, userId, callback);
@@ -85,5 +84,9 @@ public class MealsRepository {
 
     public Single<SimpleMealsResponse> getAllMealsByArea(String area) {
         return remoteDataSource.getAllMealsByArea(area);
+    }
+
+    public Single<MealEntity> getMealByIdFromLocal(String mealId) {
+        return localDataSource.getMealById(mealId);
     }
 }

@@ -37,7 +37,7 @@
     <string name="finish">Finish</string>
     <string name="third_onboarding_description">Third Onboarding Description</string>
     <string name="popular_meals">Popular Meals</string>
-    <string name="today_s_random_meal">Today\'s Random Meal</string>
+    <string name="today_s_random_meal">Today\'s Meal</string>
     <string name="refresh">Refresh</string>
     <string name="add_to_plan">Add To Plan</string>
     <string name="tags">Tags</string>
@@ -52,4 +52,7 @@
     <string name="area_in_search">Area</string>
     <string name="ingredient_in_search">Ingredient</string>
     <string name="search_by">Search By</string>
+    <string name="no_favorite_meals_yet">No Favorite Meals Yet</string>
+    <string name="no_plans_yet">No Plans Yet</string>
+    <string name="select_a_date">Select a Date</string>
 </resources>

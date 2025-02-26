@@ -3,7 +3,13 @@ package io.github.boodyahmedhamdy.mealano.utils.ui;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import android.util.Log;
+import android.view.View;
+import android.widget.ScrollView;
+
 import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +21,7 @@ import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 
 public class UiUtils {
 
-
+    private static final String TAG = "UiUtils";
     public static void hideToolbar(FragmentActivity fragmentActivity) {
         fragmentActivity.findViewById(R.id.toolbar).setVisibility(GONE);
     }
@@ -205,46 +211,33 @@ public class UiUtils {
         Map.entry("Vietnamese", "VN")
     );
 
-    private static Map<String, String> createCountryCodeMap() {
-        Map<String, String> map = new HashMap<>();
-
-        // Add mappings for countries in the response
-        map.put("American", "US");
-        map.put("British", "GB");
-        map.put("Canadian", "CA");
-        map.put("Chinese", "CN");
-        map.put("Croatian", "HR");
-        map.put("Dutch", "NL");
-        map.put("Egyptian", "EG");
-        map.put("Filipino", "PH");
-        map.put("French", "FR");
-        map.put("Greek", "GR");
-        map.put("Indian", "IN");
-        map.put("Irish", "IE");
-        map.put("Italian", "IT");
-        map.put("Jamaican", "JM");
-        map.put("Japanese", "JP");
-        map.put("Kenyan", "KE");
-        map.put("Malaysian", "MY");
-        map.put("Mexican", "MX");
-        map.put("Moroccan", "MA");
-        map.put("Norwegian", "NO");
-        map.put("Polish", "PL");
-        map.put("Portuguese", "PT");
-        map.put("Russian", "RU");
-        map.put("Spanish", "ES");
-        map.put("Thai", "TH");
-        map.put("Tunisian", "TN");
-        map.put("Turkish", "TR");
-        map.put("Ukrainian", "UA");
-        map.put("Uruguayan", "UY");
-        map.put("Vietnamese", "VN");
-
-        return map;
-    }
-
     public static String getAreaImgPath(String strArea) {
         String countryCode = countryCodeMap.getOrDefault(strArea, "unknown");
         return "https://www.themealdb.com/images/icons/flags/big/64/" + countryCode.toLowerCase() + ".png";
+    }
+
+    public static void showSuccessSnackBar(View view, String successMessage) {
+        try {
+            Snackbar.make(view, successMessage, Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(view.getResources().getColor(R.color.md_theme_primary))
+                    .setTextColor(view.getResources().getColor(R.color.md_theme_onPrimary))
+                    .show();
+        } catch (Exception e) {
+            Log.e(TAG, "showSuccessSnackBar: ", e);
+        }
+
+
+    }
+
+    public static void showErrorSnackBar(View view, String errorMessage) {
+        try {
+            Snackbar.make(view, errorMessage, Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(view.getResources().getColor(R.color.md_theme_error))
+                    .setTextColor(view.getResources().getColor(R.color.md_theme_onError))
+                    .show();
+
+        } catch (Exception e) {
+            Log.e(TAG, "showErrorSnackBar: ", e);
+        }
     }
 }
