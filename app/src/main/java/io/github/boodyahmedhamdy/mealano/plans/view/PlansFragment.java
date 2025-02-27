@@ -107,6 +107,9 @@ public class PlansFragment extends Fragment implements PlansView {
             },
             planEntity -> {
                 presenter.getMealById(planEntity.getMealId());
+            },
+            planEntity -> {
+                presenter.sharePlanToCalendar(planEntity);
             }
         );
 

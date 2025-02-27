@@ -25,10 +25,13 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlanViewHold
 
     CustomClickListener<PlanEntity> onPlanCardClickListener;
 
-    public PlansAdapter(List<PlanEntity> plans, CustomClickListener<PlanEntity> onDeleteBtnClickListener, CustomClickListener<PlanEntity> onPlanCardClickListener) {
+    CustomClickListener<PlanEntity> onShareBtnClickListener;
+
+    public PlansAdapter(List<PlanEntity> plans, CustomClickListener<PlanEntity> onDeleteBtnClickListener, CustomClickListener<PlanEntity> onPlanCardClickListener, CustomClickListener<PlanEntity> onShareBtnClickListener) {
         this.plans = plans;
         this.onDeleteBtnClickListener = onDeleteBtnClickListener;
         this.onPlanCardClickListener = onPlanCardClickListener;
+        this.onShareBtnClickListener = onShareBtnClickListener;
     }
 
     public void setList(List<PlanEntity> plans) {
@@ -64,6 +67,10 @@ public class PlansAdapter extends RecyclerView.Adapter<PlansAdapter.PlanViewHold
 
         holder.binding.btnDeletePlan.setOnClickListener(v -> {
             onDeleteBtnClickListener.onClick(planEntity);
+        });
+
+        holder.binding.btnSharePlanToCalendar.setOnClickListener(v -> {
+            onShareBtnClickListener.onClick(planEntity);
         });
     }
 

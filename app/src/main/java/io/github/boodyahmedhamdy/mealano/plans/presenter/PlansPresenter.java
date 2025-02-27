@@ -130,13 +130,10 @@ public class PlansPresenter {
                         view.setErrorMessage("error while getting from remote");
                     });
 
-
-
-
-//            .flatMap(planEntities -> plansRepository.insertAllPlansToLocal(planEntities))
-//                    .flatMap(planEntities -> plansRepository.deletePlansFromLocalNotIn(planEntities))
-//                    .subscribe();
         }
     }
 
+    public void sharePlanToCalendar(PlanEntity planEntity) {
+        view.setSuccessMessage("clicked to share: " + planEntity.getMealDTO().getStrMeal());
+    }
 }
