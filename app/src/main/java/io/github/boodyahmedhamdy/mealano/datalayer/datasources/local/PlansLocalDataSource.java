@@ -53,4 +53,8 @@ public class PlansLocalDataSource {
     public Completable deletePlan(PlanEntity planEntity) {
         return plansDao.deletePlan(planEntity);
     }
+
+    public Completable deletePlansNotIn(String userId, List<String> mealIds) {
+        return plansDao.deletePlansNotIn(userId, mealIds);
+    }
 }

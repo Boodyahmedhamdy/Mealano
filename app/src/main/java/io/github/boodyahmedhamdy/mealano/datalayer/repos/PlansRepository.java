@@ -11,6 +11,7 @@ import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleSource;
 
 public class PlansRepository {
 
@@ -45,7 +46,7 @@ public class PlansRepository {
         return localDataSource.getAllPlans(userId);
     }
 
-    public Observable<List<PlanEntity>> getAllPlansFromRemote(String userId) {
+    public Single<List<PlanEntity>> getAllPlansFromRemote(String userId) {
         return remoteDataSource.getAllPlans(userId);
     }
 
@@ -67,5 +68,9 @@ public class PlansRepository {
 
     public Task<Void> deletePlanFromRemote(PlanEntity planEntity) {
         return remoteDataSource.deletePlan(planEntity);
+    }
+
+    public Completable deletePlansFromLocalNotIn(String userId, List<String> mealIds) {
+        return localDataSource.deletePlansNotIn(userId, mealIds);
     }
 }

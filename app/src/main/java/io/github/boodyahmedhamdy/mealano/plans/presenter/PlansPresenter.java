@@ -69,8 +69,6 @@ public class PlansPresenter {
     }
 
 
-
-
     public void getMealById(String mealId) {
         view.goToMealDetailsScreen(mealId);
     }
@@ -78,47 +76,67 @@ public class PlansPresenter {
     public void deletePlan(PlanEntity planEntity) {
 
         // deletes from local
-        Disposable dis = plansRepository.deletePlanFromLocal(planEntity)
-                .compose(new OnBackgroundTransformer<>())
-                .subscribe(() -> {
-                    view.setSuccessMessage("deleted Successfully");
-                }, throwable -> {
-                    view.setErrorMessage(throwable.getLocalizedMessage());
-                });
+//        Disposable dis = plansRepository.deletePlanFromLocal(planEntity)
+//                .compose(new OnBackgroundTransformer<>())
+//                .subscribe(() -> {
+//                    view.setSuccessMessage("deleted Successfully");
+//                }, throwable -> {
+//                    view.setErrorMessage(throwable.getLocalizedMessage());
+//                });
 
-/*        if(networkMonitor.isConnected()) {
+        // delete from remote
+        if(networkMonitor.isConnected()) {
             plansRepository.deletePlanFromRemote(planEntity)
                     .addOnSuccessListener(unused -> {
                         view.setSuccessMessage("Plan deleted successfully");
-                        syncPlans();
+                        syncV2();
                     })
                     .addOnFailureListener(e -> {
                         view.setErrorMessage("Couldn't Delete the Plan");
                     });
         } else {
             view.setErrorMessage("Can't delete plan when you are offline");
-        }*/
+        }
 
     }
 
+    public void syncV2() {
+        if(usersRepository.isLoggedIn()) {
+            Disposable dis = plansRepository.getAllPlansFromRemote(usersRepository.getCurrentUser().getUid())
+                    .compose(new OnBackgroundTransformer<>())
+                    .subscribe(remotePlanEntities -> {
 
-    public void syncPlans() {
-        Disposable dis =  plansRepository
-                .getAllPlansFromRemote(usersRepository.getCurrentUser().getUid())
-                .compose(new OnBackgroundTransformer<>())
-                .subscribe(planEntities -> {
+                        Disposable dis2 = plansRepository.insertAllPlansToLocal(remotePlanEntities)
+                                .compose(new OnBackgroundTransformer<>())
+                                .subscribe(() -> {
 
-                    Disposable dis2 =  plansRepository.insertAllPlansToLocal(planEntities)
-                            .compose(new OnBackgroundTransformer<>())
-                            .subscribe(() -> {
-                                view.setSuccessMessage("Sync Successfully");
-                            }, throwable -> {
-                                view.setErrorMessage("Sync Failed");
-                            });
-                }, throwable -> {
-                    view.setErrorMessage("Failed to connect to Server");
-                });
+                                    Disposable dis3 = plansRepository.deletePlansFromLocalNotIn(
+                                            usersRepository.getCurrentUser().getUid(),
+                                            remotePlanEntities.stream().map(planEntity -> planEntity.getMealId()).collect(Collectors.toList())
+                                    ).compose(new OnBackgroundTransformer<>())
+                                            .subscribe(() -> {
+                                                view.setSuccessMessage("Sync Successfully");
+                                            }, throwable -> { // error while deleting
+                                                view.setErrorMessage("error while deleting");
+                                            });
 
+                                }, throwable -> {
+                                    // error while inserting
+                                    view.setErrorMessage("error while inserting");
+                                });
+
+                    }, throwable -> {
+                        // error while getting from remote
+                        view.setErrorMessage("error while getting from remote");
+                    });
+
+
+
+
+//            .flatMap(planEntities -> plansRepository.insertAllPlansToLocal(planEntities))
+//                    .flatMap(planEntities -> plansRepository.deletePlansFromLocalNotIn(planEntities))
+//                    .subscribe();
+        }
     }
 
 }

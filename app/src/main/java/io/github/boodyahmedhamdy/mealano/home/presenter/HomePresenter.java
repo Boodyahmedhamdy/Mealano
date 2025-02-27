@@ -20,7 +20,6 @@ public class HomePresenter {
 
     HomeView view;
 
-
     MealsRepository mealsRepository;
     UsersRepository usersRepository;
     PlansRepository plansRepository;
@@ -47,7 +46,7 @@ public class HomePresenter {
                         view.setRandomMeal(mealDTO);
                     }, throwable -> {
                         view.setIsLoading(false);
-                        view.setError(throwable.getLocalizedMessage());
+                        view.setError("No Internet");
                     });
         } else {
             view.setIsOnline(false);
@@ -68,7 +67,7 @@ public class HomePresenter {
                     view.setAllMeals(detailedMealDTOS);
                     view.setIsLoading(false);
                 }, throwable -> {
-                    view.setError(throwable.getLocalizedMessage());
+                    view.setError("No Internet");
                     view.setIsLoading(false);
                 });
 
@@ -86,35 +85,25 @@ public class HomePresenter {
                 });
     }
 
-    public void addMealToFavorite(DetailedMealDTO mealDTO) {
-
-        Disposable dis = mealsRepository.addMealToLocalFavorite(
-                new MealEntity(mealDTO, usersRepository.getCurrentUser().getUid(), mealDTO.getIdMeal())
-        )
-        .compose(new OnBackgroundTransformer<>())
-        .subscribe(() -> {
-                view.setSuccessfullyAddedToFavorite(mealDTO);
-                Log.i(TAG, "addMealToFavorite: finished adding to favorite");
-            },
-            throwable -> {
-                view.setError(throwable.getLocalizedMessage());
-                Log.e(TAG, "addMealToFavorite: ", throwable);
-            });
-    }
-
-
     public void addMealToPlans(DetailedMealDTO mealDTO, Long date) {
-//        plansRepository.addPlanToRemote(
-//                new PlanEntity(usersRepository.getCurrentUser().getUid(), date, mealDTO.getIdMeal(), mealDTO)
-//        );
+        if(usersRepository.isLoggedIn()) {
 
-        Disposable dis = plansRepository.addPlanToLocal(
-                new PlanEntity(usersRepository.getCurrentUser().getUid(), date, mealDTO.getIdMeal(), mealDTO)
-        ).compose(new OnBackgroundTransformer<>())
-                .subscribe(() -> {
-                    view.setSuccessMessage("added " + mealDTO.getStrMeal() + " to Plans Successfully");
-                }, throwable -> {
-                    view.setError("failed to add" + mealDTO.getStrMeal() + " to Plans");
-                });
+            if(networkMonitor.isConnected()) {
+
+                plansRepository.addPlanToRemote(
+                                new PlanEntity(usersRepository.getCurrentUser().getUid(), date, mealDTO.getIdMeal(), mealDTO)
+                        ).addOnSuccessListener(unused -> {
+                            view.setSuccessMessage("added " + mealDTO.getStrMeal() + " to Plans Successfully");
+                        }).addOnFailureListener(e -> {
+                            view.setError("failed to add" + mealDTO.getStrMeal() + " to Plans");
+                        });
+            } else {
+                view.setError("Can't add Plan Offline, please turn wifi on");
+            }
+        } else {
+            view.setError("you can't add plan in Guest mode, login to open this feature");
+        }
+
     }
+
 }

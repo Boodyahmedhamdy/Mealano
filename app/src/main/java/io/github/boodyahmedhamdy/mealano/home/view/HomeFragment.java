@@ -64,8 +64,6 @@ public class HomeFragment extends Fragment implements HomeView{
         super.onCreate(savedInstanceState);
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -111,7 +109,7 @@ public class HomeFragment extends Fragment implements HomeView{
                         );
                     });
                 },
-                mealDTO -> { presenter.addMealToFavorite(mealDTO); }
+                mealDTO -> { /*presenter.addMealToFavorite(mealDTO);*/ }
         );
         binding.rvAllMeals.setAdapter(adapter);
 
@@ -157,12 +155,6 @@ public class HomeFragment extends Fragment implements HomeView{
             binding.randomCard.cgMealTags.addView(chip);
         });
 
-        // favorite button
-        binding.randomCard.btnAddToFavoriteIcon.setOnClickListener(v -> {
-            Log.i(TAG, "clicked on favorite button onRandom meal in meal: " + detailedMealDTO.getStrMeal());
-            presenter.addMealToFavorite(detailedMealDTO);
-        });
-
         // add to plan
         binding.randomCard.btnMealAddToPlan.setOnClickListener(v -> {
             Log.i(TAG, "clicked on add to plan button onRandome in meal: " + detailedMealDTO.getStrMeal());
@@ -188,10 +180,7 @@ public class HomeFragment extends Fragment implements HomeView{
 
     @Override
     public void setError(String errorMessage) {
-        new AlertDialog.Builder(binding.getRoot().getContext())
-                .setTitle("ERROR")
-                .setMessage(errorMessage)
-                .create().show();
+        UiUtils.showErrorSnackBar(binding.getRoot(), errorMessage);
     }
 
     @Override
@@ -212,7 +201,6 @@ public class HomeFragment extends Fragment implements HomeView{
     public void setIsOnline(Boolean isOnline) {
         Log.i(TAG, "setIsOnline: isonline: " + isOnline);
         if(isOnline) {
-//            Snackbar.make(binding.getRoot(), "Back Online", Snackbar.LENGTH_SHORT).show();
             binding.randomCard.getRoot().setVisibility(VISIBLE);
             binding.rvAllMeals.setVisibility(VISIBLE);
             binding.textView15.setVisibility(VISIBLE);
@@ -226,22 +214,13 @@ public class HomeFragment extends Fragment implements HomeView{
             binding.textView18.setVisibility(INVISIBLE);
             binding.btnRefreshRandomMeal.setVisibility(INVISIBLE);
             binding.noWifiCardHome.getRoot().setVisibility(VISIBLE);
-//            Snackbar.make(binding.getRoot(), "you are Offline", Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public void setSuccessfullyAddedToFavorite(DetailedMealDTO mealDTO) {
-        Snackbar.make(
-                binding.getRoot(),
-                "added " + mealDTO.getStrMeal() + " Successfully to Favorite",
-                Snackbar.LENGTH_LONG).show();
-
-    }
-
-    @Override
     public void setSuccessMessage(String successMessage) {
-        Snackbar.make(binding.getRoot(), successMessage, Snackbar.LENGTH_SHORT).show();
+
+        UiUtils.showSuccessSnackBar(binding.getRoot(), successMessage);
     }
 
 }

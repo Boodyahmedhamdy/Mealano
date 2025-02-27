@@ -232,21 +232,16 @@ public class MealDetailsFragment extends Fragment implements MealDetailsView {
 
         }
 
-
     }
 
     @Override
     public void setSuccessfullyAddedToFavorite(DetailedMealDTO mealDTO) {
-        Snackbar.make(
-                binding.getRoot(),
-                "added " + mealDTO.getStrMeal() + " Successfully to Favorite",
-                Snackbar.LENGTH_LONG).show();
+        UiUtils.showSuccessSnackBar(
+                binding.getRoot(), "added " + mealDTO.getStrMeal() + " Successfully to Favorite"
+        );
         binding.btnAddToFavoriteDetail.setText("Saved to Favorite");
         binding.btnAddToFavoriteDetail.setEnabled(false);
     }
 
-    @Override
-    public void setSuccessfullyAddedToPlans(boolean isAddedToPlans) {
 
-    }
 }

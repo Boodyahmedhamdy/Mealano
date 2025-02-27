@@ -34,4 +34,7 @@ public interface PlansDao {
 
     @Delete
     Completable deletePlan(PlanEntity planEntity);
+
+    @Query("delete from plans where user_id = :userId and meal_id not in (:mealIds) ")
+    Completable deletePlansNotIn(String userId, List<String> mealIds);
 }

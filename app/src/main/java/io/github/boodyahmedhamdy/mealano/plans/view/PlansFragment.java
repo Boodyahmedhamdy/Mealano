@@ -112,6 +112,7 @@ public class PlansFragment extends Fragment implements PlansView {
 
         binding.rvPlans.setAdapter(adapter);
 
+        presenter.syncV2();
         presenter.getAllPlans();
 
 

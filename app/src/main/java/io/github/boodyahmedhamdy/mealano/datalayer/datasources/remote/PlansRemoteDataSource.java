@@ -20,6 +20,7 @@ import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.PlanEntity;
 import io.github.boodyahmedhamdy.mealano.utils.callbacks.CustomCallback;
 import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 
 public class PlansRemoteDataSource {
 
@@ -51,8 +52,8 @@ public class PlansRemoteDataSource {
 
     }
 
-    public Observable<List<PlanEntity>> getAllPlans(String userId) {
-        return Observable.create(emitter -> {
+    public Single<List<PlanEntity>> getAllPlans(String userId) {
+        return Single.create(emitter -> {
             DatabaseReference ref = firebaseDatabase.getReference("users")
                     .child(userId).child("plans");
 
@@ -76,9 +77,7 @@ public class PlansRemoteDataSource {
                             }
                         }
                     }
-
-                    emitter.onNext(plans);
-                    emitter.onComplete();
+                    emitter.onSuccess(plans);
 
                     Log.i(TAG, "user: " + userId + " have " + plans.size() + " plans available");
                 }

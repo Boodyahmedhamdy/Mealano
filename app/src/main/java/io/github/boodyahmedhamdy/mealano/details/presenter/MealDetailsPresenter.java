@@ -104,29 +104,45 @@ public class MealDetailsPresenter implements IMealDetailsPresenter {
     }
 
     public void addMealToPlans(DetailedMealDTO currentMeal, Long date) {
-        PlanEntity planEntity = new PlanEntity(
-                usersRepository.getCurrentUser().getUid(), date, currentMeal.getIdMeal(), currentMeal
-        );
-
-        Disposable dis = plansRepository.addPlanToLocal(planEntity)
-                .compose(new OnBackgroundTransformer<>())
-                .subscribe(() -> {
-                    view.setSuccessMessage("added " + currentMeal.getStrMeal() + " to Plans Successfully");
-                }, throwable -> {
-                    view.setErrorMessage("failed to add" + currentMeal.getStrMeal() + " to Plans");
-                });
-
-//        if(networkMonitor.isConnected()) {
-//            plansRepository.addPlanToRemote(planEntity)
-//                    .addOnCompleteListener(task -> {
-//                       if(task.isSuccessful()) {
-//                           view.setSuccessMessage("successfully added " + currentMeal.getStrMeal() + " to Plans");
-//                       } else {
-//                           view.setErrorMessage("Failed to add " + currentMeal.getStrMeal() + " to Plans");
-//                       }
+//        if(usersRepository.isLoggedIn()) {
+//            PlanEntity planEntity = new PlanEntity(
+//                    usersRepository.getCurrentUser().getUid(), date, currentMeal.getIdMeal(), currentMeal
+//            );
+//            Disposable dis = plansRepository.addPlanToLocal(planEntity)
+//                    .compose(new OnBackgroundTransformer<>())
+//                    .subscribe(() -> {
+//                        view.setSuccessMessage("added " + currentMeal.getStrMeal() + " to Plans Successfully");
+//                    }, throwable -> {
+//                        view.setErrorMessage("failed to add" + currentMeal.getStrMeal() + " to Plans");
 //                    });
 //        } else {
-//            view.setErrorMessage("you need to be Online to add Plan to favorite");
+//            view.setErrorMessage("you can't add plan in Guest mode, login to open this feature");
+//
 //        }
+
+        if(usersRepository.isLoggedIn()) {
+
+            if(networkMonitor.isConnected()) {
+
+                PlanEntity planEntity = new PlanEntity(
+                    usersRepository.getCurrentUser().getUid(), date, currentMeal.getIdMeal(), currentMeal
+            );
+                plansRepository.addPlanToRemote(planEntity)
+                    .addOnCompleteListener(task -> {
+                       if(task.isSuccessful()) {
+                           view.setSuccessMessage("successfully added " + currentMeal.getStrMeal() + " to Plans");
+                       } else {
+                           view.setErrorMessage("Failed to add " + currentMeal.getStrMeal() + " to Plans");
+                       }
+                    });
+            } else {
+                view.setErrorMessage("you need to be Online to add Plan to favorite");
+            }
+        } else {
+            view.setErrorMessage("you can't add plan in Guest mode, login to open this feature");
+        }
+
+
+
     }
 }

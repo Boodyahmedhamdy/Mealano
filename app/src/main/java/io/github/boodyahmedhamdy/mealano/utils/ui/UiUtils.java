@@ -62,69 +62,79 @@ public class UiUtils {
     }
 
     public static List<SimpleIngredientAndMeasurement> getIngredientsAndMeasurements(DetailedMealDTO mealDTO) {
-        List<String> measurements = List.of(
-                mealDTO.getStrMeasure1(),
-                mealDTO.getStrMeasure2(),
-                mealDTO.getStrMeasure3(),
-                mealDTO.getStrMeasure4(),
-                mealDTO.getStrMeasure5(),
-                mealDTO.getStrMeasure6(),
-                mealDTO.getStrMeasure7(),
-                mealDTO.getStrMeasure8(),
-                mealDTO.getStrMeasure9(),
-                mealDTO.getStrMeasure10(),
-                mealDTO.getStrMeasure11(),
-                mealDTO.getStrMeasure12(),
-                mealDTO.getStrMeasure13(),
-                mealDTO.getStrMeasure14(),
-                mealDTO.getStrMeasure15(),
-                mealDTO.getStrMeasure16(),
-                mealDTO.getStrMeasure17(),
-                mealDTO.getStrMeasure18(),
-                mealDTO.getStrMeasure19(),
-                mealDTO.getStrMeasure20()
-        );
+        try {
+            List<String> measurements = List.of(
+                    mealDTO.getStrMeasure1(),
+                    mealDTO.getStrMeasure2(),
+                    mealDTO.getStrMeasure3(),
+                    mealDTO.getStrMeasure4(),
+                    mealDTO.getStrMeasure5(),
+                    mealDTO.getStrMeasure6(),
+                    mealDTO.getStrMeasure7(),
+                    mealDTO.getStrMeasure8(),
+                    mealDTO.getStrMeasure9(),
+                    mealDTO.getStrMeasure10(),
+                    mealDTO.getStrMeasure11(),
+                    mealDTO.getStrMeasure12(),
+                    mealDTO.getStrMeasure13(),
+                    mealDTO.getStrMeasure14(),
+                    mealDTO.getStrMeasure15(),
+                    mealDTO.getStrMeasure16(),
+                    mealDTO.getStrMeasure17(),
+                    mealDTO.getStrMeasure18(),
+                    mealDTO.getStrMeasure19(),
+                    mealDTO.getStrMeasure20()
+            );
 
-        List<String> ingredients = List.of(
-                mealDTO.getStrIngredient1(),
-                mealDTO.getStrIngredient2(),
-                mealDTO.getStrIngredient3(),
-                mealDTO.getStrIngredient4(),
-                mealDTO.getStrIngredient5(),
-                mealDTO.getStrIngredient6(),
-                mealDTO.getStrIngredient7(),
-                mealDTO.getStrIngredient8(),
-                mealDTO.getStrIngredient9(),
-                mealDTO.getStrIngredient10(),
-                mealDTO.getStrIngredient11(),
-                mealDTO.getStrIngredient12(),
-                mealDTO.getStrIngredient13(),
-                mealDTO.getStrIngredient14(),
-                mealDTO.getStrIngredient15(),
-                mealDTO.getStrIngredient16(),
-                mealDTO.getStrIngredient17(),
-                mealDTO.getStrIngredient18(),
-                mealDTO.getStrIngredient19(),
-                mealDTO.getStrIngredient20()
-        );
-        List<SimpleIngredientAndMeasurement> components = new ArrayList<>();
-        for(int i = 0 ; i < ingredients.size() ; i++) {
-            if(
-                    ingredients.get(i) == null
-                    || ingredients.get(i).isEmpty()
-                    || measurements.get(i) == null
-                    || measurements.get(i).isEmpty()
-            ) {
-                break;
-            } else {
-                String bigImageUrl = getIngredientBigImageUrl(ingredients.get(i));
-                String smallImageUrl = getIngredientSmallImageUrl(ingredients.get(i));
-                components.add(
-                        new SimpleIngredientAndMeasurement(ingredients.get(i), measurements.get(i), smallImageUrl, bigImageUrl)
-                );
+            List<String> ingredients = List.of(
+                    mealDTO.getStrIngredient1(),
+                    mealDTO.getStrIngredient2(),
+                    mealDTO.getStrIngredient3(),
+                    mealDTO.getStrIngredient4(),
+                    mealDTO.getStrIngredient5(),
+                    mealDTO.getStrIngredient6(),
+                    mealDTO.getStrIngredient7(),
+                    mealDTO.getStrIngredient8(),
+                    mealDTO.getStrIngredient9(),
+                    mealDTO.getStrIngredient10(),
+                    mealDTO.getStrIngredient11(),
+                    mealDTO.getStrIngredient12(),
+                    mealDTO.getStrIngredient13(),
+                    mealDTO.getStrIngredient14(),
+                    mealDTO.getStrIngredient15(),
+                    mealDTO.getStrIngredient16(),
+                    mealDTO.getStrIngredient17(),
+                    mealDTO.getStrIngredient18(),
+                    mealDTO.getStrIngredient19(),
+                    mealDTO.getStrIngredient20()
+            );
+            List<SimpleIngredientAndMeasurement> components = new ArrayList<>();
+            for(int i = 0 ; i < ingredients.size() ; i++) {
+                if(
+                        ingredients.get(i) == null
+                                || ingredients.get(i).isEmpty()
+                                || measurements.get(i) == null
+                                || measurements.get(i).isEmpty()
+                ) {
+                    break;
+                } else {
+                    String bigImageUrl = getIngredientBigImageUrl(ingredients.get(i));
+                    String smallImageUrl = getIngredientSmallImageUrl(ingredients.get(i));
+                    components.add(
+                            new SimpleIngredientAndMeasurement(ingredients.get(i), measurements.get(i), smallImageUrl, bigImageUrl)
+                    );
+                }
             }
+            return components;
+
+
+        } catch (Exception e) {
+            Log.e(TAG, "getIngredientsAndMeasurements: ", e);
+            return new ArrayList<>();
         }
-        return components;
+
+
+
     }
 
     private static String getIngredientSmallImageUrl(String ingredient) {
