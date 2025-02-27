@@ -44,6 +44,7 @@ import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 public class SignupFragment extends Fragment implements SignupView {
     private static final String TAG = "SignupFragment";
+    private static final int SIGNUP_REQUEST_CODE = 10;
     FragmentSignupBinding binding;
     SignupPresenter presenter;
     NavController navController;
@@ -108,7 +109,7 @@ public class SignupFragment extends Fragment implements SignupView {
             GoogleSignInClient client = GoogleSignIn.getClient(requireActivity(), signInOptions);
 
             Intent intent = client.getSignInIntent();
-            startActivityForResult(intent, 12);
+            startActivityForResult(intent, SIGNUP_REQUEST_CODE);
         });
 
 
@@ -117,7 +118,7 @@ public class SignupFragment extends Fragment implements SignupView {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 12) {
+        if(requestCode == SIGNUP_REQUEST_CODE) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
 
@@ -130,7 +131,7 @@ public class SignupFragment extends Fragment implements SignupView {
                         if(task.isSuccessful()) {
                             goToHomeScreen();
                         } else {
-                            setErrorMessage("error from login with google");
+                            setErrorMessage(task.getException().getLocalizedMessage());
                         }
                     }
                 });

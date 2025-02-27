@@ -113,9 +113,11 @@ public class SearchByFragment extends Fragment implements SearchByView {
         if(isOnline) {
             binding.noWifiSearchBy.getRoot().setVisibility(INVISIBLE);
             binding.tietSearchBy.setVisibility(VISIBLE);
+            binding.textInputLayout2.setVisibility(VISIBLE);
             binding.rvSimpleMeals.setVisibility(VISIBLE);
         } else {
             binding.noWifiSearchBy.getRoot().setVisibility(VISIBLE);
+            binding.textInputLayout2.setVisibility(INVISIBLE);
             binding.tietSearchBy.setVisibility(INVISIBLE);
             binding.rvSimpleMeals.setVisibility(INVISIBLE);
         }

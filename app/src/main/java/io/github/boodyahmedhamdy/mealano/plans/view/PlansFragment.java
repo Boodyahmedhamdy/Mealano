@@ -165,4 +165,13 @@ public class PlansFragment extends Fragment implements PlansView {
             binding.tvNoPlansYet.setVisibility(INVISIBLE);
         }
     }
+
+//    private void requestCalendarPermissions() {
+//
+//    }
+//
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//    }
 }

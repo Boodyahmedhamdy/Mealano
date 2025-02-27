@@ -42,6 +42,7 @@ import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 public class LoginFragment extends Fragment implements LoginView {
     private static final String TAG = "LoginFragment";
+    private static final int LOGIN_REQUEST_CODE = 11;
     FragmentLoginBinding binding;
     NavController navController;
     LoginPresenter presenter;
@@ -98,9 +99,7 @@ public class LoginFragment extends Fragment implements LoginView {
             GoogleSignInClient client = GoogleSignIn.getClient(requireActivity(), signInOptions);
 
             Intent intent = client.getSignInIntent();
-            startActivityForResult(intent, 11);
-
-
+            startActivityForResult(intent, LOGIN_REQUEST_CODE);
         });
 
 
@@ -122,7 +121,7 @@ public class LoginFragment extends Fragment implements LoginView {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 11) {
+        if(requestCode == LOGIN_REQUEST_CODE) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
 
@@ -135,13 +134,13 @@ public class LoginFragment extends Fragment implements LoginView {
                         if(task.isSuccessful()) {
                             goToHomeScreen();
                         } else {
-                            setErrorMessage("error from login with google");
+                            setErrorMessage(task.getException().getLocalizedMessage());
                         }
                     }
                 });
             } catch (Exception e) {
                 e.printStackTrace();
-                setErrorMessage(e.getLocalizedMessage());
+                setErrorMessage("Some Error Happend, Make sure you are Online");
             }
         }
     }

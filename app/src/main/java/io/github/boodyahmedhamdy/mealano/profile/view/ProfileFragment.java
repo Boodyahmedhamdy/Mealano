@@ -20,6 +20,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -98,11 +101,20 @@ public class ProfileFragment extends Fragment implements ProfileView, OnSignOutC
             navController.navigate(ProfileFragmentDirections.actionProfileFragmentToLoginFragment());
         });
 
-
     }
 
     @Override
     public void onSuccess() {
+        GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.client_id))
+                .requestEmail()
+                .build();
+        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(requireActivity(), signInOptions);
+        googleSignInClient.signOut().addOnCompleteListener(task -> {
+            Log.d(TAG, "signed out from google signout");
+        });
+
+
         navController.navigate(
                 ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
         );
