@@ -56,4 +56,19 @@
     <string name="no_plans_yet">No Plans Yet</string>
     <string name="select_a_date">Select a Date</string>
     <string name="about_mealano">About Mealano</string>
+    <string name="linkedin">Linkedin</string>
+    <string name="github">Github</string>
+    <string name="dev_title">Native Android Developer</string>
+    <string name="dev_name">Abdelrahman Ahmed Hamdy</string>
+    <string name="project_description">Mealano is the first Android
+        application to build during my 9 Months Journey at ITI,
+        Mealano was built using java. Huge thanks for All my instructors
+        (Ahmed Mazen, Heba Ismail, Mohammed Galal and Eng.Hager)
+        and special thanks for all my Colleges who helped me during this project.
+        finally I hope you like this application and enjoy using it. \n\n
+        you can contact me via linkedin.\n
+        source code is available on Github\n\n
+
+        Thank you for reading, Enjoy Mealano.
+    </string>
 </resources>
