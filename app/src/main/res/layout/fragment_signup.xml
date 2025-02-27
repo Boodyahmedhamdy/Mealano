@@ -99,7 +99,7 @@
             android:layout_marginEnd="16dp"
             android:hint="@string/password"
             app:endIconMode="password_toggle"
-            app:helperText="put at least 6 characters"
+            app:helperText="@string/put_at_least_6_characters"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tilEmailSignupScreen"
             app:layout_constraintTop_toBottomOf="@+id/tilEmailSignupScreen"
@@ -122,7 +122,7 @@
             android:hint="@string/confirm_password"
             app:endIconMode="password_toggle"
 
-            app:helperText="put at least 6 characters"
+            app:helperText="@string/put_at_least_6_characters"
             app:layout_constraintEnd_toEndOf="@+id/tilPasswordSignupScreen"
             app:layout_constraintStart_toStartOf="@+id/tilPasswordSignupScreen"
             app:layout_constraintTop_toBottomOf="@+id/tilPasswordSignupScreen"

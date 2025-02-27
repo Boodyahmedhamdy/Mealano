@@ -18,7 +18,7 @@
     <string name="continue_as_guest">الاستمرار كضيف</string>
     <string name="welcome">مرحبا</string>
     <string name="back">بعودتك</string>
-    <string name="login_description">use the email and password you enterd while\nregisteration</string>
+    <string name="login_description">ادخل البريد الالكتروني وكلمة المرورالخاصة بك</string>
     <string name="email">البريد الالكتروني</string>
     <string name="password">كلمة المرور</string>
     <string name="or_login_using">او سجل الدخول باستخدام</string>
@@ -26,7 +26,7 @@
     <string name="confirm_password">تاكيد كلمة المرور</string>
     <string name="already_have_account">لديك حساب بالفعل ؟</string>
     <string name="or_signup_using">او انشئ حساب باستخدام</string>
-    <string name="signup_description">enter email and password to let us know you</string>
+    <string name="signup_description">انشئ حسابا باستخدام بريدك الالكتروني و كلمة مرور</string>
     <string name="login_successfully">تم تسجيل الدخول بنجاح</string>
     <string name="signup_successfully">تمت انشاء الحساب بنجاح</string>
     <string name="signout">تسجيل الخروج</string>
@@ -40,7 +40,7 @@
     <string name="popular_meals">الوجبات الرائجة</string>
     <string name="today_s_random_meal">وجبة اليوم المقترحة</string>
     <string name="refresh">اعادة التحميل</string>
-    <string name="add_to_plan">لضافة الى الخطة</string>
+    <string name="add_to_plan">اضافة الى الخطة</string>
     <string name="tags">عناوين</string>
     <string name="category">الفئة:</string>
     <string name="area">المنطقة:</string>
@@ -52,10 +52,16 @@
     <string name="dev_title">مطور تطبيقات اندرويد</string>
     <string name="dev_name">عبدالرحمن احمد حمدي</string>
     <string name="project_description">ميلانو هو أول تطبيق أندرويد     تم إنشاؤه خلال رحلتي التي استمرت 9 أشهر في معهد تكنولوجيا المعلومات (ITI)،     تم بناء ميلانو باستخدام لغة جافا. شكرًا جزيلًا لجميع مدربيّ     (أحمد مازن، هبة إسماعيل، محمد جلال والمهندسة هاجر)     وشكر خاص لجميع زملائي الذين ساعدوني خلال هذا المشروع.     أخيرًا، أتمنى أن يعجبكم هذا التطبيق وتستمتعوا باستخدامه. \\n\\n     يمكنكم التواصل معي عبر لينكدإن.     الكود المصدري متاح على جيت هاب.     شكرًا لقراءتكم، استمتعوا بميلانو.</string>
+    <string name="search_by">البحث باستخدام</string>
     <string name="no_favorite_meals_yet">لا توجد وجبات مفضلة بعد</string>
     <string name="no_plans_yet">"لا توجد خطط بعد "</string>
     <string name="category_in_search">التصنيفات</string>
     <string name="area_in_search">المناطق</string>
     <string name="ingredient_in_search">المكونات</string>
+    <string name="select_a_date">اختر موعد</string>
+    <string name="about_mealano">عن التطبيق</string>
+    <string name="put_at_least_6_characters">يجب الا تقل كلمة المرور عن 6 احرف</string>
+    <string name="you_arn_t_authorized_n_login_to_open_this_feature">برجاء تسجيل الدخول لاستخدام هذه الخاصية</string>
+    <string name="internet_is_lost_turn_wifi_on">لا يوجد اتصال بالانترنت!!</string>
 
 </resources>

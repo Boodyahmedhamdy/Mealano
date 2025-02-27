@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Internet is lost, Turn Wifi On "
+        android:text="@string/internet_is_lost_turn_wifi_on"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"

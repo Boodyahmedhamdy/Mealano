@@ -71,4 +71,7 @@
 
         Thank you for reading, Enjoy Mealano.
     </string>
+    <string name="put_at_least_6_characters">put at least 6 characters</string>
+    <string name="you_arn_t_authorized_n_login_to_open_this_feature">You Arn\'t Authorized!!\n Login to open this feature</string>
+    <string name="internet_is_lost_turn_wifi_on">Internet is lost, Turn Wifi On</string>
 </resources>

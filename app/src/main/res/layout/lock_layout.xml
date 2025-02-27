@@ -24,7 +24,7 @@
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="You Arn't Authorized!!\n Login to open this feature"
+        android:text="@string/you_arn_t_authorized_n_login_to_open_this_feature"
         android:textAlignment="center"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
