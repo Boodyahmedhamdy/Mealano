@@ -14,8 +14,6 @@ public interface PlansLocalDataSource {
 
     Completable insertPlans(List<PlanEntity> entities);
 
-    Flowable<List<PlanEntity>> getPlansByDate(String userId, Long date);
-
     Single<PlanEntity> getPlanByMealId(String mealId);
 
     Completable deletePlan(PlanEntity planEntity);

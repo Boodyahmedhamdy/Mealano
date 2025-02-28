@@ -3,7 +3,10 @@ package io.github.boodyahmedhamdy.mealano.plans.view;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -34,7 +37,8 @@ import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.users.User
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.plans.PlansRepositoryImpl;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.users.UsersRepositoryImpl;
 import io.github.boodyahmedhamdy.mealano.plans.contract.PlansView;
-import io.github.boodyahmedhamdy.mealano.plans.presenter.PlansPresenter;
+import io.github.boodyahmedhamdy.mealano.plans.contract.PlansPresenter;
+import io.github.boodyahmedhamdy.mealano.plans.presenter.PlansPresenterImpl;
 import io.github.boodyahmedhamdy.mealano.utils.network.NetworkMonitor;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
@@ -45,6 +49,7 @@ public class PlansFragment extends Fragment implements PlansView {
     FragmentPlansBinding binding;
     PlansPresenter presenter;
     PlansAdapter adapter;
+    PlanEntity clickedPlan;
 
 
 
@@ -67,7 +72,7 @@ public class PlansFragment extends Fragment implements PlansView {
         UiUtils.showToolbar(requireActivity());
         UiUtils.showBottomBar(requireActivity());
 
-        presenter = new PlansPresenter(this,
+        presenter = new PlansPresenterImpl(this,
                 PlansRepositoryImpl.getInstance(
                         PlansRemoteDataSourceImpl.getInstance(FirebaseDatabase.getInstance()),
                         PlansLocalDataSourceImpl.getInstance(MealanoDatabase.getInstance(requireContext()).plansDao())
@@ -98,16 +103,42 @@ public class PlansFragment extends Fragment implements PlansView {
                 presenter.getMealById(planEntity.getMealId());
             },
             planEntity -> {
-                presenter.sharePlanToCalendar(planEntity);
+
+                clickedPlan = planEntity;
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    String[] permissions = {
+                            Manifest.permission.READ_CALENDAR,
+                            Manifest.permission.WRITE_CALENDAR
+                    };
+                    requestPermissions(permissions, 100);
+                }
+
+//                ContentResolver contentResolver = requireActivity().getContentResolver();
+//                presenter.sharePlanToCalendar(planEntity, contentResolver);
             }
         );
 
         binding.rvPlans.setAdapter(adapter);
 
-        presenter.syncV2();
+        presenter.sync();
         presenter.getAllPlans();
 
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d(TAG, "onRequestPermissionsResult() called with: requestCode = [" + requestCode + "], permissions = [" + permissions + "], grantResults = [" + grantResults + "]");
+        if(requestCode == 100) {
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.i(TAG, "onRequestPermissionsResult: Able To SHare Plan");
+                presenter.sharePlanToCalendar(clickedPlan, requireActivity().getContentResolver());
+            } else {
+                Log.e(TAG, "onRequestPermissionsResult: PERMISSION DENIED");
+            }
+        }
     }
 
     @Override
@@ -155,12 +186,4 @@ public class PlansFragment extends Fragment implements PlansView {
         }
     }
 
-//    private void requestCalendarPermissions() {
-//
-//    }
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//    }
 }

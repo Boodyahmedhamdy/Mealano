@@ -57,10 +57,7 @@ public class PlansRepositoryImpl implements PlansRepository {
         return localDataSource.insertPlans(planEntities);
     }
 
-    @Override
-    public Flowable<List<PlanEntity>> getPlansFromLocalByDate(String userId, Long date) {
-        return localDataSource.getPlansByDate(userId, date);
-    }
+
 
     @Override
     public Single<PlanEntity> getPlanFromLocalByMealId(String mealId) {

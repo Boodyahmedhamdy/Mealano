@@ -1,18 +1,24 @@
 package io.github.boodyahmedhamdy.mealano.plans.presenter;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.net.Uri;
+import android.provider.CalendarContract;
 import android.util.Log;
 
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.PlanEntity;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.plans.PlansRepository;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.users.UsersRepository;
+import io.github.boodyahmedhamdy.mealano.plans.contract.PlansPresenter;
 import io.github.boodyahmedhamdy.mealano.plans.contract.PlansView;
 import io.github.boodyahmedhamdy.mealano.utils.network.NetworkMonitor;
 import io.github.boodyahmedhamdy.mealano.utils.rx.OnBackgroundTransformer;
 import io.reactivex.rxjava3.disposables.Disposable;
 
-public class PlansPresenter {
+public class PlansPresenterImpl implements PlansPresenter {
 
     private static final String TAG = "PlansPresenter";
     PlansView view;
@@ -20,13 +26,14 @@ public class PlansPresenter {
     UsersRepository usersRepository;
     NetworkMonitor networkMonitor;
 
-    public PlansPresenter(PlansView view, PlansRepository plansRepository, UsersRepository usersRepository, NetworkMonitor networkMonitor) {
+    public PlansPresenterImpl(PlansView view, PlansRepository plansRepository, UsersRepository usersRepository, NetworkMonitor networkMonitor) {
         this.view = view;
         this.plansRepository = plansRepository;
         this.usersRepository = usersRepository;
         this.networkMonitor = networkMonitor;
     }
 
+    @Override
     public void getAllPlans() {
         if(usersRepository.isLoggedIn()){
             view.setIsAuthenticated(true);
@@ -46,47 +53,20 @@ public class PlansPresenter {
     }
 
 
-
-    // to get only the upcoming plans
-    public void getAllPlansByDate(Long selectedDate) {
-        if(usersRepository.isLoggedIn()){
-            view.setIsAuthenticated(true);
-            Disposable dis = plansRepository.getPlansFromLocalByDate(
-                            usersRepository.getCurrentUser().getUid(), selectedDate
-                    ).compose(new OnBackgroundTransformer<>())
-                    .subscribe(planEntities -> {
-                        view.setPlans(planEntities);
-                        Log.i(TAG, "getAllPlans: " + planEntities);
-                    }, throwable -> {
-                        view.setErrorMessage(throwable.getLocalizedMessage());
-                    });
-        } else {
-            view.setIsAuthenticated(false);
-        }
-    }
-
-
+    @Override
     public void getMealById(String mealId) {
         view.goToMealDetailsScreen(mealId);
     }
 
+    @Override
     public void deletePlan(PlanEntity planEntity) {
-
-        // deletes from local
-//        Disposable dis = plansRepository.deletePlanFromLocal(planEntity)
-//                .compose(new OnBackgroundTransformer<>())
-//                .subscribe(() -> {
-//                    view.setSuccessMessage("deleted Successfully");
-//                }, throwable -> {
-//                    view.setErrorMessage(throwable.getLocalizedMessage());
-//                });
 
         // delete from remote
         if(networkMonitor.isConnected()) {
             plansRepository.deletePlanFromRemote(planEntity)
                     .addOnSuccessListener(unused -> {
                         view.setSuccessMessage("Plan deleted successfully");
-                        syncV2();
+                        sync();
                     })
                     .addOnFailureListener(e -> {
                         view.setErrorMessage("Couldn't Delete the Plan");
@@ -97,7 +77,8 @@ public class PlansPresenter {
 
     }
 
-    public void syncV2() {
+    @Override
+    public void sync() {
         if(usersRepository.isLoggedIn()) {
             Disposable dis = plansRepository.getAllPlansFromRemote(usersRepository.getCurrentUser().getUid())
                     .compose(new OnBackgroundTransformer<>())
@@ -130,7 +111,30 @@ public class PlansPresenter {
         }
     }
 
-    public void sharePlanToCalendar(PlanEntity planEntity) {
-        view.setSuccessMessage("clicked to share: " + planEntity.getMealDTO().getStrMeal());
+    @Override
+    public void sharePlanToCalendar(PlanEntity planEntity, ContentResolver contentResolver) {
+
+        Log.i(TAG, "sharePlanToCalendar: started");
+        ContentValues values = new ContentValues();
+
+        values.put(CalendarContract.Events.CALENDAR_ID, 1);
+        values.put(CalendarContract.Events.TITLE, planEntity.getMealDTO().getStrMeal());
+        values.put(CalendarContract.Events.DTSTART, planEntity.getDate());
+        values.put(CalendarContract.Events.DTEND, planEntity.getDate() + 16*60*60*1000); // 16 hours
+        values.put(CalendarContract.Events.ALL_DAY, true);
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+
+        try {
+            Uri uri = contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
+            long eventId = Long.parseLong(uri.getLastPathSegment());
+            Log.i(TAG, "sharePlanToCalendar: added event with id: " + eventId);
+
+            view.setSuccessMessage("added " + planEntity.getMealDTO().getStrMeal() + " Successfully to your Calendar");
+
+        } catch (Exception e) {
+            Log.e(TAG, "sharePlanToCalendar: ", e);
+            view.setErrorMessage("Failed to Add " + planEntity.getMealDTO().getStrMeal() + " to your Calendar");
+        }
+
     }
 }

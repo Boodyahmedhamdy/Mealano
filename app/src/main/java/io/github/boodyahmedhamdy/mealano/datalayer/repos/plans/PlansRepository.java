@@ -20,8 +20,6 @@ public interface PlansRepository {
 
     Completable insertAllPlansToLocal(List<PlanEntity> planEntities);
 
-    Flowable<List<PlanEntity>> getPlansFromLocalByDate(String userId, Long date);
-
     Single<PlanEntity> getPlanFromLocalByMealId(String mealId);
 
     Completable deletePlanFromLocal(PlanEntity planEntity);

@@ -26,9 +26,6 @@ public interface PlansDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insertPlans(List<PlanEntity> entities);
 
-    @Query("SELECT * FROM PLANS WHERE user_id = :userId and date >= :date")
-    Flowable<List<PlanEntity>> getPlansByDate(String userId, Long date);
-
     @Query("SELECT * FROM PLANS WHERE meal_id = :mealId")
     Single<PlanEntity> getPlansByMealId(String mealId);
 

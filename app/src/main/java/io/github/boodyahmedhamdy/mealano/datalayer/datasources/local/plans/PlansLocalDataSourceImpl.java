@@ -45,10 +45,7 @@ public class PlansLocalDataSourceImpl implements PlansLocalDataSource {
 
     }
 
-    @Override
-    public Flowable<List<PlanEntity>> getPlansByDate(String userId, Long date) {
-        return plansDao.getPlansByDate(userId, date);
-    }
+
 
     @Override
     public Single<PlanEntity> getPlanByMealId(String mealId) {

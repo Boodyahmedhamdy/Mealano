@@ -8,11 +8,14 @@ import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
+import com.google.android.material.datepicker.CompositeDateValidator;
+import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -35,7 +38,10 @@ public class DatePickerUtils {
         long nextWeek = calendar.getTimeInMillis();
 
         CalendarConstraints constraints = new CalendarConstraints.Builder()
-                .setValidator(DateValidatorPointForward.now()) // Disable past dates
+                .setValidator(CompositeDateValidator.allOf(Arrays.asList(
+                        DateValidatorPointForward.from(today),     // Disable dates before today
+                        DateValidatorPointBackward.before(nextWeek) // Disable dates after one week
+                )))
                 .setStart(today)
                 .setEnd(nextWeek)
                 .build();
@@ -61,6 +67,7 @@ public class DatePickerUtils {
             Toast.makeText(activity, "Selected Date: " + selectedDate, Toast.LENGTH_SHORT).show();
         });
     }
+
     public static String formatDateToString(Long date) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
