@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -40,5 +41,9 @@ public class UsersRemoteDataSource {
         Log.i(TAG, "loginWithEmailAndPassword: started");
 
         return firebaseAuth.signInWithEmailAndPassword(email, password);
+    }
+
+    public Task<AuthResult> signupWithCredential(AuthCredential credential) {
+        return firebaseAuth.signInWithCredential(credential);
     }
 }

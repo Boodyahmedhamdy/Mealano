@@ -125,16 +125,7 @@ public class SignupFragment extends Fragment implements SignupView {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
 
-                FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            goToHomeScreen();
-                        } else {
-                            setErrorMessage(task.getException().getLocalizedMessage());
-                        }
-                    }
-                });
+                presenter.signupWithCredential(credential);
             } catch (Exception e) {
                 e.printStackTrace();
                 setErrorMessage(e.getLocalizedMessage());

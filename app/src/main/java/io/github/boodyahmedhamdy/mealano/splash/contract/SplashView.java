@@ -2,7 +2,9 @@ package io.github.boodyahmedhamdy.mealano.splash.contract;
 
 public interface SplashView {
 
-    void setIsFirstTime(Boolean isFirstTime);
+    void goToOnBoarding();
 
-    void setIsLoggedIn(Boolean isLoggedIn);
+    void goToHome();
+
+    void goToLogin();
 }

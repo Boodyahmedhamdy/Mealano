@@ -3,6 +3,7 @@ package io.github.boodyahmedhamdy.mealano.datalayer.repos;
 import android.util.Log;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -59,5 +60,9 @@ public class UsersRepository {
 
     public FirebaseUser getCurrentUser() {
         return localDataSource.getCurrentUser();
+    }
+
+    public Task<AuthResult> signInWithCredential(AuthCredential credential) {
+        return remoteDataSource.signupWithCredential(credential);
     }
 }

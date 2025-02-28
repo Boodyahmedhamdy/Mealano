@@ -22,11 +22,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
@@ -37,7 +35,8 @@ import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalD
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.login.contract.LoginView;
-import io.github.boodyahmedhamdy.mealano.login.presenter.LoginPresenter;
+import io.github.boodyahmedhamdy.mealano.login.contract.LoginPresenter;
+import io.github.boodyahmedhamdy.mealano.login.presenter.LoginPresenterImpl;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 public class LoginFragment extends Fragment implements LoginView {
@@ -67,7 +66,7 @@ public class LoginFragment extends Fragment implements LoginView {
         UiUtils.hideBottomBar(requireActivity());
         navController = Navigation.findNavController(binding.getRoot());
 
-        presenter = new LoginPresenter(
+        presenter = new LoginPresenterImpl(
                 this,
                 UsersRepository.getInstance(
                         UsersLocalDataSource.getInstance(
@@ -124,20 +123,11 @@ public class LoginFragment extends Fragment implements LoginView {
         if(requestCode == LOGIN_REQUEST_CODE) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             try {
-
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
 
-                FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
-                            goToHomeScreen();
-                        } else {
-                            setErrorMessage(task.getException().getLocalizedMessage());
-                        }
-                    }
-                });
+                presenter.signInWithCredential(credential);
+
             } catch (Exception e) {
                 e.printStackTrace();
                 setErrorMessage("Some Error Happend, Make sure you are Online");

@@ -22,7 +22,8 @@ import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalD
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.splash.contract.SplashView;
-import io.github.boodyahmedhamdy.mealano.splash.presenter.SplashPresenter;
+import io.github.boodyahmedhamdy.mealano.splash.contract.SplashPresenter;
+import io.github.boodyahmedhamdy.mealano.splash.presenter.SplashPresenterImpl;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 
@@ -53,7 +54,7 @@ public class SplashFragment extends Fragment implements SplashView {
         UiUtils.hideBottomBar(requireActivity());
         navController = Navigation.findNavController(view);
 
-        presenter = new SplashPresenter(
+        presenter = new SplashPresenterImpl(
                 this,
                 UsersRepository.getInstance(
                         UsersLocalDataSource.getInstance(
@@ -65,44 +66,34 @@ public class SplashFragment extends Fragment implements SplashView {
         );
 
         new Handler().postDelayed(() -> {
-            Log.i(TAG, "before presenter checks isFirstTime");
-            boolean isFirstTime = presenter.isFirstTime();
-            Log.i(TAG, "after checking is first time");
-            if(isFirstTime) {
-                setIsFirstTime(isFirstTime);
-            } else {
-                Log.i(TAG, "before presneter checks isLoggedIn");
-                boolean isLoggedIn = presenter.isLoggedIn();
-                Log.i(TAG, "after presenter checks isLoggedIn");
-                setIsLoggedIn(isLoggedIn);
-            }
+
+            presenter.start();
 
         }, SPLASH_SCREEN_TIME_IN_MILLIS);
 
     }
 
     @Override
-    public void setIsFirstTime(Boolean isFirstTime) {
-        if(isFirstTime) {
-            Log.i(TAG, "setIsFirstTime: navigating to OnBoarding");
-            navController.navigate(
-                    SplashFragmentDirections.actionSplashFragmentToOnBoardingFragment()
-            );
-        }
+    public void goToOnBoarding() {
+        Log.i(TAG, "setIsFirstTime: navigating to OnBoarding");
+        navController.navigate(
+                SplashFragmentDirections.actionSplashFragmentToOnBoardingFragment()
+        );
     }
 
     @Override
-    public void setIsLoggedIn(Boolean isLoggedIn) {
-        if(isLoggedIn) {
-            Log.i(TAG, "setIsLoggedIn: navigating to Home");
-            navController.navigate(
-                    SplashFragmentDirections.actionSplashFragmentToHomeFragment()
-            );
-        } else {
-            Log.i(TAG, "setIsLoggedIn: navigating to Login");
-            navController.navigate(
-                    SplashFragmentDirections.actionSplashFragmentToLoginFragment()
-            );
-        }
+    public void goToHome() {
+        Log.i(TAG, "setIsLoggedIn: navigating to Home");
+        navController.navigate(
+                SplashFragmentDirections.actionSplashFragmentToHomeFragment()
+        );
+    }
+
+    @Override
+    public void goToLogin() {
+        Log.i(TAG, "setIsLoggedIn: navigating to Login");
+        navController.navigate(
+                SplashFragmentDirections.actionSplashFragmentToLoginFragment()
+        );
     }
 }

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 
 import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
@@ -73,6 +74,16 @@ public class SignupPresenter {
 
         Log.i(TAG, "isValidInput: finished validating true");
         return true;
+    }
+
+    public void signupWithCredential(AuthCredential credential) {
+        usersRepository.signInWithCredential(credential).addOnCompleteListener(task -> {
+            if(task.isSuccessful()) {
+                view.goToHomeScreen();
+            } else {
+                view.setErrorMessage(task.getException().getLocalizedMessage());
+            }
+        });
     }
 
 
