@@ -1,11 +1,8 @@
 package io.github.boodyahmedhamdy.mealano.plans.view;
 
-import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
-import android.content.Context;
-import android.icu.util.Calendar;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 
@@ -19,34 +16,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentPlansBinding;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.PlansLocalDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.plans.PlansLocalDataSourceImpl;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.SharedPreferencesManager;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.users.UsersLocalDataSourceImpl;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.MealanoDatabase;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.PlanEntity;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.PlansRemoteDataSource;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.PlansRepository;
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
-import io.github.boodyahmedhamdy.mealano.favorite.view.FavoriteFragmentDirections;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.plans.PlansRemoteDataSourceImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.users.UsersRemoteDataSourceImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.plans.PlansRepositoryImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.users.UsersRepositoryImpl;
 import io.github.boodyahmedhamdy.mealano.plans.contract.PlansView;
 import io.github.boodyahmedhamdy.mealano.plans.presenter.PlansPresenter;
 import io.github.boodyahmedhamdy.mealano.utils.network.NetworkMonitor;
-import io.github.boodyahmedhamdy.mealano.utils.ui.DatePickerUtils;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 
@@ -79,16 +68,16 @@ public class PlansFragment extends Fragment implements PlansView {
         UiUtils.showBottomBar(requireActivity());
 
         presenter = new PlansPresenter(this,
-                PlansRepository.getInstance(
-                        PlansRemoteDataSource.getInstance(FirebaseDatabase.getInstance()),
-                        PlansLocalDataSource.getInstance(MealanoDatabase.getInstance(requireContext()).plansDao())
+                PlansRepositoryImpl.getInstance(
+                        PlansRemoteDataSourceImpl.getInstance(FirebaseDatabase.getInstance()),
+                        PlansLocalDataSourceImpl.getInstance(MealanoDatabase.getInstance(requireContext()).plansDao())
                 ),
-                UsersRepository.getInstance(
-                        UsersLocalDataSource.getInstance(
+                UsersRepositoryImpl.getInstance(
+                        UsersLocalDataSourceImpl.getInstance(
                                 SharedPreferencesManager.getInstance(requireContext()),
                                 FirebaseAuth.getInstance()
                         ),
-                        UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())),
+                        UsersRemoteDataSourceImpl.getInstance(FirebaseAuth.getInstance())),
                 NetworkMonitor.getInstance(requireContext().getSystemService(ConnectivityManager.class))
                 );
 

@@ -1,6 +1,6 @@
 package io.github.boodyahmedhamdy.mealano.details.contract;
 
-import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
+import io.github.boodyahmedhamdy.mealano.data.network.dtos.DetailedMealDTO;
 
 public interface MealDetailsView {
 

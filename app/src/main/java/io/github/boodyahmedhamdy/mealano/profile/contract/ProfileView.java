@@ -4,4 +4,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public interface ProfileView {
     void setCurrentUser(FirebaseUser user);
+
+    void goToLogin();
+
+    void setErrorMessage(String errorMessage);
 }

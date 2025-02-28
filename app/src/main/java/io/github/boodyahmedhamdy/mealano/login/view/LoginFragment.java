@@ -31,9 +31,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.SharedPreferencesManager;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentLoginBinding;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.users.UsersLocalDataSourceImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.users.UsersRemoteDataSourceImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.users.UsersRepositoryImpl;
 import io.github.boodyahmedhamdy.mealano.login.contract.LoginView;
 import io.github.boodyahmedhamdy.mealano.login.contract.LoginPresenter;
 import io.github.boodyahmedhamdy.mealano.login.presenter.LoginPresenterImpl;
@@ -68,12 +68,12 @@ public class LoginFragment extends Fragment implements LoginView {
 
         presenter = new LoginPresenterImpl(
                 this,
-                UsersRepository.getInstance(
-                        UsersLocalDataSource.getInstance(
+                UsersRepositoryImpl.getInstance(
+                        UsersLocalDataSourceImpl.getInstance(
                                 SharedPreferencesManager.getInstance(getContext()),
                                 FirebaseAuth.getInstance()
                         ),
-                        UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
+                        UsersRemoteDataSourceImpl.getInstance(FirebaseAuth.getInstance())
                 )
         );
 

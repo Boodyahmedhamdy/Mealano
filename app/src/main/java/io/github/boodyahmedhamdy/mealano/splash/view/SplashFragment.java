@@ -18,9 +18,9 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.SharedPreferencesManager;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.users.UsersLocalDataSourceImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.users.UsersRemoteDataSourceImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.users.UsersRepositoryImpl;
 import io.github.boodyahmedhamdy.mealano.splash.contract.SplashView;
 import io.github.boodyahmedhamdy.mealano.splash.contract.SplashPresenter;
 import io.github.boodyahmedhamdy.mealano.splash.presenter.SplashPresenterImpl;
@@ -56,12 +56,12 @@ public class SplashFragment extends Fragment implements SplashView {
 
         presenter = new SplashPresenterImpl(
                 this,
-                UsersRepository.getInstance(
-                        UsersLocalDataSource.getInstance(
+                UsersRepositoryImpl.getInstance(
+                        UsersLocalDataSourceImpl.getInstance(
                                 SharedPreferencesManager.getInstance(getContext()),
                                 FirebaseAuth.getInstance()
                         ),
-                        UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
+                        UsersRemoteDataSourceImpl.getInstance(FirebaseAuth.getInstance())
                 )
         );
 

@@ -5,19 +5,17 @@ import static android.view.View.VISIBLE;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.ScrollView;
 
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import io.github.boodyahmedhamdy.mealano.R;
-import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
+import io.github.boodyahmedhamdy.mealano.data.network.dtos.DetailedMealDTO;
 
 public class UiUtils {
 

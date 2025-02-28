@@ -3,7 +3,6 @@ package io.github.boodyahmedhamdy.mealano.favorite.view;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,20 +23,19 @@ import java.util.List;
 
 import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentFavoriteBinding;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.MealsLocalDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.meals.MealsLocalDataSourceImpl;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.SharedPreferencesManager;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.users.UsersLocalDataSourceImpl;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.MealanoDatabase;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.MealEntity;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsApi;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.api.MealsApi;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.meals.MealsRemoteDataSourceImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.users.UsersRemoteDataSourceImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.meals.MealsRepositoryImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.users.UsersRepositoryImpl;
 import io.github.boodyahmedhamdy.mealano.favorite.contract.FavoriteView;
-import io.github.boodyahmedhamdy.mealano.favorite.presenter.FavoritePresenter;
-import io.github.boodyahmedhamdy.mealano.utils.listeners.CustomClickListener;
-import io.github.boodyahmedhamdy.mealano.utils.network.NetworkMonitor;
+import io.github.boodyahmedhamdy.mealano.favorite.contract.FavoritePresenter;
+import io.github.boodyahmedhamdy.mealano.favorite.presenter.FavoritePresenterImpl;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 
@@ -69,15 +67,15 @@ public class FavoriteFragment extends Fragment implements FavoriteView {
         UiUtils.showToolbar(requireActivity());
         UiUtils.showBottomBar(requireActivity());
 
-        presenter = new FavoritePresenter(
+        presenter = new FavoritePresenterImpl(
                 this,
-                MealsRepository.getInstance(
-                        MealsLocalDataSource.getInstance(MealanoDatabase.getInstance(requireContext()).mealsDao()),
-                        MealsRemoteDataSource.getInstance(MealsApi.getMealsApiService(), FirebaseDatabase.getInstance())
+                MealsRepositoryImpl.getInstance(
+                        MealsLocalDataSourceImpl.getInstance(MealanoDatabase.getInstance(requireContext()).mealsDao()),
+                        MealsRemoteDataSourceImpl.getInstance(MealsApi.getMealsApiService(), FirebaseDatabase.getInstance())
                 ),
-                UsersRepository.getInstance(
-                        UsersLocalDataSource.getInstance(SharedPreferencesManager.getInstance(requireContext()), FirebaseAuth.getInstance()),
-                        UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
+                UsersRepositoryImpl.getInstance(
+                        UsersLocalDataSourceImpl.getInstance(SharedPreferencesManager.getInstance(requireContext()), FirebaseAuth.getInstance()),
+                        UsersRemoteDataSourceImpl.getInstance(FirebaseAuth.getInstance())
                 )
         );
 

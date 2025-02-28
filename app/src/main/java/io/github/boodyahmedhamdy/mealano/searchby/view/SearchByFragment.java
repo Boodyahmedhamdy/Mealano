@@ -24,15 +24,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 import io.github.boodyahmedhamdy.mealano.R;
-import io.github.boodyahmedhamdy.mealano.data.network.dto.SimpleMealDTO;
+import io.github.boodyahmedhamdy.mealano.data.network.dtos.SimpleMealDTO;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentSearchByBinding;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.MealsLocalDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.meals.MealsLocalDataSourceImpl;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.MealanoDatabase;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsApi;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.api.MealsApi;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.meals.MealsRemoteDataSourceImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.meals.MealsRepositoryImpl;
 import io.github.boodyahmedhamdy.mealano.searchby.contract.SearchByView;
-import io.github.boodyahmedhamdy.mealano.searchby.presenter.SearchByPresenter;
+import io.github.boodyahmedhamdy.mealano.searchby.contract.SearchByPresenter;
+import io.github.boodyahmedhamdy.mealano.searchby.presenter.SearchByPresenterImpl;
 import io.github.boodyahmedhamdy.mealano.utils.network.NetworkMonitor;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
@@ -64,13 +65,11 @@ public class SearchByFragment extends Fragment implements SearchByView {
         String key = SearchByFragmentArgs.fromBundle(getArguments()).getSearchByKey();
         String value = SearchByFragmentArgs.fromBundle(getArguments()).getSearchByValue();
 
-        Snackbar.make(binding.getRoot(), "key: " + key + ", value: " + value, Snackbar.LENGTH_LONG).show();
-
-        presenter = new SearchByPresenter(
+        presenter = new SearchByPresenterImpl(
                 this,
-                MealsRepository.getInstance(
-                        MealsLocalDataSource.getInstance(MealanoDatabase.getInstance(requireContext()).mealsDao()),
-                        MealsRemoteDataSource.getInstance(MealsApi.getMealsApiService(), FirebaseDatabase.getInstance())
+                MealsRepositoryImpl.getInstance(
+                        MealsLocalDataSourceImpl.getInstance(MealanoDatabase.getInstance(requireContext()).mealsDao()),
+                        MealsRemoteDataSourceImpl.getInstance(MealsApi.getMealsApiService(), FirebaseDatabase.getInstance())
                 ),
                 NetworkMonitor.getInstance(requireContext().getSystemService(ConnectivityManager.class))
         );

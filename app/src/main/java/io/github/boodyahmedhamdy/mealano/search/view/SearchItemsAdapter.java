@@ -1,7 +1,6 @@
 package io.github.boodyahmedhamdy.mealano.search.view;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,6 @@ import java.util.List;
 
 import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.databinding.SearchItemBinding;
-import io.github.boodyahmedhamdy.mealano.search.presenter.SearchItem;
 import io.github.boodyahmedhamdy.mealano.utils.listeners.CustomClickListener;
 
 public class SearchItemsAdapter extends RecyclerView.Adapter<SearchItemsAdapter.SearchItemViewHolder> {

@@ -28,17 +28,16 @@ import java.util.List;
 
 import io.github.boodyahmedhamdy.mealano.constants.SearchConstants;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentSearchBinding;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.MealsLocalDataSource;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.meals.MealsLocalDataSourceImpl;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.MealanoDatabase;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsApi;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.MealsRemoteDataSource;
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.MealsRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.api.MealsApi;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.meals.MealsRemoteDataSourceImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.meals.MealsRepositoryImpl;
 import io.github.boodyahmedhamdy.mealano.search.contract.SearchView;
-import io.github.boodyahmedhamdy.mealano.search.presenter.SearchItem;
-import io.github.boodyahmedhamdy.mealano.search.presenter.SearchPresenter;
+import io.github.boodyahmedhamdy.mealano.search.contract.SearchPresenter;
+import io.github.boodyahmedhamdy.mealano.search.presenter.SearchPresenterImpl;
 import io.github.boodyahmedhamdy.mealano.utils.network.NetworkMonitor;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
-import io.reactivex.rxjava3.core.Observable;
 
 public class SearchFragment extends Fragment implements SearchView {
 
@@ -49,9 +48,6 @@ public class SearchFragment extends Fragment implements SearchView {
     SearchItemsAdapter adapter;
 
     String searchBy;
-
-
-
 
 
     @Override
@@ -74,11 +70,11 @@ public class SearchFragment extends Fragment implements SearchView {
         UiUtils.showToolbar(requireActivity());
         UiUtils.showBottomBar(requireActivity());
 
-        presenter = new SearchPresenter(
+        presenter = new SearchPresenterImpl(
                 this,
-                MealsRepository.getInstance(
-                        MealsLocalDataSource.getInstance(MealanoDatabase.getInstance(requireContext()).mealsDao()),
-                        MealsRemoteDataSource.getInstance(MealsApi.getMealsApiService(), FirebaseDatabase.getInstance())
+                MealsRepositoryImpl.getInstance(
+                        MealsLocalDataSourceImpl.getInstance(MealanoDatabase.getInstance(requireContext()).mealsDao()),
+                        MealsRemoteDataSourceImpl.getInstance(MealsApi.getMealsApiService(), FirebaseDatabase.getInstance())
                 ),
                 NetworkMonitor.getInstance(requireContext().getSystemService(ConnectivityManager.class))
         );
@@ -87,18 +83,6 @@ public class SearchFragment extends Fragment implements SearchView {
         for(int i = 0 ; i < binding.chipGroup.getChildCount() ; i++) {
             Chip chip = (Chip) binding.chipGroup.getChildAt(i);
             chip.setChecked(false);
-            chip.setOnCheckedChangeListener((buttonView, isChecked) -> {
-                if(isChecked) {
-                    Log.i(TAG, "checked chip: " + buttonView.getText());
-                    searchBy = buttonView.getText().toString();
-                    Log.i(TAG, "searchBy: " + searchBy);
-
-                } else {
-                    Log.i(TAG, "unChecked chip: " + buttonView.getText());
-                    Log.i(TAG, "searchBy: " + searchBy);
-                    searchBy = "";
-                }
-            });
         }
 
         binding.chipCategory.setOnCheckedChangeListener((buttonView, isChecked) -> {

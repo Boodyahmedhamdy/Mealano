@@ -2,17 +2,14 @@ package io.github.boodyahmedhamdy.mealano.plans.presenter;
 
 import android.util.Log;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.db.entities.PlanEntity;
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.PlansRepository;
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.plans.PlansRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.users.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.plans.contract.PlansView;
 import io.github.boodyahmedhamdy.mealano.utils.network.NetworkMonitor;
 import io.github.boodyahmedhamdy.mealano.utils.rx.OnBackgroundTransformer;
-import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 public class PlansPresenter {

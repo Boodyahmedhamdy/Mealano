@@ -5,16 +5,10 @@ import static io.github.boodyahmedhamdy.mealano.constants.AuthConstants.MIN_PASS
 import android.util.Log;
 import android.util.Patterns;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.users.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.signup.contract.SignupView;
-import io.github.boodyahmedhamdy.mealano.utils.network.EmptyNetworkCallback;
 
 public class SignupPresenter {
 

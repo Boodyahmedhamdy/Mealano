@@ -2,7 +2,7 @@ package io.github.boodyahmedhamdy.mealano.searchby.contract;
 
 import java.util.List;
 
-import io.github.boodyahmedhamdy.mealano.data.network.dto.SimpleMealDTO;
+import io.github.boodyahmedhamdy.mealano.data.network.dtos.SimpleMealDTO;
 
 public interface SearchByView {
     void setIsOnline(boolean isOnline);

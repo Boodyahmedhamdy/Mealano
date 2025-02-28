@@ -1,6 +1,6 @@
 package io.github.boodyahmedhamdy.mealano.splash.presenter;
 
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.users.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.splash.contract.SplashPresenter;
 import io.github.boodyahmedhamdy.mealano.splash.contract.SplashView;
 

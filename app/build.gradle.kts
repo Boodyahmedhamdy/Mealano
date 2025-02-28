@@ -75,7 +75,6 @@ dependencies {
     //---------------- Room Ended -----------------------
 
 
-
     //---------------- Rxjava Started -----------------------
     implementation ("io.reactivex.rxjava3:rxandroid:3.0.2")
     implementation ("io.reactivex.rxjava3:rxjava:3.1.5")
@@ -84,13 +83,12 @@ dependencies {
 
     //---------------- Sign in with google Started -----------------------
      // signin with google
-//    implementation ("androidx.credentials:credentials:<latest version>")
-//    implementation ("androidx.credentials:credentials-play-services-auth:<latest version>")
-//    implementation ("com.google.android.libraries.identity.googleid:googleid:<latest version>")
+
     implementation("androidx.credentials:credentials:1.5.0-rc01")
     implementation("com.google.android.gms:play-services-auth:21.3.0")
     implementation("androidx.credentials:credentials-play-services-auth:1.5.0-rc01")
     //---------------- Sign in with google Ended -----------------------
+
 
 
     //---------------- Lottie Started -----------------------

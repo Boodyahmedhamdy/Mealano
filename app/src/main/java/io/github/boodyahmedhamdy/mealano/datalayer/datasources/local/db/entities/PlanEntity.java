@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
-import io.github.boodyahmedhamdy.mealano.data.network.dto.DetailedMealDTO;
+import io.github.boodyahmedhamdy.mealano.data.network.dtos.DetailedMealDTO;
 
 @Entity(tableName = "plans", primaryKeys = {"user_id", "date", "meal_id"})
 public class PlanEntity {

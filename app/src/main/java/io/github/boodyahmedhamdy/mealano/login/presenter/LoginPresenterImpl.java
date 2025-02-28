@@ -8,7 +8,7 @@ import android.util.Patterns;
 
 import com.google.firebase.auth.AuthCredential;
 
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.users.UsersRepository;
 import io.github.boodyahmedhamdy.mealano.login.contract.LoginPresenter;
 import io.github.boodyahmedhamdy.mealano.login.contract.LoginView;
 

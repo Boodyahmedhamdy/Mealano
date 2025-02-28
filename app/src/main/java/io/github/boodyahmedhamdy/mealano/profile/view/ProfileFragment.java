@@ -5,7 +5,6 @@ import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,16 +28,16 @@ import com.google.firebase.auth.FirebaseUser;
 import io.github.boodyahmedhamdy.mealano.R;
 import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.SharedPreferencesManager;
 import io.github.boodyahmedhamdy.mealano.databinding.FragmentProfileBinding;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.UsersLocalDataSource;
-import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.UsersRemoteDataSource;
-import io.github.boodyahmedhamdy.mealano.datalayer.repos.UsersRepository;
-import io.github.boodyahmedhamdy.mealano.profile.contract.OnSignOutCallback;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.local.users.UsersLocalDataSourceImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.datasources.remote.users.UsersRemoteDataSourceImpl;
+import io.github.boodyahmedhamdy.mealano.datalayer.repos.users.UsersRepositoryImpl;
+import io.github.boodyahmedhamdy.mealano.profile.contract.ProfilePresenter;
 import io.github.boodyahmedhamdy.mealano.profile.contract.ProfileView;
-import io.github.boodyahmedhamdy.mealano.profile.presenter.ProfilePresenter;
+import io.github.boodyahmedhamdy.mealano.profile.presenter.ProfilePresenterImpl;
 import io.github.boodyahmedhamdy.mealano.utils.ui.UiUtils;
 
 
-public class ProfileFragment extends Fragment implements ProfileView, OnSignOutCallback {
+public class ProfileFragment extends Fragment implements ProfileView {
     private static final String TAG = "ProfileFragment";
     FragmentProfileBinding binding;
     ProfilePresenter presenter;
@@ -66,11 +65,11 @@ public class ProfileFragment extends Fragment implements ProfileView, OnSignOutC
         UiUtils.showBottomBar(requireActivity());
         navController = Navigation.findNavController(binding.getRoot());
 
-        presenter = new ProfilePresenter(
+        presenter = new ProfilePresenterImpl(
                 this,
-                UsersRepository.getInstance(
-                        UsersLocalDataSource.getInstance(SharedPreferencesManager.getInstance(getContext()), FirebaseAuth.getInstance()),
-                        UsersRemoteDataSource.getInstance(FirebaseAuth.getInstance())
+                UsersRepositoryImpl.getInstance(
+                        UsersLocalDataSourceImpl.getInstance(SharedPreferencesManager.getInstance(getContext()), FirebaseAuth.getInstance()),
+                        UsersRemoteDataSourceImpl.getInstance(FirebaseAuth.getInstance())
                 )
         );
 
@@ -82,7 +81,13 @@ public class ProfileFragment extends Fragment implements ProfileView, OnSignOutC
                     .setMessage("are you sure to Sign out?")
                     .setPositiveButton("Yes", (dialog1, which) -> {
                         Log.i(TAG, "clicked on positive button. will signout");
-                        presenter.signOut(this);
+                        GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                                .requestIdToken(getString(R.string.client_id))
+                                .requestEmail()
+                                .build();
+                        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(requireActivity(), signInOptions);
+
+                        presenter.signOut(googleSignInClient);
                     })
                     .setNegativeButton("No", (dialog1, which) -> {
                         Log.i(TAG, "clicked on negative button");
@@ -101,28 +106,6 @@ public class ProfileFragment extends Fragment implements ProfileView, OnSignOutC
             navController.navigate(ProfileFragmentDirections.actionProfileFragmentToLoginFragment());
         });
 
-    }
-
-    @Override
-    public void onSuccess() {
-        GoogleSignInOptions signInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.client_id))
-                .requestEmail()
-                .build();
-        GoogleSignInClient googleSignInClient = GoogleSignIn.getClient(requireActivity(), signInOptions);
-        googleSignInClient.signOut().addOnCompleteListener(task -> {
-            Log.d(TAG, "signed out from google signout");
-        });
-
-
-        navController.navigate(
-                ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
-        );
-    }
-
-    @Override
-    public void onFailure(String errorMessage) {
-        Log.e(TAG, "onFailure: error message: " + errorMessage);
     }
 
     @Override
@@ -163,5 +146,17 @@ public class ProfileFragment extends Fragment implements ProfileView, OnSignOutC
             binding.btnSignout.setVisibility(INVISIBLE);
         }
 
+    }
+
+    @Override
+    public void goToLogin() {
+        navController.navigate(
+                ProfileFragmentDirections.actionProfileFragmentToLoginFragment()
+        );
+    }
+
+    @Override
+    public void setErrorMessage(String errorMessage) {
+        UiUtils.showErrorSnackBar(binding.getRoot(), errorMessage);
     }
 }

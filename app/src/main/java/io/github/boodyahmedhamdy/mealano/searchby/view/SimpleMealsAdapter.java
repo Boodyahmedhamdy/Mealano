@@ -1,7 +1,6 @@
 package io.github.boodyahmedhamdy.mealano.searchby.view;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,7 +11,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import io.github.boodyahmedhamdy.mealano.R;
-import io.github.boodyahmedhamdy.mealano.data.network.dto.SimpleMealDTO;
+import io.github.boodyahmedhamdy.mealano.data.network.dtos.SimpleMealDTO;
 import io.github.boodyahmedhamdy.mealano.databinding.SimpleMealLayoutBinding;
 import io.github.boodyahmedhamdy.mealano.utils.listeners.CustomClickListener;
 
