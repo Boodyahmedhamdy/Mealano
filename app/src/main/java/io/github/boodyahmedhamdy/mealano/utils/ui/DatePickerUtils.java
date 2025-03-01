@@ -39,8 +39,8 @@ public class DatePickerUtils {
 
         CalendarConstraints constraints = new CalendarConstraints.Builder()
                 .setValidator(CompositeDateValidator.allOf(Arrays.asList(
-                        DateValidatorPointForward.from(today),     // Disable dates before today
-                        DateValidatorPointBackward.before(nextWeek) // Disable dates after one week
+                        DateValidatorPointForward.now(),
+                        DateValidatorPointBackward.before(nextWeek)
                 )))
                 .setStart(today)
                 .setEnd(nextWeek)
