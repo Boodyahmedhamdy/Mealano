@@ -59,25 +59,6 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
     }
 
     @Override
-    public void getAllFavorites(String userId) {
-        DatabaseReference ref = firebaseDatabase.getReference("users").child(userId).child("favorites");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    DetailedMealDTO meal = dataSnapshot.getValue(DetailedMealDTO.class);
-                    Log.i(TAG, "onDataChange: meal:" + meal);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    @Override
     public Single<CategoriesResponse> getAllCategories() {
         return service.getAllCategories();
     }

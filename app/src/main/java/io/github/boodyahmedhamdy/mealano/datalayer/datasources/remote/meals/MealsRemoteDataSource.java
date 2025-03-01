@@ -17,7 +17,6 @@ public interface MealsRemoteDataSource {
     Single<DetailedMealsResponse> getMealById(String mealId);
 
 
-    void getAllFavorites(String userId);
 
     Single<CategoriesResponse> getAllCategories();
 
