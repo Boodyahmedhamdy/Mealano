@@ -1,5 +1,7 @@
 # Mealano
 
+![](media/finalMedia/1.jpg)
+
 ## Overview
 
 Meal Planner is an Android application built using Java that helps users plan their meals efficiently. It provides features such as meal suggestions, searching by various criteria, favorite meal management, and integration with the mobile calendar.
@@ -12,9 +14,8 @@ Meal Planner is an Android application built using Java that helps users plan th
 - Supoort for Arabic/English
   
 
-
 #### 🚀 **User Authentication**
-
+![](media/finalMedia/2.jpg)
 - **Login Screen**
     - Login using Email and Password
     - Login using Google
@@ -30,20 +31,31 @@ Meal Planner is an Android application built using Java that helps users plan th
 #### 🍽️ **Meal Management**
 
 - **Home Screen**
+  ![](media/finalMedia/3.jpg)
     - Suggested Meal for the Day
     - List of Popular Meals
     - Add Meals to Plans
 - **Search Meals Screen**
+ ![](media/finalMedia/4.jpg)
+
     - Search by Ingredient
     - Search by Area
     - Search by Category
 - **Favorite Meals Screen**
+  ![](media/finalMedia/5.jpg)
     - View Favorite Meals
     - Remove Meals from Favorites
 - **Plans Screen**
+  ![](media/finalMedia/6.jpg)
     - View and Manage Meal Plans
     - Delete Meal Plans
     - Share Meal Plans with Mobile Calendar
+- **Details Screen**
+  ![](media/finalMedia/7.jpg)
+  - view meal Details
+  - view list of ingredients 
+  - view steps to make the Meal
+  - Youtube video for the recipe
 
 #### 👤 **User Profile & App Information**
 
