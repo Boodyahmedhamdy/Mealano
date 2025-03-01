@@ -12,8 +12,8 @@
     <string name="plans">الخطط</string>
     <string name="meal_details">تفاصيل الوجبة</string>
     <string name="about">حول</string>
-    <string name="first_onboading_title">العنوان الاول</string>
-    <string name="first_onboarding_description">الوصف الاول</string>
+    <string name="first_onboading_title">لا أفكار، لا مشكلة</string>
+    <string name="first_onboarding_description">ميلانو يقترح عليك وجبة حتى لا تحتار في السؤال (ماذا ستأكل اليوم)</string>
     <string name="next">التالي</string>
     <string name="continue_as_guest">الاستمرار كضيف</string>
     <string name="welcome">مرحبا</string>
@@ -32,11 +32,11 @@
     <string name="signout">تسجيل الخروج</string>
     <string name="some_error_happend_while_logging_you_in_please_check_your_internet_connection_and_try_again">حدث خطا اثناء تسجيل الدخول. من فضلك تجقق من اتصال الانترنت لديك</string>
     <string name="error_happened">حدث خطأ</string>
-    <string name="second_onboarding_title">العنوان الثاني</string>
-    <string name="second_onboarding_description">الوصف الثاني</string>
-    <string name="third_onboarding_title">العنوان الثالث</string>
+    <string name="second_onboarding_title">اكتشف وجبات الطعام من جميع أنحاء العالم</string>
+    <string name="second_onboarding_description">يوفر لك تطبيق Mealano إمكانية البحث عن الوجبات في جميع أنحاء العالم حسب المكون أو المنطقة أو الفئة</string>
+    <string name="third_onboarding_title">احفظ وجباتك المفضلة وخطط لأسبوعك</string>
+    <string name="third_onboarding_description">يمكنك حفظ وجباتك المفضلة حتى تتمكن من مراجعتها في أي وقت أو إضافة وجبة إلى خطتك الأسبوعية ومشاركتها مع تقويم هاتفك المحمول</string>
     <string name="finish">انهاء</string>
-    <string name="third_onboarding_description">الوصف الثالث</string>
     <string name="popular_meals">الوجبات الرائجة</string>
     <string name="today_s_random_meal">وجبة اليوم المقترحة</string>
     <string name="refresh">اعادة التحميل</string>

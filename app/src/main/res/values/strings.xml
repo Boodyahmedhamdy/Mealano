@@ -11,8 +11,8 @@
     <string name="plans">Plans</string>
     <string name="meal_details">Meal Details</string>
     <string name="about">About</string>
-    <string name="first_onboading_title">First Onboading Title</string>
-    <string name="first_onboarding_description">First Onboarding Description</string>
+    <string name="first_onboading_title">No Ideas, No Problem</string>
+    <string name="first_onboarding_description">Mealano suggests a meal for you so you don\'t get confused by the Question (what to eat Today)</string>
     <string name="next">Next</string>
     <string name="continue_as_guest">Continue as Guest</string>
     <string name="welcome">Welcome</string>
@@ -31,11 +31,11 @@
     <string name="signout">Signout</string>
     <string name="some_error_happend_while_logging_you_in_please_check_your_internet_connection_and_try_again">some error happend while logging you in. please check your internet connection and try again</string>
     <string name="error_happened">Error Happened</string>
-    <string name="second_onboarding_title">Second Onboarding Title</string>
-    <string name="second_onboarding_description">Second Onboarding Description</string>
-    <string name="third_onboarding_title">Third Onboarding Title</string>
+    <string name="second_onboarding_title">Explore Meals From All over the World</string>
+    <string name="second_onboarding_description">Mealano provides you a search for meals all over the world by the Ingredient, Area or Category</string>
+    <string name="third_onboarding_title">Save your Favorite Meals, Plan your Week</string>
+    <string name="third_onboarding_description">you can save your favorite meals so you can review them any time or add a meal to your weekly plan and share it with you mobile calendar</string>
     <string name="finish">Finish</string>
-    <string name="third_onboarding_description">Third Onboarding Description</string>
     <string name="popular_meals">Popular Meals</string>
     <string name="today_s_random_meal">Today\'s Meal</string>
     <string name="refresh">Refresh</string>

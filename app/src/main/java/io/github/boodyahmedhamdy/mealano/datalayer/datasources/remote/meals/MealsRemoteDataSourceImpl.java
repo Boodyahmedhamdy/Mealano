@@ -59,18 +59,6 @@ public class MealsRemoteDataSourceImpl implements MealsRemoteDataSource {
     }
 
     @Override
-    public void addToFavorite(DetailedMealDTO mealDTO, String userId, CustomCallback<DetailedMealDTO> callback) {
-        DatabaseReference ref = firebaseDatabase.getReference("users").child(userId).child("favorites").child(mealDTO.getIdMeal());
-        ref.setValue(mealDTO)
-                .addOnSuccessListener(unused -> {
-                    callback.onSuccess(mealDTO);
-
-                    getAllFavorites(userId);
-                })
-                .addOnFailureListener(e -> callback.onFailure(e.getLocalizedMessage()));
-    }
-
-    @Override
     public void getAllFavorites(String userId) {
         DatabaseReference ref = firebaseDatabase.getReference("users").child(userId).child("favorites");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {

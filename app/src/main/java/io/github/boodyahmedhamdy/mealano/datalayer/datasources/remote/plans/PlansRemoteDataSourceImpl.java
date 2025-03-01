@@ -22,6 +22,8 @@ import io.reactivex.rxjava3.core.Single;
 public class PlansRemoteDataSourceImpl implements PlansRemoteDataSource {
 
     private static final String TAG = "PlansRemoteDataSource";
+    private static final String USERS = "users";
+    private static final String PLANS = "plans";
 
     FirebaseDatabase firebaseDatabase;
 
@@ -41,8 +43,8 @@ public class PlansRemoteDataSourceImpl implements PlansRemoteDataSource {
 
     @Override
     public Task<Void> addPlan(PlanEntity entity) {
-        DatabaseReference ref = firebaseDatabase.getReference("users")
-                .child(entity.getUserId()).child("plans")
+        DatabaseReference ref = firebaseDatabase.getReference(USERS)
+                .child(entity.getUserId()).child(PLANS)
                 .child(entity.getDate().toString())
                 .child(entity.getMealId());
 
@@ -53,8 +55,8 @@ public class PlansRemoteDataSourceImpl implements PlansRemoteDataSource {
     @Override
     public Single<List<PlanEntity>> getAllPlans(String userId) {
         return Single.create(emitter -> {
-            DatabaseReference ref = firebaseDatabase.getReference("users")
-                    .child(userId).child("plans");
+            DatabaseReference ref = firebaseDatabase.getReference(USERS)
+                    .child(userId).child(PLANS);
 
             List<PlanEntity> plans = new ArrayList<>();
 
@@ -90,54 +92,15 @@ public class PlansRemoteDataSourceImpl implements PlansRemoteDataSource {
             // Add the listener to the reference
             ref.addListenerForSingleValueEvent(valueEventListener);
 
-/*    public Observable<List<PlanEntity>> getAllPlans(String userId, CustomCallback<List<PlanEntity>> callback) {
-
-        return Observable.create(emitter -> {
-            DatabaseReference ref = firebaseDatabase.getReference("users")
-                    .child(userId).child("plans");
-
-            List<PlanEntity> plans = new ArrayList<>();
-
-            ValueEventListener valueEventListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot dateSnapShot : snapshot.getChildren()) {
-                        String strDate = dateSnapShot.getKey();
-
-                        for (DataSnapshot mealSnapShot : dateSnapShot.getChildren()) {
-                            String mealId = mealSnapShot.getKey();
-                            DetailedMealDTO mealDTO = mealSnapShot.getValue(DetailedMealDTO.class);
-
-                            if (mealDTO != null) {
-                                plans.add(
-                                        new PlanEntity(userId, strDate, mealId, mealDTO)
-                                );
-                            }
-                        }
-                    }
-
-                    emitter.onNext(plans);
-                    emitter.onComplete();
-
-                    Log.i(TAG, "user: " + userId + " have " + plans.size() + " plans available");
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    emitter.onError(new Exception(error.getMessage()));
-                }
-            };
-
-    }*/
         });
 
     }
 
     @Override
     public Task<Void> deletePlan(PlanEntity planEntity) {
-        DatabaseReference ref = firebaseDatabase.getReference("users")
+        DatabaseReference ref = firebaseDatabase.getReference(USERS)
                 .child(planEntity.getUserId())
-                .child("plans")
+                .child(PLANS)
                 .child(planEntity.getDate().toString())
                 .child(planEntity.getMealId());
         return ref.removeValue();

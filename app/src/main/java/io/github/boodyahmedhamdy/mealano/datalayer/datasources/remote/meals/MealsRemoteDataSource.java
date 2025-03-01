@@ -16,7 +16,6 @@ public interface MealsRemoteDataSource {
 
     Single<DetailedMealsResponse> getMealById(String mealId);
 
-    void addToFavorite(DetailedMealDTO mealDTO, String userId, CustomCallback<DetailedMealDTO> callback);
 
     void getAllFavorites(String userId);
 
