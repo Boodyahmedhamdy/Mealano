@@ -69,7 +69,7 @@ Meal Planner is an Android application built using Java that helps users plan th
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-repo/meal-planner.git
+   git clone https://github.com/Boodyahmedhamdy/Mealano.git
    ```
 2. Open the project in Android Studio.
 3. Build and run the application on an emulator or physical device.
