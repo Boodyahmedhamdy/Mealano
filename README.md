@@ -88,6 +88,9 @@ Meal Planner is an Android application built using Java that helps users plan th
 
 For developers interested in understanding the architecture of the application, refer to the images below:
 
+this is a high level view for the Home Screen Feature. most of datalayer elements are reusable. so don't get confused
+![](media/mealanoArch.png)
+
 
 ## 📬 Contact
 
